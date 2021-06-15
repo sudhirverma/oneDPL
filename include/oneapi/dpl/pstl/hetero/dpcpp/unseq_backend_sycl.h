@@ -71,6 +71,22 @@ struct walk_n
     }
 };
 
+template <typename _ExecutionPolicy, typename _F, typename _P>
+struct mask_walk_n
+{
+    _F __f;
+    _P __p;
+
+    template <typename _ItemId, typename _ForwardIterator1, typename _ForwardIterator2, typename _ForwardIterator3>
+    auto
+    operator()(const _ItemId __idx, _ForwardIterator1 __first1, _ForwardIterator2 __first2,
+               _ForwardIterator3 __first3) const
+    {
+        if (__p(__first2[__idx]))
+            return __f(__first1[__idx], __first3[__idx]);
+    }
+};
+
 // If read accessor returns temporary value then __no_op returns lvalue reference to it.
 // After temporary value destroying it will be a reference on invalid object.
 // So let's don't call functor in case of __no_op
@@ -840,9 +856,9 @@ class __brick_set_op
                                      __res -
                                      __internal::__pstl_left_bound(__b, _Size2(0), _Size2(__res), __val_b, __comp);
 
-            bres = __internal::__invoke_if_else(_IsOpDifference(),
-                                                [&]() { return __count_a_left > __count_b; }, /*difference*/
-                                                [&]() { return __count_a_left <= __count_b; } /*intersection*/);
+            bres = __internal::__invoke_if_else(
+                _IsOpDifference(), [&]() { return __count_a_left > __count_b; }, /*difference*/
+                [&]() { return __count_a_left <= __count_b; } /*intersection*/);
         }
         __c[__idx_c] = bres; //store a mask
         return bres;
