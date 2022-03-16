@@ -15,6 +15,16 @@
 set (ranlux_24_48_test.pass_timeout_debug "900") # 15min
 set (ranlux_24_48_test.pass_timeout_release "720") # 12min
 
+include(CheckIncludeFileCXX)
+CHECK_INCLUDE_FILE_CXX("tbb/version.h" HAVE_TBB)
+find_program(FIND_GXX_EXE g++)
+if (FIND_GXX_EXE)
+    execute_process(COMMAND ${FIND_GXX_EXE} -dumpversion OUTPUT_VARIABLE _onedpl_gxx_version)
+endif()
+if (_onedpl_gxx_version EQUAL 11 AND HAVE_TBB AND NOT ONEDPL_BACKEND MATCHES "^(tbb)$")
+    set (LINKING_TBB 1)
+endif()
+
 add_custom_target(build-onedpl-tests
     COMMENT "Build all oneDPL tests")
 
@@ -32,6 +42,10 @@ macro(onedpl_add_test test_source_file)
     target_compile_definitions(${_test_name} PRIVATE _PSTL_TEST_SUCCESSFUL_KEYWORD=1)
     if (MSVC)
         target_compile_options(${_test_name} PRIVATE /bigobj)
+    endif()
+
+    if (LINKING_TBB)
+       target_link_libraries(${_test_name} PRIVATE tbb)
     endif()
 
     # oneDPL test harness may initialize a C++ iterator using iterator with different type
