@@ -18,6 +18,7 @@ set (ranlux_24_48_test.pass_timeout_release "720") # 12min
 include(CheckIncludeFileCXX)
 CHECK_INCLUDE_FILE_CXX("tbb/version.h" HAVE_TBB)
 find_program(FIND_GXX_EXE g++)
+
 if (FIND_GXX_EXE)
     execute_process(COMMAND ${FIND_GXX_EXE} -dumpversion OUTPUT_VARIABLE _onedpl_gxx_version)
 endif()
