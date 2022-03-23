@@ -15,7 +15,6 @@
 set (ranlux_24_48_test.pass_timeout_debug "900") # 15min
 set (ranlux_24_48_test.pass_timeout_release "720") # 12min
 
-include(CheckIncludeFileCXX)
 find_path(HAVE_TBB tbb/tbb.h)
 find_program(FIND_GXX_EXE g++)
 if (FIND_GXX_EXE)
