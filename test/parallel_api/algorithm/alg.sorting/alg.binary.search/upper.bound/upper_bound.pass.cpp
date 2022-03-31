@@ -36,6 +36,9 @@ DEFINE_TEST(test_upper_bound)
     void
     check_and_clean(Accessor1 result, Accessor2 value, Size n)
     {
+        if (n == 0)
+            return;
+
         int num_values = n * .01 > 1 ? n * .01 : 1; // # search values expected to be << n
         if (n == 1)
         {
@@ -134,15 +137,15 @@ main()
 
 #if TEST_DPCPP_BACKEND_PRESENT
     // Run tests for USM shared memory
-    test3buffers<sycl::usm::alloc::shared, test_upper_bound<ValueType>>();
+    test3buffers<sycl::usm::alloc::shared, test_upper_bound<ValueType>, 0>();
     // Run tests for USM device memory
-    test3buffers<sycl::usm::alloc::device, test_upper_bound<ValueType>>();
+    test3buffers<sycl::usm::alloc::device, test_upper_bound<ValueType>, 0>();
 #endif // TEST_DPCPP_BACKEND_PRESENT
 
 #if TEST_DPCPP_BACKEND_PRESENT
-    test_algo_three_sequences<test_upper_bound<ValueType>>();
+    test_algo_three_sequences<test_upper_bound<ValueType>, 0>();
 #else
-    test_algo_three_sequences<ValueType, test_upper_bound>();
+    test_algo_three_sequences<ValueType, test_upper_bound, 0>();
 #endif // TEST_DPCPP_BACKEND_PRESENT
 
     return TestUtils::done();
