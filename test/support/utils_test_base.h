@@ -405,12 +405,12 @@ create_test_obj(TestBaseData&)
 
 //--------------------------------------------------------------------------------------------------------------------//
 // Used with algorithms that have two input sequences and one output sequences
-template <typename T, typename TestName>
+template <typename T, typename TestName, size_t kStartIndex = 1>
 //typename ::std::enable_if<::std::is_base_of<test_base<T>, TestName>::value, void>::type
 void
 test_algo_three_sequences()
 {
-    for (size_t n = 1; n <= max_n; n = n <= 16 ? n + 1 : size_t(3.1415 * n))
+    for (size_t n = kStartIndex; n <= max_n; n = n <= 16 ? n + 1 : size_t(3.1415 * n))
     {
         //TODO: consider to use class TestUtils::Sequence directly. Actually, we don't need any special action for input/output data here.
         using TestBaseData = test_base_data_sequence<T>;
@@ -433,13 +433,13 @@ test_algo_three_sequences()
 }
 
 //--------------------------------------------------------------------------------------------------------------------//
-template <typename TestName>
+template <typename TestName, size_t kStartIndex = 1>
 typename ::std::enable_if<
     ::std::is_base_of<test_base<typename TestName::UsedValueType>, TestName>::value,
     void>::type
 test_algo_three_sequences()
 {
-    test_algo_three_sequences<typename TestName::UsedValueType, TestName>();
+    test_algo_three_sequences<typename TestName::UsedValueType, TestName, kStartIndex>();
 }
 
 }; // namespace TestUtils
