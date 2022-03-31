@@ -36,6 +36,9 @@ DEFINE_TEST(test_binary_search)
     void
     check_and_clean(Accessor1 result, Size n)
     {
+        if (n == 0)
+            return;
+
         int num_values = n * .01 > 1 ? n * .01 : 1; // # search values expected to be << n
         for (int i = 0; i != num_values; ++i)
         {
@@ -133,15 +136,15 @@ main()
 
 #if TEST_DPCPP_BACKEND_PRESENT
     // Run tests for USM shared memory
-    test3buffers<sycl::usm::alloc::shared, test_binary_search<ValueType>>();
+    test3buffers<sycl::usm::alloc::shared, test_binary_search<ValueType>, 0>();
     // Run tests for USM device memory
-    test3buffers<sycl::usm::alloc::device, test_binary_search<ValueType>>();
+    test3buffers<sycl::usm::alloc::device, test_binary_search<ValueType>, 0>();
 #endif // TEST_DPCPP_BACKEND_PRESENT
 
 #if TEST_DPCPP_BACKEND_PRESENT
-    test_algo_three_sequences<test_binary_search<ValueType>>();
+    test_algo_three_sequences<test_binary_search<ValueType>, 0>();
 #else
-    test_algo_three_sequences<ValueType, test_binary_search>();
+    test_algo_three_sequences<ValueType, test_binary_search, 0>();
 #endif // TEST_DPCPP_BACKEND_PRESENT
 
     return TestUtils::done();
