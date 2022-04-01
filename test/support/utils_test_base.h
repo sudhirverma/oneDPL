@@ -409,7 +409,6 @@ create_test_obj(TestBaseData&)
 //--------------------------------------------------------------------------------------------------------------------//
 // Used with algorithms that have two input sequences and one output sequences
 template <typename T, typename TestName, size_t kStartIndex = 1>
-//typename ::std::enable_if<::std::is_base_of<test_base<T>, TestName>::value, void>::type
 void
 test_algo_three_sequences()
 {
