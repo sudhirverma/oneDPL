@@ -3462,11 +3462,8 @@ constexpr size_t na = sizeof(a) / sizeof(a[0]);
 constexpr size_t nb = sizeof(b) / sizeof(b[0]);
 constexpr size_t nc = sizeof(c) / sizeof(c[0]);
 constexpr size_t nd = sizeof(d) / sizeof(d[0]);
+constexpr size_t full_size = na + nb + nc + nd;
 
-constexpr size_t get_size()
-{
-    return na + nb + nc + nd;
-}
 
 DEFINE_TEST(test_includes)
 {
@@ -3476,7 +3473,7 @@ DEFINE_TEST(test_includes)
     void
     operator()(Policy&& exec, Iterator1 first1, Iterator1 last1, Iterator2 first2, Iterator2 last2, Size n)
     {
-        if (n < get_size())
+        if (n < full_size)
             return;
 
         TestDataTransfer<UDTKind::eKeys, Size> host_keys(*this, n);
@@ -3519,7 +3516,7 @@ DEFINE_TEST(test_set_intersection)
     operator()(Policy&& exec, Iterator1 first1, Iterator1 last1, Iterator2 first2, Iterator2 last2, Iterator3 first3,
                Iterator3 last3, Size n)
     {
-        if (n < get_size())
+        if (n < full_size)
             return;
 
         TestDataTransfer<UDTKind::eKeys, Size> host_keys(*this, n);
@@ -3579,7 +3576,7 @@ DEFINE_TEST(test_set_difference)
     operator()(Policy&& exec, Iterator1 first1, Iterator1 last1, Iterator2 first2, Iterator2 last2, Iterator3 first3,
                Iterator3 last3, Size n)
     {
-        if (n < get_size())
+        if (n < full_size)
             return;
 
         TestDataTransfer<UDTKind::eKeys, Size> host_keys(*this, n);
@@ -3614,7 +3611,7 @@ DEFINE_TEST(test_set_union)
     operator()(Policy&& exec, Iterator1 first1, Iterator1 last1, Iterator2 first2, Iterator2 last2, Iterator3 first3,
                Iterator3 last3, Size n)
     {
-        if (n < get_size())
+        if (n < full_size)
             return;
 
         TestDataTransfer<UDTKind::eKeys, Size> host_keys(*this, n);
@@ -3650,7 +3647,7 @@ DEFINE_TEST(test_set_symmetric_difference)
     operator()(Policy&& exec, Iterator1 first1, Iterator1 last1, Iterator2 first2, Iterator2 last2, Iterator3 first3,
                Iterator3 last3, Size n)
     {
-        if (n < get_size())
+        if (n < full_size)
             return;
 
         TestDataTransfer<UDTKind::eKeys, Size> host_keys(*this, n);
