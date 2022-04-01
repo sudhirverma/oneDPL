@@ -383,9 +383,12 @@ void update_data(TTestDataTransfer& helper, Args&& ...args)
     template <UDTKind kind, typename Size>                                                                        \
     using TestDataTransfer = typename TestUtils::test_base<TestValueType>::template TestDataTransfer<kind, Size>; \
                                                                                                                   \
-    using UsedValueType = TestValueType;
+    using UsedValueType = TestValueType;                                                                          \
+                                                                                                                  \
+    static const char* name() { return #TestClassName; }
 #else
-#define DEFINE_TEST_CONSTRUCTOR(TestClassName)
+#define DEFINE_TEST_CONSTRUCTOR(TestClassName)                                                                    \
+    static const char* name() { return #TestClassName; }
 #endif // TEST_DPCPP_BACKEND_PRESENT
 
 //--------------------------------------------------------------------------------------------------------------------//
@@ -424,11 +427,22 @@ test_algo_three_sequences()
         auto inout2_offset_first = test_base_data.get_start_from(UDTKind::eVals);
         auto inout3_offset_first = test_base_data.get_start_from(UDTKind::eRes);
 
-        invoke_on_all_host_policies()(create_test_obj<T, TestName>(test_base_data),
-                                      inout1_offset_first, inout1_offset_first + n,
-                                      inout2_offset_first, inout2_offset_first + n,
-                                      inout3_offset_first, inout3_offset_first + n,
-                                      n);
+        try
+        {
+            invoke_on_all_host_policies()(create_test_obj<T, TestName>(test_base_data),
+                                          inout1_offset_first, inout1_offset_first + n,
+                                          inout2_offset_first, inout2_offset_first + n,
+                                          inout3_offset_first, inout3_offset_first + n,
+                                          n);
+        }
+        catch (const std::exception& exc)
+        {
+            ::std::cout << "Exception occurred in test_algo_three_sequences function : " << exc.what() << std::endl;
+            ::std::cout << "    Test name: " << TestName::name() << std::endl;
+            ::std::cout << "    n = " << n << ::std::endl;
+
+            throw;
+        }
     }
 }
 
