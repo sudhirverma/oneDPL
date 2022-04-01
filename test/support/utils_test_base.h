@@ -19,6 +19,7 @@
 #include <vector>
 #include <initializer_list>
 #include <utility>
+#include <exception>
 
 #include "utils_const.h"
 #include "utils_sequence.h"
@@ -407,6 +408,24 @@ create_test_obj(TestBaseData&)
 }
 
 //--------------------------------------------------------------------------------------------------------------------//
+template <typename TestName, typename Op>
+void invoke_test(const char* fnc_name, size_t n, Op op)
+{
+    try
+    {
+        op();
+    }
+    catch (const std::exception& exc)
+    {
+        ::std::cout << "Exception occurred in " << fnc_name << " : " << exc.what() << std::endl;
+        ::std::cout << "    Test name: " << TestName::name() << std::endl;
+        ::std::cout << "    n = " << n << ::std::endl;
+
+        throw;
+    }
+}
+
+//--------------------------------------------------------------------------------------------------------------------//
 // Used with algorithms that have two input sequences and one output sequences
 template <typename T, typename TestName, size_t kStartIndex = 1>
 void
@@ -426,22 +445,15 @@ test_algo_three_sequences()
         auto inout2_offset_first = test_base_data.get_start_from(UDTKind::eVals);
         auto inout3_offset_first = test_base_data.get_start_from(UDTKind::eRes);
 
-        try
-        {
-            invoke_on_all_host_policies()(create_test_obj<T, TestName>(test_base_data),
-                                          inout1_offset_first, inout1_offset_first + n,
-                                          inout2_offset_first, inout2_offset_first + n,
-                                          inout3_offset_first, inout3_offset_first + n,
-                                          n);
-        }
-        catch (const std::exception& exc)
-        {
-            ::std::cout << "Exception occurred in test_algo_three_sequences function : " << exc.what() << std::endl;
-            ::std::cout << "    Test name: " << TestName::name() << std::endl;
-            ::std::cout << "    n = " << n << ::std::endl;
-
-            throw;
-        }
+        invoke_test<TestName>("test_algo_three_sequences", n,
+            [&]() {
+                invoke_on_all_host_policies()(
+                    create_test_obj<T, TestName>(test_base_data),
+                    inout1_offset_first, inout1_offset_first + n,
+                    inout2_offset_first, inout2_offset_first + n,
+                    inout3_offset_first, inout3_offset_first + n,
+                    n);
+            });
     }
 }
 
