@@ -3458,15 +3458,14 @@ int b[] = {0, 1, 1, 6, 6, 9};
 int c[] = {0, 1, 6, 6, 6, 9, 9};
 int d[] = {7, 7, 7, 8};
 int e[] = {11, 11, 12, 16, 19};
-constexpr auto na = sizeof(a) / sizeof(a[0]);
-constexpr auto nb = sizeof(b) / sizeof(b[0]);
-constexpr auto nc = sizeof(c) / sizeof(c[0]);
-constexpr auto nd = sizeof(d) / sizeof(d[0]);
+constexpr size_t na = sizeof(a) / sizeof(a[0]);
+constexpr size_t nb = sizeof(b) / sizeof(b[0]);
+constexpr size_t nc = sizeof(c) / sizeof(c[0]);
+constexpr size_t nd = sizeof(d) / sizeof(d[0]);
 
-template <typename Size>
-Size get_size(Size n)
+constexpr size_t get_size()
 {
-    return n + na + nb + nc + nd;
+    return na + nb + nc + nd;
 }
 
 DEFINE_TEST(test_includes)
@@ -3477,8 +3476,11 @@ DEFINE_TEST(test_includes)
     void
     operator()(Policy&& exec, Iterator1 first1, Iterator1 last1, Iterator2 first2, Iterator2 last2, Size n)
     {
-        TestDataTransfer<UDTKind::eKeys, Size> host_keys(*this, get_size(n));
-        TestDataTransfer<UDTKind::eVals, Size> host_vals(*this, get_size(n));
+        if (n < get_size())
+            return;
+
+        TestDataTransfer<UDTKind::eKeys, Size> host_keys(*this, n);
+        TestDataTransfer<UDTKind::eVals, Size> host_vals(*this, n);
 
         //first test case
         last1 = first1 + na;
@@ -3517,9 +3519,12 @@ DEFINE_TEST(test_set_intersection)
     operator()(Policy&& exec, Iterator1 first1, Iterator1 last1, Iterator2 first2, Iterator2 last2, Iterator3 first3,
                Iterator3 last3, Size n)
     {
-        TestDataTransfer<UDTKind::eKeys, Size> host_keys(*this, get_size(n));
-        TestDataTransfer<UDTKind::eVals, Size> host_vals(*this, get_size(n));
-        TestDataTransfer<UDTKind::eRes,  Size> host_res (*this, get_size(n));
+        if (n < get_size())
+            return;
+
+        TestDataTransfer<UDTKind::eKeys, Size> host_keys(*this, n);
+        TestDataTransfer<UDTKind::eVals, Size> host_vals(*this, n);
+        TestDataTransfer<UDTKind::eRes,  Size> host_res (*this, n);
 
         //first test case
         last1 = first1 + na;
@@ -3574,9 +3579,12 @@ DEFINE_TEST(test_set_difference)
     operator()(Policy&& exec, Iterator1 first1, Iterator1 last1, Iterator2 first2, Iterator2 last2, Iterator3 first3,
                Iterator3 last3, Size n)
     {
-        TestDataTransfer<UDTKind::eKeys, Size> host_keys(*this, get_size(n));
-        TestDataTransfer<UDTKind::eVals, Size> host_vals(*this, get_size(n));
-        TestDataTransfer<UDTKind::eRes,  Size> host_res (*this, get_size(n));
+        if (n < get_size())
+            return;
+
+        TestDataTransfer<UDTKind::eKeys, Size> host_keys(*this, n);
+        TestDataTransfer<UDTKind::eVals, Size> host_vals(*this, n);
+        TestDataTransfer<UDTKind::eRes,  Size> host_res (*this, n);
 
         last1 = first1 + na;
         last2 = first2 + nb;
@@ -3606,9 +3614,12 @@ DEFINE_TEST(test_set_union)
     operator()(Policy&& exec, Iterator1 first1, Iterator1 last1, Iterator2 first2, Iterator2 last2, Iterator3 first3,
                Iterator3 last3, Size n)
     {
-        TestDataTransfer<UDTKind::eKeys, Size> host_keys(*this, get_size(n));
-        TestDataTransfer<UDTKind::eVals, Size> host_vals(*this, get_size(n));
-        TestDataTransfer<UDTKind::eRes,  Size> host_res (*this, get_size(n));
+        if (n < get_size())
+            return;
+
+        TestDataTransfer<UDTKind::eKeys, Size> host_keys(*this, n);
+        TestDataTransfer<UDTKind::eVals, Size> host_vals(*this, n);
+        TestDataTransfer<UDTKind::eRes,  Size> host_res (*this, n);
 
         last1 = first1 + na;
         last2 = first2 + nb;
@@ -3639,9 +3650,12 @@ DEFINE_TEST(test_set_symmetric_difference)
     operator()(Policy&& exec, Iterator1 first1, Iterator1 last1, Iterator2 first2, Iterator2 last2, Iterator3 first3,
                Iterator3 last3, Size n)
     {
-        TestDataTransfer<UDTKind::eKeys, Size> host_keys(*this, get_size(n));
-        TestDataTransfer<UDTKind::eVals, Size> host_vals(*this, get_size(n));
-        TestDataTransfer<UDTKind::eRes, Size>  host_res (*this, get_size(n));
+        if (n < get_size())
+            return;
+
+        TestDataTransfer<UDTKind::eKeys, Size> host_keys(*this, n);
+        TestDataTransfer<UDTKind::eVals, Size> host_vals(*this, n);
+        TestDataTransfer<UDTKind::eRes, Size>  host_res (*this, n);
 
         last1 = first1 + na;
         last2 = first2 + nb;
