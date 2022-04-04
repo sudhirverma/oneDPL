@@ -3473,6 +3473,7 @@ DEFINE_TEST(test_includes)
     void
     operator()(Policy&& exec, Iterator1 first1, Iterator1 last1, Iterator2 first2, Iterator2 last2, Size n)
     {
+        // For this test required to have space for source test static data.
         if (n < full_size)
             return;
 
@@ -3516,6 +3517,7 @@ DEFINE_TEST(test_set_intersection)
     operator()(Policy&& exec, Iterator1 first1, Iterator1 last1, Iterator2 first2, Iterator2 last2, Iterator3 first3,
                Iterator3 last3, Size n)
     {
+        // For this test required to have space for source test static data.
         if (n < full_size)
             return;
 
@@ -3576,6 +3578,7 @@ DEFINE_TEST(test_set_difference)
     operator()(Policy&& exec, Iterator1 first1, Iterator1 last1, Iterator2 first2, Iterator2 last2, Iterator3 first3,
                Iterator3 last3, Size n)
     {
+        // For this test required to have space for source test static data.
         if (n < full_size)
             return;
 
@@ -3611,6 +3614,7 @@ DEFINE_TEST(test_set_union)
     operator()(Policy&& exec, Iterator1 first1, Iterator1 last1, Iterator2 first2, Iterator2 last2, Iterator3 first3,
                Iterator3 last3, Size n)
     {
+        // For this test required to have space for source test static data.
         if (n < full_size)
             return;
 
@@ -3647,6 +3651,7 @@ DEFINE_TEST(test_set_symmetric_difference)
     operator()(Policy&& exec, Iterator1 first1, Iterator1 last1, Iterator2 first2, Iterator2 last2, Iterator3 first3,
                Iterator3 last3, Size n)
     {
+        // For this test required to have space for source test static data.
         if (n < full_size)
             return;
 
