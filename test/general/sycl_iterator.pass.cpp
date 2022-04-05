@@ -3470,7 +3470,7 @@ DEFINE_TEST(test_includes)
     void
     operator()(Policy&& exec, Iterator1 first1, Iterator1 last1, Iterator2 first2, Iterator2 last2, Size n)
     {
-        assert(n >= full_size);
+        assert(n == full_size);
 
         TestDataTransfer<UDTKind::eKeys, Size> host_keys(*this, n);
         TestDataTransfer<UDTKind::eVals, Size> host_vals(*this, n);
@@ -3823,7 +3823,9 @@ test_usm_and_buffer()
     PRINT_DEBUG("test_find_first_of");
     test2buffers<alloc_type, test_find_first_of<ValueType>>();
     PRINT_DEBUG("test_includes");
-    test2buffers<alloc_type, test_includes<ValueType>, full_size /* start test from n = full_size */>();
+    test2buffers<alloc_type, test_includes<ValueType>,
+                 full_size /* start test from n = full_size */,
+                 full_size /* continue test while n <= full_size */>();
 
     //test3buffers
     PRINT_DEBUG("test_partition_copy");
