@@ -15,15 +15,9 @@
 set (ranlux_24_48_test.pass_timeout_debug "900") # 15min
 set (ranlux_24_48_test.pass_timeout_release "720") # 12min
 
-if (WIN32)
-    list(APPEND ADDITIONAL_INCLUDE_DIRS ENV INCLUDE ENV CPATH)
-else()
-    list(APPEND ADDITIONAL_INCLUDE_DIRS ENV CPATH ENV C_INCLUDE_PATH ENV CPLUS_INCLUDE_PATH ENV INCLUDE_PATH)
-endif()
-
-find_path(HAVE_TBB NAMES tbb/tbb.h PATHS ADDITIONAL_INCLUDE_DIRS)
-if (_onedpl_gxx_version VERSION_GREATER_EQUAL 11 AND HAVE_TBB AND NOT ONEDPL_BACKEND MATCHES "^(tbb|dpcpp)$")
-    set (LINKING_TBB 1)
+find_path(_onedpl_tbb_h_found NAMES tbb/tbb.h PATHS ENV CPATH ENV C_INCLUDE_PATH ENV CPLUS_INCLUDE_PATH ENV INCLUDE_PATH)
+if (NOT _onedpl_gxx_version VERSION_LESS 11 AND _onedpl_tbb_h_found AND NOT ONEDPL_BACKEND MATCHES "^(tbb|dpcpp)$")
+    set (_onedpl_link_extra_libs tbb)
 endif()
 
 add_custom_target(build-onedpl-tests
@@ -45,10 +39,6 @@ macro(onedpl_add_test test_source_file)
         target_compile_options(${_test_name} PRIVATE /bigobj)
     endif()
 
-    if (LINKING_TBB)
-       target_link_libraries(${_test_name} PRIVATE tbb)
-    endif()
-
     # oneDPL test harness may initialize a C++ iterator using iterator with different type
     # that may break code when using Intel(R) C++ Compiler Classic with -O3 flag on Linux
     if (CMAKE_SYSTEM_NAME MATCHES "Linux" AND CMAKE_CXX_COMPILER_ID STREQUAL Intel)
@@ -56,7 +46,7 @@ macro(onedpl_add_test test_source_file)
     endif()
 
     target_include_directories(${_test_name} PRIVATE "${CMAKE_CURRENT_LIST_DIR}")
-    target_link_libraries(${_test_name} PRIVATE oneDPL)
+    target_link_libraries(${_test_name} PRIVATE oneDPL ${_onedpl_link_extra_libs})
     set_target_properties(${_test_name} PROPERTIES CXX_EXTENSIONS NO)
 
     add_test(NAME ${_test_name} COMMAND ${CMAKE_CURRENT_BINARY_DIR}/${_test_name})
