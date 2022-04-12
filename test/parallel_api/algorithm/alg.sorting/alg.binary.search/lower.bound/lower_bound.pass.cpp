@@ -38,7 +38,6 @@ DEFINE_TEST(test_lower_bound)
     void
     check_and_clean(Accessor1 result, Accessor2 value, Size n)
     {
-        // If test source data is empty check and clean are not required
         if (n == 0)
             return;
 
