@@ -1529,11 +1529,12 @@ DEFINE_TEST(test_is_partitioned)
     void
     operator()(Policy&& exec, Iterator first, Iterator last, Size n)
     {
-        assert(n >= 2);
-
         TestDataTransfer<UDTKind::eKeys, Size> host_keys(*this, n);
 
         using ValueType = typename ::std::iterator_traits<Iterator>::value_type;
+
+        if (n < 2)
+            return;
 
         auto less_than = [](const ValueType& value) -> bool { return value < 10; };
         auto is_odd = [](const ValueType& value) -> bool { return value % 2; };
@@ -3708,7 +3709,7 @@ test_usm_and_buffer()
     PRINT_DEBUG("test_count_if");
     test1buffer<alloc_type, test_count_if<ValueType>>();
     PRINT_DEBUG("test_is_partitioned");
-    test1buffer<alloc_type, test_is_partitioned<ValueType>, 2 /* start test from n = 2 */>();
+    test1buffer<alloc_type, test_is_partitioned<ValueType>>();
     PRINT_DEBUG("test_sort");
     test1buffer<alloc_type, test_sort<ValueType>>();
     PRINT_DEBUG("test_min_element");
