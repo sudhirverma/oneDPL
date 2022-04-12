@@ -3473,7 +3473,9 @@ DEFINE_TEST(test_includes)
     void
     operator()(Policy&& exec, Iterator1 first1, Iterator1 last1, Iterator2 first2, Iterator2 last2, Size n)
     {
-        assert(n >= full_size);
+        // For this test required to have space for source test static data.
+        if (n < full_size)
+            return;
 
         TestDataTransfer<UDTKind::eKeys, Size> host_keys(*this, n);
         TestDataTransfer<UDTKind::eVals, Size> host_vals(*this, n);
@@ -3515,7 +3517,9 @@ DEFINE_TEST(test_set_intersection)
     operator()(Policy&& exec, Iterator1 first1, Iterator1 last1, Iterator2 first2, Iterator2 last2, Iterator3 first3,
                Iterator3 last3, Size n)
     {
-        assert(n >= full_size);
+        // For this test required to have space for source test static data.
+        if (n < full_size)
+            return;
 
         TestDataTransfer<UDTKind::eKeys, Size> host_keys(*this, n);
         TestDataTransfer<UDTKind::eVals, Size> host_vals(*this, n);
@@ -3574,7 +3578,9 @@ DEFINE_TEST(test_set_difference)
     operator()(Policy&& exec, Iterator1 first1, Iterator1 last1, Iterator2 first2, Iterator2 last2, Iterator3 first3,
                Iterator3 last3, Size n)
     {
-        assert(n >= full_size);
+        // For this test required to have space for source test static data.
+        if (n < full_size)
+            return;
 
         TestDataTransfer<UDTKind::eKeys, Size> host_keys(*this, n);
         TestDataTransfer<UDTKind::eVals, Size> host_vals(*this, n);
@@ -3608,7 +3614,9 @@ DEFINE_TEST(test_set_union)
     operator()(Policy&& exec, Iterator1 first1, Iterator1 last1, Iterator2 first2, Iterator2 last2, Iterator3 first3,
                Iterator3 last3, Size n)
     {
-        assert(n >= full_size);
+        // For this test required to have space for source test static data.
+        if (n < full_size)
+            return;
 
         TestDataTransfer<UDTKind::eKeys, Size> host_keys(*this, n);
         TestDataTransfer<UDTKind::eVals, Size> host_vals(*this, n);
@@ -3643,7 +3651,9 @@ DEFINE_TEST(test_set_symmetric_difference)
     operator()(Policy&& exec, Iterator1 first1, Iterator1 last1, Iterator2 first2, Iterator2 last2, Iterator3 first3,
                Iterator3 last3, Size n)
     {
-        assert(n >= full_size);
+        // For this test required to have space for source test static data.
+        if (n < full_size)
+            return;
 
         TestDataTransfer<UDTKind::eKeys, Size> host_keys(*this, n);
         TestDataTransfer<UDTKind::eVals, Size> host_vals(*this, n);
@@ -3826,19 +3836,19 @@ test_usm_and_buffer()
     PRINT_DEBUG("test_find_first_of");
     test2buffers<alloc_type, test_find_first_of<ValueType>>();
     PRINT_DEBUG("test_includes");
-    test2buffers<alloc_type, test_includes<ValueType>, full_size /* start test from n = full_size */>();
+    test2buffers<alloc_type, test_includes<ValueType>>();
 
     //test3buffers
     PRINT_DEBUG("test_partition_copy");
     test3buffers<alloc_type, test_partition_copy<ValueType>>();
     PRINT_DEBUG("test_set_symmetric_difference");
-    test3buffers<alloc_type, test_set_symmetric_difference<ValueType>, full_size /* start test from n = full_size */>();
+    test3buffers<alloc_type, test_set_symmetric_difference<ValueType>>();
     PRINT_DEBUG("test_set_union");
-    test3buffers<alloc_type, test_set_union<ValueType>, full_size /* start test from n = full_size */>();
+    test3buffers<alloc_type, test_set_union<ValueType>>();
     PRINT_DEBUG("test_set_difference");
-    test3buffers<alloc_type, test_set_difference<ValueType>, full_size /* start test from n = full_size */>();
+    test3buffers<alloc_type, test_set_difference<ValueType>>();
     PRINT_DEBUG("test_set_intersection");
-    test3buffers<alloc_type, test_set_intersection<ValueType>, full_size /* start test from n = full_size */>();
+    test3buffers<alloc_type, test_set_intersection<ValueType>>();
     PRINT_DEBUG("test_merge");
     test3buffers<alloc_type, test_merge<ValueType>>(2);
 }
