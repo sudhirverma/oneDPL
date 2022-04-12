@@ -137,15 +137,15 @@ main()
 
 #if TEST_DPCPP_BACKEND_PRESENT
     // Run tests for USM shared memory
-    test3buffers<sycl::usm::alloc::shared, test_upper_bound<ValueType>, 0 /* start test from n = 0 */>();
+    test3buffers<sycl::usm::alloc::shared, test_upper_bound<ValueType>>();
     // Run tests for USM device memory
-    test3buffers<sycl::usm::alloc::device, test_upper_bound<ValueType>, 0 /* start test from n = 0 */>();
+    test3buffers<sycl::usm::alloc::device, test_upper_bound<ValueType>>();
 #endif // TEST_DPCPP_BACKEND_PRESENT
 
 #if TEST_DPCPP_BACKEND_PRESENT
-    test_algo_three_sequences<test_upper_bound<ValueType>, 0 /* start test from n = 0 */>();
+    test_algo_three_sequences<test_upper_bound<ValueType>>();
 #else
-    test_algo_three_sequences<ValueType, test_upper_bound, 0 /* start test from n = 0 */>();
+    test_algo_three_sequences<ValueType, test_upper_bound>();
 #endif // TEST_DPCPP_BACKEND_PRESENT
 
     return TestUtils::done();
