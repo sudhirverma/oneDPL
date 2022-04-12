@@ -142,7 +142,7 @@ sycl::queue get_test_queue()
     return my_queue;
 }
 
-template <sycl::usm::alloc alloc_type, typename TestValueType, typename TestName, size_t kStartIndex = 1, size_t kStopIndex = max_n>
+template <sycl::usm::alloc alloc_type, typename TestValueType, typename TestName>
 void
 test1buffer()
 {
@@ -158,7 +158,7 @@ test1buffer()
         auto inout1_offset_first = test_base_data.get_start_from(UDTKind::eKeys);
 
         // 3. run algorithms
-        for (size_t n = kStartIndex; n <= kStopIndex; n = n <= 16 ? n + 1 : size_t(3.1415 * n))
+        for (size_t n = 0; n <= max_n; n = n <= 16 ? n + 1 : size_t(3.1415 * n))
         {
 #    if _ONEDPL_DEBUG_SYCL
             ::std::cout << "n = " << n << ::std::endl;
@@ -182,7 +182,7 @@ test1buffer()
         auto inout1_offset_first = test_base_data.get_start_from(UDTKind::eKeys);
 
         // 3. run algorithms
-        for (size_t n = kStartIndex; n <= kStopIndex; n = n <= 16 ? n + 1 : size_t(3.1415 * n))
+        for (size_t n = 0; n <= max_n; n = n <= 16 ? n + 1 : size_t(3.1415 * n))
         {
 #if _ONEDPL_DEBUG_SYCL
             ::std::cout << "n = " << n << ::std::endl;
@@ -198,7 +198,7 @@ test1buffer()
     }
 }
 
-template <sycl::usm::alloc alloc_type, typename TestValueType, typename TestName, size_t kStartIndex = 1, size_t kStopIndex = max_n>
+template <sycl::usm::alloc alloc_type, typename TestValueType, typename TestName>
 void
 test2buffers()
 {
@@ -216,7 +216,7 @@ test2buffers()
         auto inout2_offset_first = test_base_data.get_start_from(UDTKind::eVals);
 
         // 3. run algorithms
-        for (size_t n = kStartIndex; n <= kStopIndex; n = n <= 16 ? n + 1 : size_t(3.1415 * n))
+        for (size_t n = 0; n <= max_n; n = n <= 16 ? n + 1 : size_t(3.1415 * n))
         {
 #    if _ONEDPL_DEBUG_SYCL
             ::std::cout << "n = " << n << ::std::endl;
@@ -242,7 +242,7 @@ test2buffers()
         auto inout2_offset_first = test_base_data.get_start_from(UDTKind::eVals);
 
         // 3. run algorithms
-        for (size_t n = kStartIndex; n <= kStopIndex; n = n <= 16 ? n + 1 : size_t(3.1415 * n))
+        for (size_t n = 0; n <= max_n; n = n <= 16 ? n + 1 : size_t(3.1415 * n))
         {
 #if _ONEDPL_DEBUG_SYCL
             ::std::cout << "n = " << n << ::std::endl;
@@ -258,7 +258,7 @@ test2buffers()
     }
 }
 
-template <sycl::usm::alloc alloc_type, typename TestValueType, typename TestName, size_t kStartIndex = 1, size_t kStopIndex = max_n>
+template <sycl::usm::alloc alloc_type, typename TestValueType, typename TestName>
 void
 test3buffers(int mult = kDefaultMultValue)
 {
@@ -279,7 +279,7 @@ test3buffers(int mult = kDefaultMultValue)
         auto inout3_offset_first = test_base_data.get_start_from(UDTKind::eRes);
 
         // 3. run algorithms
-        for (size_t n = kStartIndex; n <= kStopIndex; n = (n <= 16 ? n + 1 : size_t(3.1415 * n)))
+        for (size_t n = 0; n <= max_n; n = (n <= 16 ? n + 1 : size_t(3.1415 * n)))
         {
 #    if _ONEDPL_DEBUG_SYCL
             ::std::cout << "n = " << n << ::std::endl;
@@ -308,7 +308,7 @@ test3buffers(int mult = kDefaultMultValue)
         auto inout3_offset_first = test_base_data.get_start_from(UDTKind::eRes);
 
         // 3. run algorithms
-        for (size_t n = kStartIndex; n <= kStopIndex; n = (n <= 16 ? n + 1 : size_t(3.1415 * n)))
+        for (size_t n = 0; n <= max_n; n = (n <= 16 ? n + 1 : size_t(3.1415 * n)))
         {
 #if _ONEDPL_DEBUG_SYCL
             ::std::cout << "n = " << n << ::std::endl;
@@ -325,31 +325,31 @@ test3buffers(int mult = kDefaultMultValue)
     }
 }
 
-template <sycl::usm::alloc alloc_type, typename TestName, size_t kStartIndex = 1, size_t kStopIndex = max_n>
+template <sycl::usm::alloc alloc_type, typename TestName>
 typename ::std::enable_if<
     ::std::is_base_of<test_base<typename TestName::UsedValueType>, TestName>::value,
     void>::type
 test1buffer()
 {
-    test1buffer<alloc_type, typename TestName::UsedValueType, TestName, kStartIndex, kStopIndex>();
+    test1buffer<alloc_type, typename TestName::UsedValueType, TestName>();
 }
 
-template <sycl::usm::alloc alloc_type, typename TestName, size_t kStartIndex = 1, size_t kStopIndex = max_n>
+template <sycl::usm::alloc alloc_type, typename TestName>
 typename ::std::enable_if<
     ::std::is_base_of<test_base<typename TestName::UsedValueType>, TestName>::value,
     void>::type
 test2buffers()
 {
-    test2buffers<alloc_type, typename TestName::UsedValueType, TestName, kStartIndex, kStopIndex>();
+    test2buffers<alloc_type, typename TestName::UsedValueType, TestName>();
 }
 
-template <sycl::usm::alloc alloc_type, typename TestName, size_t kStartIndex = 1, size_t kStopIndex = max_n>
+template <sycl::usm::alloc alloc_type, typename TestName>
 typename ::std::enable_if<
     ::std::is_base_of<test_base<typename TestName::UsedValueType>, TestName>::value,
     void>::type
 test3buffers(int mult = kDefaultMultValue)
 {
-    test3buffers<alloc_type, typename TestName::UsedValueType, TestName, kStartIndex, kStopIndex>(mult);
+    test3buffers<alloc_type, typename TestName::UsedValueType, TestName>(mult);
 }
 } /* namespace TestUtils */
 
