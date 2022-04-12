@@ -409,7 +409,7 @@ create_test_obj(TestBaseData&)
 
 //--------------------------------------------------------------------------------------------------------------------//
 template <typename TestName, typename Op>
-void invoke_test(const char* fnc_name, size_t n, Op op)
+bool invoke_test(const char* fnc_name, size_t n, Op op)
 {
     try
     {
