@@ -3571,7 +3571,7 @@ DEFINE_TEST(test_set_difference)
     operator()(Policy&& exec, Iterator1 first1, Iterator1 last1, Iterator2 first2, Iterator2 last2, Iterator3 first3,
                Iterator3 last3, Size n)
     {
-        assert(n == full_size);
+        assert(n >= full_size);
 
         TestDataTransfer<UDTKind::eKeys, Size> host_keys(*this, n);
         TestDataTransfer<UDTKind::eVals, Size> host_vals(*this, n);
@@ -3839,9 +3839,7 @@ test_usm_and_buffer()
                  full_size /* start test from n = full_size */,
                  full_size /* continue test while n <= full_size */>();
     PRINT_DEBUG("test_set_difference");
-    test3buffers<alloc_type, test_set_difference<ValueType>,
-                 full_size /* start test from n = full_size */,
-                 full_size /* continue test while n <= full_size */>();
+    test3buffers<alloc_type, test_set_difference<ValueType>, full_size /* start test from n = full_size */>();
     PRINT_DEBUG("test_set_intersection");
     test3buffers<alloc_type, test_set_intersection<ValueType>, full_size /* start test from n = full_size */>();
     PRINT_DEBUG("test_merge");
