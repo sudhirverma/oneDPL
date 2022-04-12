@@ -422,8 +422,16 @@ void invoke_test(const char* fnc_name, size_t n, Op op)
                     << "    Test name: " << TestName::name() << std::endl
                     << "    n = " << n << ::std::endl;
 
-        throw;
+        if (reason.find("CL_OUT_OF_RESOURCES") != std::string::npos)
+        {
+            std::cout << "    CL_OUT_OF_RESOURCES -> continue next tests" << ::std::endl;
+            return false;
+        }
+        else
+            throw;
     }
+
+    return true;
 }
 
 //--------------------------------------------------------------------------------------------------------------------//
