@@ -828,6 +828,9 @@ DEFINE_TEST(test_adjacent_difference)
     void
     operator()(Policy&& exec, Iterator1 first1, Iterator1 last1, Iterator2 first2, Iterator2 /* last2 */, Size n)
     {
+        if (n == 0)
+            return;
+
         TestDataTransfer<UDTKind::eKeys, Size> host_keys(*this, n);
         TestDataTransfer<UDTKind::eVals, Size> host_vals(*this, n);
 
@@ -1419,6 +1422,9 @@ DEFINE_TEST(test_count)
     void
     operator()(Policy&& exec, Iterator first, Iterator last, Size n)
     {
+        if (n == 0)
+            return;
+
         TestDataTransfer<UDTKind::eKeys, Size> host_keys(*this, n);
 
         using ValueType = typename ::std::iterator_traits<Iterator>::value_type;
@@ -1474,6 +1480,9 @@ DEFINE_TEST(test_count_if)
     void
     operator()(Policy&& exec, Iterator first, Iterator last, Size n)
     {
+        if (n == 0)
+            return;
+
         TestDataTransfer<UDTKind::eKeys, Size> host_keys(*this, n);
 
         using ValueType = typename ::std::iterator_traits<Iterator>::value_type;
@@ -1589,6 +1598,9 @@ DEFINE_TEST(test_any_all_none_of)
         ::std::iota(host_keys.get(), host_keys.get() + n, T1(0));
         host_keys.update_data();
 
+        if (n == 0)
+            return;
+
         // empty sequence case
         if (n == 1)
         {
@@ -1695,6 +1707,9 @@ DEFINE_TEST(test_find_if)
     void
     operator()(Policy&& exec, Iterator1 first1, Iterator1 last1, Size n)
     {
+        if(n == 0)
+            return;
+
         TestDataTransfer<UDTKind::eKeys, Size> host_keys(*this, n);
 
         typedef typename ::std::iterator_traits<Iterator1>::value_type T1;
@@ -1835,6 +1850,9 @@ DEFINE_TEST(test_search)
     void
     operator()(Policy&& exec, Iterator1 first1, Iterator1 last1, Iterator2 first2, Iterator2 last2, Size n)
     {
+        if (n == 0)
+            return;
+
         TestDataTransfer<UDTKind::eKeys, Size> host_keys(*this, n);
         TestDataTransfer<UDTKind::eVals, Size> host_vals(*this, n);
 
@@ -1899,6 +1917,9 @@ DEFINE_TEST(test_search_n)
     void
     operator()(Policy&& exec, Iterator first, Iterator last, Size n)
     {
+        if (n == 0)
+            return;
+
         TestDataTransfer<UDTKind::eKeys, Size> host_keys(*this, n);
 
         typedef typename ::std::iterator_traits<Iterator>::value_type T;
@@ -2234,6 +2255,9 @@ DEFINE_TEST(test_remove)
     void
     operator()(Policy&& exec, Iterator first, Iterator last, Size n)
     {
+        if (n == 0)
+            return;
+
         TestDataTransfer<UDTKind::eKeys, Size> host_keys(*this, n);
 
         typedef typename ::std::iterator_traits<Iterator>::value_type T1;
@@ -2269,6 +2293,9 @@ DEFINE_TEST(test_remove_if)
     void
     operator()(Policy&& exec, Iterator first, Iterator last, Size n)
     {
+        if (n == 0)
+            return;
+
         TestDataTransfer<UDTKind::eKeys, Size> host_keys(*this, n);
 
         typedef typename ::std::iterator_traits<Iterator>::value_type T1;
@@ -2539,6 +2566,9 @@ DEFINE_TEST(test_is_heap_until)
     void
     operator()(Policy&& exec, Iterator first, Iterator last, Size n)
     {
+        if (n == 0)
+            return;
+
         TestDataTransfer<UDTKind::eKeys, Size> host_keys(*this, n);
 
         using ValueType = typename ::std::iterator_traits<Iterator>::value_type;
@@ -2587,6 +2617,9 @@ DEFINE_TEST(test_is_heap)
     void
     operator()(Policy&& exec, Iterator first, Iterator last, Size n)
     {
+        if (n == 0)
+            return;
+
         TestDataTransfer<UDTKind::eKeys, Size> host_keys(*this, n);
 
         using ValueType = typename ::std::iterator_traits<Iterator>::value_type;
@@ -3083,6 +3116,9 @@ DEFINE_TEST(test_lexicographical_compare)
     void
     operator()(Policy&& exec, Iterator1 first1, Iterator1 last1, Iterator2 first2, Iterator2 last2, Size n)
     {
+        if (n == 0)
+            return;
+
         TestDataTransfer<UDTKind::eKeys, Size> host_keys(*this, n);
         TestDataTransfer<UDTKind::eVals, Size> host_vals(*this, n);
 
@@ -3293,6 +3329,9 @@ DEFINE_TEST(test_nth_element)
     void
     operator()(Policy&& exec, Iterator1 first1, Iterator1 last1, Iterator2 first2, Iterator2 /* last2 */, Size n)
     {
+        if (n == 0)
+            return;
+
         TestDataTransfer<UDTKind::eKeys, Size> host_keys(*this, n);
         TestDataTransfer<UDTKind::eVals, Size> host_vals(*this, n);
 
@@ -3404,6 +3443,9 @@ DEFINE_TEST(test_rotate)
     void
     operator()(Policy&& exec, Iterator1 first, Iterator1 last, Size n)
     {
+        if (n == 0)
+            return;
+
         TestDataTransfer<UDTKind::eKeys, Size> host_keys(*this, n);
         host_keys.retrieve_data();
 
@@ -3432,6 +3474,9 @@ DEFINE_TEST(test_rotate_copy)
     void
     operator()(Policy&& exec, Iterator1 first, Iterator1 last, Iterator1 result_first, Iterator1 /* result_last */, Size n)
     {
+        if (n == 0)
+            return;
+
         TestDataTransfer<UDTKind::eKeys, Size> host_keys(*this, n);
         TestDataTransfer<UDTKind::eVals, Size> host_vals(*this, n);
 
