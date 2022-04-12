@@ -2845,11 +2845,12 @@ DEFINE_TEST(test_partial_sort)
     void
     operator()(Policy&& exec, Iterator1 first1, Iterator1 last1, Iterator2 /* first1 */, Iterator2 /* last2 */, Size n)
     {
-        assert(n >= 2);
-
         TestDataTransfer<UDTKind::eKeys, Size> host_keys(*this, n);
 
         typedef typename ::std::iterator_traits<Iterator1>::value_type T1;
+
+        if (n <= 1)
+            return;
 
         auto value = T1(333);
         auto init = value;
@@ -3806,7 +3807,7 @@ test_usm_and_buffer()
     PRINT_DEBUG("test_lexicographical_compare");
     test2buffers<alloc_type, test_lexicographical_compare<ValueType>>();
     PRINT_DEBUG("test_partial_sort");
-    test2buffers<alloc_type, test_partial_sort<ValueType>, 2 /* start test from n = 2 */>();
+    test2buffers<alloc_type, test_partial_sort<ValueType>>();
     PRINT_DEBUG("test_partial_sort_copy");
     test2buffers<alloc_type, test_partial_sort_copy<ValueType>>();
     PRINT_DEBUG("test_search");
