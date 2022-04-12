@@ -417,9 +417,10 @@ void invoke_test(const char* fnc_name, size_t n, Op op)
     }
     catch (const std::exception& exc)
     {
-        ::std::cout << "Exception occurred in " << fnc_name << " : " << exc.what() << std::endl;
-        ::std::cout << "    Test name: " << TestName::name() << std::endl;
-        ::std::cout << "    n = " << n << ::std::endl;
+        const std::string reason(exc.what() ? exc.what() : "");
+        ::std::cout << "Exception occurred in " << fnc_name << " : " << reason << std::endl
+                    << "    Test name: " << TestName::name() << std::endl
+                    << "    n = " << n << ::std::endl;
 
         throw;
     }
