@@ -33,8 +33,8 @@ void test_edges()
     for (unsigned i = 0; i < N; ++i)
     {
         double r = dpl::arg(testcases[i]);
-        if (std::isnan(testcases[i].real()) || std::isnan(testcases[i].imag()))
-            assert(std::isnan(r));
+        if (dpl::isnan(testcases[i].real()) || dpl::isnan(testcases[i].imag()))
+            assert(dpl::isnan(r));
         else
         {
             switch (classify(testcases[i]))

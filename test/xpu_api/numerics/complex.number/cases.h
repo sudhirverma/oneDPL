@@ -201,15 +201,15 @@ classify(const dpl::complex<T>& x)
         return zero;
     if (dpl::isinf(x.real()) || dpl::isinf(x.imag()))
         return inf;
-    if (std::isnan(x.real()) && std::isnan(x.imag()))
+    if (dpl::isnan(x.real()) && dpl::isnan(x.imag()))
         return NaN;
-    if (std::isnan(x.real()))
+    if (dpl::isnan(x.real()))
     {
         if (x.imag() == T(0))
             return NaN;
         return non_zero_nan;
     }
-    if (std::isnan(x.imag()))
+    if (dpl::isnan(x.imag()))
     {
         if (x.real() == T(0))
             return NaN;
@@ -226,7 +226,7 @@ classify(double x)
         return zero;
     if (dpl::isinf(x))
         return inf;
-    if (std::isnan(x))
+    if (dpl::isnan(x))
         return NaN;
     return non_zero;
 }

@@ -44,11 +44,11 @@ void test_edges()
             assert(std::signbit(r.real()) == std::signbit(testcases[i].real()));
             assert(std::signbit(r.imag()) == std::signbit(testcases[i].imag()));
         }
-        else if ( testcases[i].real() == 0 && std::isnan(testcases[i].imag()))
+        else if ( testcases[i].real() == 0 && dpl::isnan(testcases[i].imag()))
         {
             assert(r.real() == 0);
             assert(std::signbit(testcases[i].real()) == std::signbit(r.real()));
-            assert(std::isnan(r.imag()));
+            assert(dpl::isnan(r.imag()));
         }
         else if (dpl::abs(testcases[i].real()) == 1 && testcases[i].imag() == 0)
         {
@@ -66,10 +66,10 @@ void test_edges()
             else
                 is_about(r.imag(), -pi/2);
         }
-        else if (std::isfinite(testcases[i].real()) && std::isnan(testcases[i].imag()))
+        else if (std::isfinite(testcases[i].real()) && dpl::isnan(testcases[i].imag()))
         {
-            assert(std::isnan(r.real()));
-            assert(std::isnan(r.imag()));
+            assert(dpl::isnan(r.real()));
+            assert(dpl::isnan(r.imag()));
         }
         else if (dpl::isinf(testcases[i].real()) && std::isfinite(testcases[i].imag()))
         {
@@ -89,18 +89,18 @@ void test_edges()
             else
                 is_about(r.imag(),  pi/2);
         }
-        else if (dpl::isinf(testcases[i].real()) && std::isnan(testcases[i].imag()))
+        else if (dpl::isinf(testcases[i].real()) && dpl::isnan(testcases[i].imag()))
         {
             assert(r.real() == 0);
             assert(std::signbit(testcases[i].real()) == std::signbit(r.real()));
-            assert(std::isnan(r.imag()));
+            assert(dpl::isnan(r.imag()));
         }
-        else if (std::isnan(testcases[i].real()) && std::isfinite(testcases[i].imag()))
+        else if (dpl::isnan(testcases[i].real()) && std::isfinite(testcases[i].imag()))
         {
-            assert(std::isnan(r.real()));
-            assert(std::isnan(r.imag()));
+            assert(dpl::isnan(r.real()));
+            assert(dpl::isnan(r.imag()));
         }
-        else if (std::isnan(testcases[i].real()) && dpl::isinf(testcases[i].imag()))
+        else if (dpl::isnan(testcases[i].real()) && dpl::isinf(testcases[i].imag()))
         {
             assert(r.real() == 0);
             assert(std::signbit(testcases[i].real()) == std::signbit(r.real()));
@@ -109,10 +109,10 @@ void test_edges()
             else
                 is_about(r.imag(),  pi/2);
         }
-        else if (std::isnan(testcases[i].real()) && std::isnan(testcases[i].imag()))
+        else if (dpl::isnan(testcases[i].real()) && dpl::isnan(testcases[i].imag()))
         {
-            assert(std::isnan(r.real()));
-            assert(std::isnan(r.imag()));
+            assert(dpl::isnan(r.real()));
+            assert(dpl::isnan(r.imag()));
         }
         else
         {

@@ -43,14 +43,14 @@ void test_edges()
         {
             dpl::complex<double> r = dpl::pow(dpl::real(testcases[i]), testcases[j]);
             dpl::complex<double> z = dpl::exp(testcases[j] * dpl::log(dpl::complex<double>(dpl::real(testcases[i]))));
-            if (std::isnan(dpl::real(r)))
-                assert(std::isnan(dpl::real(z)));
+            if (dpl::isnan(dpl::real(r)))
+                assert(dpl::isnan(dpl::real(z)));
             else
             {
                 assert(dpl::real(r) == dpl::real(z));
             }
-            if (std::isnan(dpl::imag(r)))
-                assert(std::isnan(dpl::imag(z)));
+            if (dpl::isnan(dpl::imag(r)))
+                assert(dpl::isnan(dpl::imag(z)));
             else
             {
                 is_about(dpl::imag(r), dpl::imag(z));

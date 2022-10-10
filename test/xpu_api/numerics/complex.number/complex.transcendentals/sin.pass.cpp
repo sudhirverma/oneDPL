@@ -39,15 +39,15 @@ void test_edges()
         dpl::complex<double> t1(-imag(testcases[i]), real(testcases[i]));
         dpl::complex<double> t2 = sinh(t1);
         dpl::complex<double> z(imag(t2), -real(t2));
-        if (std::isnan(dpl::real(r)))
-            assert(std::isnan(dpl::real(z)));
+        if (dpl::isnan(dpl::real(r)))
+            assert(dpl::isnan(dpl::real(z)));
         else
         {
             assert(dpl::real(r) == dpl::real(z));
             assert(std::signbit(dpl::real(r)) == std::signbit(dpl::real(z)));
         }
-        if (std::isnan(dpl::imag(r)))
-            assert(std::isnan(dpl::imag(z)));
+        if (dpl::isnan(dpl::imag(r)))
+            assert(dpl::isnan(dpl::imag(z)));
         else
         {
 #ifndef _PSTL_CLANG_TEST_COMPLEX_SIN_IS_CASE_BROKEN

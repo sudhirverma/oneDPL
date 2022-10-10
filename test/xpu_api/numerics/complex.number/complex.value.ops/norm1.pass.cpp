@@ -45,10 +45,10 @@ void test_edges()
 #endif // _PSTL_ICC_TEST_COMPLEX_NORM_MINUS_INF_NAN_BROKEN_TEST_EDGES
             break;
         case NaN:
-            assert(std::isnan(r));
+            assert(dpl::isnan(r));
             break;
         case non_zero_nan:
-            assert(std::isnan(r));
+            assert(dpl::isnan(r));
             break;
         }
     }

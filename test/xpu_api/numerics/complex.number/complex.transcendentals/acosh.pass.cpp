@@ -72,7 +72,7 @@ void test_edges()
             else
                 is_about(r.imag(),  pi/2);
         }
-        else if (std::isfinite(testcases[i].real()) && std::isnan(testcases[i].imag()))
+        else if (std::isfinite(testcases[i].real()) && dpl::isnan(testcases[i].imag()))
         {
             assert(std::isnan(r.real()));
 #ifndef _PSTL_CLANG_TEST_COMPLEX_ACOS_IS_NAN_CASE_BROKEN
@@ -113,27 +113,27 @@ void test_edges()
             else
                 is_about(r.imag(),  0.25 * pi);
         }
-        else if (dpl::isinf(testcases[i].real()) && std::isnan(testcases[i].imag()))
+        else if (dpl::isinf(testcases[i].real()) && dpl::isnan(testcases[i].imag()))
         {
             assert(dpl::isinf(r.real()));
             assert(r.real() > 0);
-            assert(std::isnan(r.imag()));
+            assert(dpl::isnan(r.imag()));
         }
-        else if (std::isnan(testcases[i].real()) && std::isfinite(testcases[i].imag()))
+        else if (dpl::isnan(testcases[i].real()) && std::isfinite(testcases[i].imag()))
         {
-            assert(std::isnan(r.real()));
-            assert(std::isnan(r.imag()));
+            assert(dpl::isnan(r.real()));
+            assert(dpl::isnan(r.imag()));
         }
-        else if (std::isnan(testcases[i].real()) && dpl::isinf(testcases[i].imag()))
+        else if (dpl::isnan(testcases[i].real()) && dpl::isinf(testcases[i].imag()))
         {
             assert(dpl::isinf(r.real()));
             assert(r.real() > 0);
-            assert(std::isnan(r.imag()));
+            assert(dpl::isnan(r.imag()));
         }
-        else if (std::isnan(testcases[i].real()) && std::isnan(testcases[i].imag()))
+        else if (dpl::isnan(testcases[i].real()) && dpl::isnan(testcases[i].imag()))
         {
-            assert(std::isnan(r.real()));
-            assert(std::isnan(r.imag()));
+            assert(dpl::isnan(r.real()));
+            assert(dpl::isnan(r.imag()));
         }
         else
         {
