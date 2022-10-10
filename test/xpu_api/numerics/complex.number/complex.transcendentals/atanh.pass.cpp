@@ -50,7 +50,7 @@ void test_edges()
             assert(std::signbit(testcases[i].real()) == std::signbit(r.real()));
             assert(std::isnan(r.imag()));
         }
-        else if (std::abs(testcases[i].real()) == 1 && testcases[i].imag() == 0)
+        else if (dpl::abs(testcases[i].real()) == 1 && testcases[i].imag() == 0)
         {
             assert(std::isinf(r.real()));
             assert(std::signbit(testcases[i].real()) == std::signbit(r.real()));

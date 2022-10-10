@@ -95,7 +95,7 @@ void test_edges()
             assert(std::isnan(r.real()));
             assert(std::isnan(r.imag()));
         }
-        else if (std::isfinite(testcases[i].imag()) && std::abs(testcases[i].imag()) <= 1)
+        else if (std::isfinite(testcases[i].imag()) && dpl::abs(testcases[i].imag()) <= 1)
         {
             assert(!std::signbit(r.real()));
             assert(std::signbit(r.imag()) == std::signbit(testcases[i].imag()));

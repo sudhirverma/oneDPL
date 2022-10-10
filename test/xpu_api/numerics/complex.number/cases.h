@@ -10,8 +10,8 @@
 
 // test cases
 
-#ifndef _CASES_H
-#define _CASES_H
+#ifndef CASES_H
+#define CASES_H
 
 #include <oneapi/dpl/complex>
 #include <cassert>
