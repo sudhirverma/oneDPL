@@ -43,7 +43,7 @@ void test_edges()
         {
             if (std::signbit(testcases[i].real()))
             {
-                assert(std::isinf(r.real()));
+                assert(dpl::isinf(r.real()));
                 assert(r.real() < 0);
                 if (std::signbit(testcases[i].imag()))
                     is_about(r.imag(), -pi);
@@ -52,15 +52,15 @@ void test_edges()
             }
             else
             {
-                assert(std::isinf(r.real()));
+                assert(dpl::isinf(r.real()));
                 assert(r.real() < 0);
                 assert(r.imag() == 0);
                 assert(std::signbit(testcases[i].imag()) == std::signbit(r.imag()));
             }
         }
-        else if (std::isfinite(testcases[i].real()) && std::isinf(testcases[i].imag()))
+        else if (std::isfinite(testcases[i].real()) && dpl::isinf(testcases[i].imag()))
         {
-            assert(std::isinf(r.real()));
+            assert(dpl::isinf(r.real()));
             assert(r.real() > 0);
             if (testcases[i].imag() > 0)
                 is_about(r.imag(), pi/2);
@@ -72,17 +72,17 @@ void test_edges()
             assert(std::isnan(r.real()));
             assert(std::isnan(r.imag()));
         }
-        else if (std::isinf(testcases[i].real()) && testcases[i].real() < 0 && std::isfinite(testcases[i].imag()))
+        else if (dpl::isinf(testcases[i].real()) && testcases[i].real() < 0 && std::isfinite(testcases[i].imag()))
         {
-            assert(std::isinf(r.real()) && r.real() > 0);
+            assert(dpl::isinf(r.real()) && r.real() > 0);
             if (r.imag() > 0)
                 is_about(r.imag(), pi);
             else
                 is_about(r.imag(), -pi);
         }
-        else if (std::isinf(testcases[i].real()) && testcases[i].real() > 0 && std::isfinite(testcases[i].imag()))
+        else if (dpl::isinf(testcases[i].real()) && testcases[i].real() > 0 && std::isfinite(testcases[i].imag()))
         {
-            assert(std::isinf(r.real()) && r.real() > 0);
+            assert(dpl::isinf(r.real()) && r.real() > 0);
             assert(r.imag() == 0);
             assert(std::signbit(testcases[i].imag()) == std::signbit(r.imag()));
         }

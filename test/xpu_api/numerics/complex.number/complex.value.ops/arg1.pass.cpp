@@ -81,7 +81,7 @@ void test_edges()
                     assert(r < 0);
                 break;
             case inf:
-                if (std::isinf(testcases[i].real()) && std::isinf(testcases[i].imag()))
+                if (dpl::isinf(testcases[i].real()) && dpl::isinf(testcases[i].imag()))
                 {
                     if (testcases[i].real() < 0)
                     {
@@ -98,7 +98,7 @@ void test_edges()
                             is_about(r, -0.25 * pi);
                     }
                 }
-                else if (std::isinf(testcases[i].real()))
+                else if (dpl::isinf(testcases[i].real()))
                 {
                     if (testcases[i].real() < 0)
                     {

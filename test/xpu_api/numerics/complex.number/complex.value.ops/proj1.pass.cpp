@@ -48,7 +48,7 @@ void test_edges()
             assert(std::signbit(dpl::imag(r)) == std::signbit(dpl::imag(testcases[i])));
             break;
         case inf:
-            assert(std::isinf(dpl::real(r)) && dpl::real(r) > 0);
+            assert(dpl::isinf(dpl::real(r)) && dpl::real(r) > 0);
             assert(dpl::imag(r) == 0);
             assert(std::signbit(dpl::imag(r)) == std::signbit(dpl::imag(testcases[i])));
             break;

@@ -40,7 +40,7 @@ void test_edges()
             assert(std::isfinite(r) && r > 0);
             break;
         case inf:
-            assert(std::isinf(r) && r > 0);
+            assert(dpl::isinf(r) && r > 0);
             break;
         case NaN:
             assert(std::isnan(r));
