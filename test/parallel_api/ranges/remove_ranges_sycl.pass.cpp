@@ -14,6 +14,7 @@
 //===----------------------------------------------------------------------===//
 
 #include <oneapi/dpl/execution>
+#include <oneapi/dpl/algorithm>
 
 #include "support/test_config.h"
 
@@ -54,8 +55,8 @@ main()
 
     //check result
     ::std::vector<T> exp(data);
-    auto exp_end = ::std::remove(exp.begin(), exp.end(), val1);
-    exp_end = ::std::remove(exp.begin(), exp_end, val2);
+    auto exp_end = dpl::remove(exp.begin(), exp.end(), val1);
+    exp_end = dpl::remove(exp.begin(), exp_end, val2);
 
     EXPECT_TRUE(::std::distance(exp.begin(), exp_end) == in_end_n, "wrong effect from remove with sycl ranges");
     EXPECT_EQ_N(exp.begin(), in.begin(), in_end_n, "wrong effect from remove with sycl ranges");

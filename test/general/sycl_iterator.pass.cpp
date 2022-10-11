@@ -2241,7 +2241,7 @@ DEFINE_TEST(test_remove)
         host_keys.update_data();
 
         auto pos = (last - first) / 2;
-        auto res1 = ::std::remove(make_new_policy<new_kernel_name<Policy, 0>>(exec), first, last, T1(222 + pos));
+        auto res1 = dpl::remove(make_new_policy<new_kernel_name<Policy, 0>>(exec), first, last, T1(222 + pos));
 #if _PSTL_SYCL_TEST_USM
         exec.queue().wait_and_throw();
 #endif
