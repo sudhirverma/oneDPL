@@ -14,6 +14,7 @@
 //===----------------------------------------------------------------------===//
 
 #include <oneapi/dpl/execution>
+#include <oneapi/dpl/algorithm>
 
 #include "support/test_config.h"
 
@@ -57,7 +58,7 @@ main()
 
     //check result
     int expected[max_n];
-    ::std::reverse(data, data + max_n);
+    dpl::reverse(data, data + max_n);
     ::std::transform(data, data + max_n, expected, lambda1);
 
     EXPECT_EQ_N(expected, data2, max_n, "wrong effect from copy with sycl ranges");
