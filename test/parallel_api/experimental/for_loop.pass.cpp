@@ -55,11 +55,11 @@ test_body_for_loop(Policy&& exec, Iterator first, Iterator last, Iterator expect
 
     ::std::experimental::for_loop(exec, first, last, [&flip](Iterator iter) { flip(*iter); });
 
-    ::std::for_each(expected_first, expected_last, flip);
+    dpl::for_each(expected_first, expected_last, flip);
     EXPECT_EQ_N(expected_first, first, n, "wrong effect from for_loop");
 
     ::std::experimental::for_loop_n(exec, first, n, [&flip](Iterator iter) { flip(*iter); });
-    ::std::for_each_n(oneapi::dpl::execution::seq, expected_first, n, flip);
+    dpl::for_each_n(oneapi::dpl::execution::seq, expected_first, n, flip);
     EXPECT_EQ_N(expected_first, first, n, "wrong effect from for_loop_n");
 }
 
@@ -78,7 +78,7 @@ test_body_for_loop_integral(Policy&& exec, Iterator first, Iterator /* last */, 
         flip(*iter);
     });
 
-    ::std::for_each(expected_first, expected_last, flip);
+    dpl::for_each(expected_first, expected_last, flip);
     EXPECT_EQ_N(expected_first, first, n, "wrong effect from for_loop with integral");
 
     ::std::experimental::for_loop_n(exec, Size(0), n, [&flip, first](Size idx) {
@@ -87,7 +87,7 @@ test_body_for_loop_integral(Policy&& exec, Iterator first, Iterator /* last */, 
         flip(*iter);
     });
 
-    ::std::for_each_n(oneapi::dpl::execution::seq, expected_first, n, flip);
+    dpl::for_each_n(oneapi::dpl::execution::seq, expected_first, n, flip);
     EXPECT_EQ_N(expected_first, first, n, "wrong effect from for_loop_n with integral");
 }
 

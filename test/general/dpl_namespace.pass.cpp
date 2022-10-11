@@ -41,7 +41,7 @@ int main()
     auto zip_first = dpl::make_zip_iterator(counting_first, key_first);
 
     // key_buf = {0,0,...0,1,1,...,1}
-    std::for_each(dpl::execution::make_device_policy<class ForEach>(dpl::execution::dpcpp_default),
+    dpl::for_each(dpl::execution::make_device_policy<class ForEach>(dpl::execution::dpcpp_default),
 		zip_first, zip_first + n,
         [](std::tuple<T, T> x){
             std::get<1>(x) = (2 * std::get<0>(x)) / n;

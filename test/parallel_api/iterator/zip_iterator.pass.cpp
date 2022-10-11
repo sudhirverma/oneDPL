@@ -120,7 +120,7 @@ DEFINE_TEST(test_for_each)
         auto tuple_first1 = oneapi::dpl::make_zip_iterator(std::make_tuple(first1, first1));
         auto tuple_last1 = oneapi::dpl::make_zip_iterator(last1, last1);
 
-        ::std::for_each(make_new_policy<new_kernel_name<Policy, 0>>(exec), tuple_first1, tuple_last1,
+        dpl::for_each(make_new_policy<new_kernel_name<Policy, 0>>(exec), tuple_first1, tuple_last1,
                       TuplePredicate<decltype(f), 0>{f});
 #if _PSTL_SYCL_TEST_USM
         exec.queue().wait_and_throw();
@@ -152,7 +152,7 @@ DEFINE_TEST(test_for_each_structured_binding)
         auto tuple_first1 = oneapi::dpl::make_zip_iterator(first1, first1);
         auto tuple_last1 = oneapi::dpl::make_zip_iterator(last1, last1);
 
-        ::std::for_each(make_new_policy<new_kernel_name<Policy, 0>>(exec), tuple_first1, tuple_last1,
+        dpl::for_each(make_new_policy<new_kernel_name<Policy, 0>>(exec), tuple_first1, tuple_last1,
                         [f](auto value)
                         {
                             auto [x, y] = value;
@@ -235,7 +235,7 @@ DEFINE_TEST(test_min_element)
         using IteratorValueType = typename ::std::iterator_traits<Iterator>::value_type;
 
         IteratorValueType fill_value = IteratorValueType{static_cast<IteratorValueType>(n)};
-        ::std::for_each(host_keys.get(), host_keys.get() + n,
+        dpl::for_each(host_keys.get(), host_keys.get() + n,
                         [&fill_value](IteratorValueType& it) { it = fill_value-- % 10 + 1; });
 
         auto min_dis = n;
@@ -277,7 +277,7 @@ DEFINE_TEST(test_count_if)
         using ReturnType = typename ::std::iterator_traits<Iterator>::difference_type;
 
         ValueType fill_value{0};
-        ::std::for_each(host_keys.get(), host_keys.get() + n,
+        dpl::for_each(host_keys.get(), host_keys.get() + n,
                         [&fill_value](ValueType& value) { value = fill_value++ % 10; });
         host_keys.update_data();
 
@@ -488,7 +488,7 @@ DEFINE_TEST(test_unique)
         using Iterator1ValueType = typename ::std::iterator_traits<Iterator1>::value_type;
 
         int index = 0;
-        ::std::for_each(host_keys.get(), host_keys.get() + n,
+        dpl::for_each(host_keys.get(), host_keys.get() + n,
                         [&index](Iterator1ValueType& value) { value = (index++ + 4) / 4; });
         host_keys.update_data();
 
@@ -528,7 +528,7 @@ DEFINE_TEST(test_unique_copy)
         using Iterator1ValueType = typename ::std::iterator_traits<Iterator1>::value_type;
 
         int index = 0;
-        ::std::for_each(host_keys.get(), host_keys.get() + n,
+        dpl::for_each(host_keys.get(), host_keys.get() + n,
                         [&index](Iterator1ValueType& value) { value = (index++ + 4) / 4; });
         dpl::fill(host_vals.get(), host_vals.get() + n, Iterator1ValueType{-1});
         update_data(host_keys, host_vals);
@@ -577,13 +577,13 @@ DEFINE_TEST(test_merge)
         T2 even = T2{0};
         size_t size1 = n >= 2 ? n / 2 : n;
         size_t size2 = n >= 3 ? n / 3 : n;
-        ::std::for_each(host_keys.get(), host_keys.get() + size1,
+        dpl::for_each(host_keys.get(), host_keys.get() + size1,
                         [&odd](T1& value)
                         {
                             value = odd;
                             odd += 2;
                         });
-        ::std::for_each(host_vals.get(), host_vals.get() + size2,
+        dpl::for_each(host_vals.get(), host_vals.get() + size2,
                         [&even](T2& value)
                         {
                             value = even;
@@ -672,10 +672,10 @@ DEFINE_TEST(test_lexicographical_compare)
 
         // init
         ValueType fill_value1{0};
-        ::std::for_each(host_keys.get(), host_keys.get() + n,
+        dpl::for_each(host_keys.get(), host_keys.get() + n,
                         [&fill_value1](ValueType& value) { value = fill_value1++ % 10; });
         ValueType fill_value2{0};
-        ::std::for_each(host_vals.get(), host_vals.get() + n,
+        dpl::for_each(host_vals.get(), host_vals.get() + n,
                         [&fill_value2](ValueType& value) { value = fill_value2++ % 10; });
         if (n > 1)
             *(host_vals.get() + n - 2) = 222;

@@ -126,7 +126,7 @@ struct test_counting_iterator {
         auto e = oneapi::dpl::counting_iterator<IntType>(end);
 
         //checks in using
-        ::std::for_each(b, e, [&in, &value](IntType i) { in[i] = value; });
+        dpl::for_each(b, e, [&in, &value](IntType i) { in[i] = value; });
 
         auto res = dpl::all_of(in.begin(), in.begin() + begin, [&value](const T& a) {return a!=value;});
         EXPECT_TRUE(res, "wrong result with counting_iterator in vector's begin portion");
@@ -174,7 +174,7 @@ struct test_zip_iterator {
 
         //simple check for-loop.
         {
-        ::std::for_each(b, e, [](const ::std::tuple<T1&, T2&>& a) { ::std::get<0>(a) = 1, ::std::get<1>(a) = 1;});
+        dpl::for_each(b, e, [](const ::std::tuple<T1&, T2&>& a) { ::std::get<0>(a) = 1, ::std::get<1>(a) = 1;});
         auto res = dpl::all_of(b, e, [](const ::std::tuple<T1&, T2&>& a) {return ::std::get<0>(a) == 1 && ::std::get<1>(a) == 1;});
         EXPECT_TRUE(res, "wrong result sequence assignment to (1,1) with zip_iterator iterator");
         //all_of check for iterator which is constructed passing variadic arguments

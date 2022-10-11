@@ -39,7 +39,7 @@ int main() {
     dpl::fill(policy, buf_begin_discard_write, buf_begin_discard_write + n, 1);
 #if __SYCL_UNNAMED_LAMBDA__
     ::std::sort(policy, buf_begin, buf_end);
-    ::std::for_each(policy, buf_begin, buf_end, [](int& x) { x += 41; });
+    dpl::for_each(policy, buf_begin, buf_end, [](int& x) { x += 41; });
 
 #if !ONEDPL_FPGA_DEVICE
     sycl::buffer<float> out_buf_2{ sycl::range<1>(n) };
@@ -58,8 +58,8 @@ int main() {
 #endif // !ONEDPL_FPGA_DEVICE
 
 #else
-    // ::std::for_each(policy, buf_begin, buf_end, [](int& x) { x++; }); // It's not allowed. Policy with different name is needed
-    ::std::for_each(oneapi::dpl::execution::make_device_policy<class ForEach>(policy), buf_begin, buf_end, [](int& x) { x++; });
+    // dpl::for_each(policy, buf_begin, buf_end, [](int& x) { x++; }); // It's not allowed. Policy with different name is needed
+    dpl::for_each(oneapi::dpl::execution::make_device_policy<class ForEach>(policy), buf_begin, buf_end, [](int& x) { x++; });
     auto red_val = ::std::reduce(policy, buf_begin, buf_end, 1);
     EXPECT_TRUE(red_val == 2001, "wrong return value from reduce");
 #endif // __SYCL_UNNAMED_LAMBDA__

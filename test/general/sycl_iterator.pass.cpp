@@ -536,7 +536,7 @@ DEFINE_TEST(test_for_each)
         dpl::fill(host_keys.get() + (n / 3), host_keys.get() + (n / 2), value - 1);
         host_keys.update_data();
 
-        ::std::for_each(make_new_policy<new_kernel_name<Policy, 0>>(exec), first1 + (n / 3), first1 + (n / 2), Inc());
+        dpl::for_each(make_new_policy<new_kernel_name<Policy, 0>>(exec), first1 + (n / 3), first1 + (n / 2), Inc());
 #if _PSTL_SYCL_TEST_USM
         exec.queue().wait_and_throw();
 #endif
@@ -565,7 +565,7 @@ DEFINE_TEST(test_for_each_n)
         dpl::fill(host_keys.get(), host_keys.get() + n, value);
         host_keys.update_data();
 
-        ::std::for_each_n(make_new_policy<new_kernel_name<Policy, 0>>(exec), first1, n, Inc());
+        dpl::for_each_n(make_new_policy<new_kernel_name<Policy, 0>>(exec), first1, n, Inc());
 #if _PSTL_SYCL_TEST_USM
         exec.queue().wait_and_throw();
 #endif
@@ -840,7 +840,7 @@ DEFINE_TEST(test_adjacent_difference)
         auto __f = [](Iterator1ValueType& a, Iterator1ValueType& b) -> Iterator2ValueType { return a + b; };
 
         // init
-        ::std::for_each(host_keys.get(), host_keys.get() + n,
+        dpl::for_each(host_keys.get(), host_keys.get() + n,
                         [&fill_value](Iterator1ValueType& val) { val = (fill_value++ % 10) + 1; });
         dpl::fill(host_vals.get(), host_vals.get() + n, blank_value);
         update_data(host_keys, host_vals);
@@ -984,7 +984,7 @@ DEFINE_TEST(test_min_element)
 
         IteratorValueType fill_value = IteratorValueType{ static_cast<IteratorValueType>(::std::distance(first, last)) };
 
-        ::std::for_each(host_keys.get(), host_keys.get() + n,
+        dpl::for_each(host_keys.get(), host_keys.get() + n,
             [&fill_value](IteratorValueType& it) { it = fill_value-- % 10 + 1; });
 
         ::std::size_t min_dis = n;
@@ -1029,7 +1029,7 @@ DEFINE_TEST(test_adjacent_find)
         auto comp = ::std::equal_to<ValueType>{};
 
         ValueType fill_value{0};
-        ::std::for_each(host_keys.get(), host_keys.get() + n,
+        dpl::for_each(host_keys.get(), host_keys.get() + n,
                         [&fill_value](ValueType& value) { value = fill_value++ % 10; });
         host_keys.update_data();
 
@@ -1126,7 +1126,7 @@ DEFINE_TEST(test_max_element)
         using IteratorValueType = typename ::std::iterator_traits<Iterator>::value_type;
 
         IteratorValueType fill_value = IteratorValueType{0};
-        ::std::for_each(host_keys.get(), host_keys.get() + n,
+        dpl::for_each(host_keys.get(), host_keys.get() + n,
                         [&fill_value](IteratorValueType& it) { it = fill_value-- % 10 + 1; });
 
         ::std::size_t max_dis = n;
@@ -1170,7 +1170,7 @@ DEFINE_TEST(test_is_sorted_until)
         auto comp = ::std::less<ValueType>{};
 
         ValueType fill_value{0};
-        ::std::for_each(host_keys.get(), host_keys.get() + n,
+        dpl::for_each(host_keys.get(), host_keys.get() + n,
                         [&fill_value](ValueType& value) { value = ++fill_value; });
         host_keys.update_data();
 
@@ -1271,7 +1271,7 @@ DEFINE_TEST(test_minmax_element)
         using IteratorValueType = typename ::std::iterator_traits<Iterator>::value_type;
         auto fill_value = IteratorValueType{ 0 };
 
-        ::std::for_each(host_keys.get(), host_keys.get() + n, [&fill_value](IteratorValueType& it) { it = fill_value++ % 10 + 1; });
+        dpl::for_each(host_keys.get(), host_keys.get() + n, [&fill_value](IteratorValueType& it) { it = fill_value++ % 10 + 1; });
         ::std::size_t dis = n;
         if (dis > 1)
         {
@@ -1325,7 +1325,7 @@ DEFINE_TEST(test_is_sorted)
         auto comp = ::std::less<ValueType>{};
 
         ValueType fill_value{ 0 };
-        ::std::for_each(host_keys.get(), host_keys.get() + n,
+        dpl::for_each(host_keys.get(), host_keys.get() + n,
                         [&fill_value](ValueType& value) { value = ++fill_value; });
         host_keys.update_data();
 
@@ -1425,7 +1425,7 @@ DEFINE_TEST(test_count)
         using ReturnType = typename ::std::iterator_traits<Iterator>::difference_type;
 
         ValueType fill_value{0};
-        ::std::for_each(host_keys.get(), host_keys.get() + n, [&fill_value](ValueType& value) { value = fill_value++ % 10; });
+        dpl::for_each(host_keys.get(), host_keys.get() + n, [&fill_value](ValueType& value) { value = fill_value++ % 10; });
         host_keys.update_data();
 
         // check when arbitrary should be counted
@@ -1480,7 +1480,7 @@ DEFINE_TEST(test_count_if)
         using ReturnType = typename ::std::iterator_traits<Iterator>::difference_type;
 
         ValueType fill_value{0};
-        ::std::for_each(host_keys.get(), host_keys.get() + n, [&fill_value](ValueType& value) { value = fill_value++ % 10; });
+        dpl::for_each(host_keys.get(), host_keys.get() + n, [&fill_value](ValueType& value) { value = fill_value++ % 10; });
         host_keys.update_data();
 
         // check when arbitrary should be counted
@@ -1543,7 +1543,7 @@ DEFINE_TEST(test_is_partitioned)
         bool expected_bool_is_odd = false;
 
         ValueType fill_value{0};
-        ::std::for_each(host_keys.get(), host_keys.get() + n, [&fill_value](ValueType& value) { value = ++fill_value; });
+        dpl::for_each(host_keys.get(), host_keys.get() + n, [&fill_value](ValueType& value) { value = ++fill_value; });
         expected_bool_less_then = ::std::is_partitioned(host_keys.get(), host_keys.get() + n, less_than);
         expected_bool_is_odd = ::std::is_partitioned(host_keys.get(), host_keys.get() + n, is_odd);
         host_keys.update_data();
@@ -2315,7 +2315,7 @@ DEFINE_TEST(test_unique_copy)
 
         // init
         int index = 0;
-        ::std::for_each(host_keys.get(), host_keys.get() + n, [&index](Iterator1ValueType& value) { value = (index++ + 4) / 4; });
+        dpl::for_each(host_keys.get(), host_keys.get() + n, [&index](Iterator1ValueType& value) { value = (index++ + 4) / 4; });
         dpl::fill(host_vals.get(), host_vals.get() + n, Iterator1ValueType{ -1 });
         update_data(host_keys, host_vals);
 
@@ -2368,7 +2368,7 @@ DEFINE_TEST(test_unique)
 
         // init
         int index = 0;
-        ::std::for_each(host_keys.get(), host_keys.get() + n, [&index](IteratorValueType& value) { value = (index++ + 4) / 4; });
+        dpl::for_each(host_keys.get(), host_keys.get() + n, [&index](IteratorValueType& value) { value = (index++ + 4) / 4; });
         host_keys.update_data();
 
         // invoke
@@ -3091,10 +3091,10 @@ DEFINE_TEST(test_lexicographical_compare)
         // INIT
         {
             ValueType fill_value1{0};
-            ::std::for_each(host_keys.get(), host_keys.get() + n,
+            dpl::for_each(host_keys.get(), host_keys.get() + n,
                             [&fill_value1](ValueType& value) { value = fill_value1++ % 10; });
             ValueType fill_value2{0};
-            ::std::for_each(host_vals.get(), host_vals.get() + n,
+            dpl::for_each(host_vals.get(), host_vals.get() + n,
                             [&fill_value2](ValueType& value) { value = fill_value2++ % 10; });
             update_data(host_keys, host_vals);
         }
@@ -3302,8 +3302,8 @@ DEFINE_TEST(test_nth_element)
         // init
         auto value1 = T1(0);
         auto value2 = T2(0);
-        ::std::for_each(host_keys.get(), host_keys.get() + n, [&value1](T1& val) { val = (value1++ % 10) + 1; });
-        ::std::for_each(host_vals.get(), host_vals.get() + n, [&value2](T2& val) { val = (value2++ % 10) + 1; });
+        dpl::for_each(host_keys.get(), host_keys.get() + n, [&value1](T1& val) { val = (value1++ % 10) + 1; });
+        dpl::for_each(host_vals.get(), host_vals.get() + n, [&value2](T2& val) { val = (value2++ % 10) + 1; });
         update_data(host_keys, host_vals);
 
         auto middle1 = first1 + n / 2;
