@@ -73,7 +73,7 @@ void test_edges()
         else if (dpl::isinf(testcases[i].real()) && std::isfinite(testcases[i].imag()))
         {
             assert(dpl::isinf(r.real()));
-            assert(std::signbit(r.real()) == std::signbit(testcases[i].real() * std::cos(testcases[i].imag())));
+            assert(std::signbit(r.real()) == std::signbit(testcases[i].real() * dpl::cos(testcases[i].imag())));
             assert(dpl::isinf(r.imag()));
             assert(std::signbit(r.imag()) == std::signbit(dpl::sin(testcases[i].imag())));
         }
