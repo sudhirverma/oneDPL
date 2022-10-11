@@ -64,7 +64,7 @@ main()
     ::std::remove_copy_if(src.begin(), src.end(), expected, pred);
     EXPECT_EQ_N(expected, views::host_all(B).begin(), res2, "wrong effect from remove_copy_if with sycl ranges");
 
-    ::std::remove_copy(src.begin(), src.end(), expected, 0);
+    dpl::remove_copy(src.begin(), src.end(), expected, 0);
     EXPECT_EQ_N(expected, views::host_all(C).begin(), res3, "wrong effect from remove_copy with sycl ranges");
 #endif //_ENABLE_RANGES_TESTING
 
