@@ -74,7 +74,7 @@ test_body_for_loop_integral(Policy&& exec, Iterator first, Iterator /* last */, 
 
     ::std::experimental::for_loop(exec, Size(0), n, [&flip, first](Size idx) {
         auto iter = first;
-        ::std::advance(iter, idx);
+        dpl::advance(iter, idx);
         flip(*iter);
     });
 
@@ -83,7 +83,7 @@ test_body_for_loop_integral(Policy&& exec, Iterator first, Iterator /* last */, 
 
     ::std::experimental::for_loop_n(exec, Size(0), n, [&flip, first](Size idx) {
         auto iter = first;
-        ::std::advance(iter, idx);
+        dpl::advance(iter, idx);
         flip(*iter);
     });
 
@@ -110,7 +110,7 @@ test_body_for_loop_strided(Policy&& exec, Iterator first, Iterator last, Iterato
     ::std::experimental::for_loop_strided(exec, first, last, loop_stride, [&flip](Iterator iter) { flip(*iter); });
 
     typename ::std::make_signed<Size>::type idx = 0;
-    for (auto iter = expected_first; iter != expected_last; ::std::advance(iter, single_stride), ++idx)
+    for (auto iter = expected_first; iter != expected_last; dpl::advance(iter, single_stride), ++idx)
     {
         if (idx % loop_stride != 0)
             continue;
@@ -162,7 +162,7 @@ test_body_for_loop_strided_integral(Policy&& exec, Iterator first, Iterator /* l
 
     ::std::experimental::for_loop_strided(exec, Size(0), n, loop_stride, [&flip, first](Size idx) {
         auto iter = first;
-        ::std::advance(iter, idx);
+        dpl::advance(iter, idx);
         flip(*iter);
     });
 
@@ -203,7 +203,7 @@ test_body_for_loop_strided_n_integral(Policy&& exec, Iterator first, Iterator /*
     // need to care about which base iterator to use: simply use first for both cases.
     ::std::experimental::for_loop_n_strided(exec, S(0), S(num_iters), loop_stride, [&flip, first](S idx) {
         auto iter = first;
-        ::std::advance(iter, dpl::abs(idx));
+        dpl::advance(iter, dpl::abs(idx));
         flip(*iter);
     });
 
@@ -243,12 +243,12 @@ test_body_for_loop_strided_neg(Policy&& exec, Iterator first, Iterator /* last *
 
     // Test negative stride value with non-forward iterators on range (first - 1, first)
     auto new_first = first;
-    ::std::advance(new_first, ::std::max(Ssize(0), Ssize(n) - 1));
+    dpl::advance(new_first, ::std::max(Ssize(0), Ssize(n) - 1));
 
     auto new_last = first;
 
     auto new_expected_first = expected_first;
-    ::std::advance(new_expected_first, ::std::max(Ssize(0), Ssize(n) - 1));
+    dpl::advance(new_expected_first, ::std::max(Ssize(0), Ssize(n) - 1));
 
     auto new_expected_last = expected_first;
 

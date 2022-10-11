@@ -14,6 +14,7 @@
 //===----------------------------------------------------------------------===//
 
 #include "oneapi/dpl/execution"
+#include "oneapi/dpl/algorithm"
 #include "oneapi/dpl/pstl/experimental/algorithm"
 
 #include <type_traits>
@@ -106,7 +107,7 @@ test_body_induction_strided(Policy&& exec, Iterator first, Iterator last, Iterat
         // just use 'first' for this purpose. Meaning that the resulting sequence shrinks to n - 1 element.
         if (loop_stride < 0 && n > 0)
         {
-            ::std::advance(new_first, n - 1);
+            dpl::advance(new_first, n - 1);
             new_last = first;
         }
 
