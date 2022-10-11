@@ -2984,7 +2984,7 @@ DEFINE_TEST(test_find_end)
             host_vals.update_data();
 
             // Empty subsequence
-            auto res = ::std::find_end(make_new_policy<new_kernel_name<Policy, 0>>(exec), first1, last1, first2, first2);
+            auto res = dpl::find_end(make_new_policy<new_kernel_name<Policy, 0>>(exec), first1, last1, first2, first2);
 #if _PSTL_SYCL_TEST_USM
             exec.queue().wait_and_throw();
 #endif
@@ -3001,7 +3001,7 @@ DEFINE_TEST(test_find_end)
             update_data(host_keys, host_vals);
 
             // No subsequence
-            auto res = ::std::find_end(make_new_policy<new_kernel_name<Policy, 1>>(exec), first1, last1, first2, first2 + n / 2);
+            auto res = dpl::find_end(make_new_policy<new_kernel_name<Policy, 1>>(exec), first1, last1, first2, first2 + n / 2);
 #if _PSTL_SYCL_TEST_USM
             exec.queue().wait_and_throw();
 #endif
@@ -3011,7 +3011,7 @@ DEFINE_TEST(test_find_end)
             ::std::iota(host_keys.get(), host_keys.get() + n, T1(10));
             host_keys.update_data();
 
-            res = ::std::find_end(make_new_policy<new_kernel_name<Policy, 2>>(exec), first1, last1, first2, last2);
+            res = dpl::find_end(make_new_policy<new_kernel_name<Policy, 2>>(exec), first1, last1, first2, last2);
 #if _PSTL_SYCL_TEST_USM
             exec.queue().wait_and_throw();
 #endif
@@ -3032,7 +3032,7 @@ DEFINE_TEST(test_find_end)
                 ::std::iota(start, end, T1(20));
                 host_keys.update_data();
 
-                auto res = ::std::find_end(make_new_policy<new_kernel_name<Policy, 3>>(exec), first1, last1, first2,
+                auto res = dpl::find_end(make_new_policy<new_kernel_name<Policy, 3>>(exec), first1, last1, first2,
                                            first2 + n / 5);
 #if _PSTL_SYCL_TEST_USM
                 exec.queue().wait_and_throw();
@@ -3048,7 +3048,7 @@ DEFINE_TEST(test_find_end)
                 host_keys.update_data();
 
 
-                auto res = ::std::find_end(make_new_policy<new_kernel_name<Policy, 4>>(exec), first1, last1, first2,
+                auto res = dpl::find_end(make_new_policy<new_kernel_name<Policy, 4>>(exec), first1, last1, first2,
                                            first2 + n / 5);
 #if _PSTL_SYCL_TEST_USM
                 exec.queue().wait_and_throw();
@@ -3063,7 +3063,7 @@ DEFINE_TEST(test_find_end)
                 ::std::iota(start, end, T1(20));
                 host_keys.update_data();
 
-                auto res = ::std::find_end(make_new_policy<new_kernel_name<Policy, 5>>(exec), first1, last1, first2,
+                auto res = dpl::find_end(make_new_policy<new_kernel_name<Policy, 5>>(exec), first1, last1, first2,
                                            first2 + n / 5);
 #if _PSTL_SYCL_TEST_USM
                 exec.queue().wait_and_throw();
