@@ -2547,7 +2547,7 @@ DEFINE_TEST(test_is_heap_until)
         ::std::make_heap(host_keys.get(), host_keys.get());
         host_keys.update_data();
 
-        auto actual = ::std::is_heap_until(make_new_policy<new_kernel_name<Policy, 0>>(exec), first, last);
+        auto actual = dpl::is_heap_until(make_new_policy<new_kernel_name<Policy, 0>>(exec), first, last);
 #if _PSTL_SYCL_TEST_USM
         exec.queue().wait_and_throw();
 #endif
@@ -2561,7 +2561,7 @@ DEFINE_TEST(test_is_heap_until)
         ::std::make_heap(host_keys.get(), host_keys.get() + n / 2);
         host_keys.update_data();
 
-        actual = ::std::is_heap_until(make_new_policy<new_kernel_name<Policy, 2>>(exec), first, last);
+        actual = dpl::is_heap_until(make_new_policy<new_kernel_name<Policy, 2>>(exec), first, last);
 #if _PSTL_SYCL_TEST_USM
         exec.queue().wait_and_throw();
 #endif
@@ -2571,7 +2571,7 @@ DEFINE_TEST(test_is_heap_until)
         ::std::make_heap(host_keys.get(), host_keys.get() + n);
         host_keys.update_data();
 
-        actual = ::std::is_heap_until(make_new_policy<new_kernel_name<Policy, 3>>(exec), first, last);
+        actual = dpl::is_heap_until(make_new_policy<new_kernel_name<Policy, 3>>(exec), first, last);
 #if _PSTL_SYCL_TEST_USM
         exec.queue().wait_and_throw();
 #endif
