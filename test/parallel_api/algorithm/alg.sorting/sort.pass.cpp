@@ -106,7 +106,7 @@ class ParanoidKey
     ParanoidKey(ParanoidKey&& k) : value(k.value), index(k.index)
     {
         EXPECT_TRUE(k.isConstructed(), "source for move-construction is dead");
-// ::std::stable_sort() fails in move semantics on paranoid test before VS2015
+// dpl::stable_sort() fails in move semantics on paranoid test before VS2015
 #if !defined(_MSC_VER) || _MSC_VER >= 1900
         k.index = Empty;
 #endif // !defined(_MSC_VER) || _MSC_VER >= 1900
@@ -119,7 +119,7 @@ class ParanoidKey
         EXPECT_TRUE(isConstructed(), "destination for move-assignment is dead");
         value = k.value;
         index = k.index;
-// ::std::stable_sort() fails in move semantics on paranoid test before VS2015
+// dpl::stable_sort() fails in move semantics on paranoid test before VS2015
 #if !defined(_MSC_VER) || _MSC_VER >= 1900
         k.index = Empty;
 #endif // !defined(_MSC_VER) || _MSC_VER >= 1900
@@ -200,7 +200,7 @@ void
 sort_data(Params&& ...params)
 {
     if (Stable)
-        ::std::stable_sort(::std::forward<Params>(params)...);
+        dpl::stable_sort(::std::forward<Params>(params)...);
     else
         dpl::sort(::std::forward<Params>(params)...);
 }
@@ -387,7 +387,7 @@ struct test_non_const
         dpl::sort(::std::forward<Policy>(exec), iter, iter, TestUtils::non_const(::std::less<T>()));
 #endif // _PSTL_TEST_SORT
 #ifdef _PSTL_TEST_STABLE_SORT
-        ::std::stable_sort(::std::forward<Policy>(exec), iter, iter, TestUtils::non_const(::std::less<T>()));
+        dpl::stable_sort(::std::forward<Policy>(exec), iter, iter, TestUtils::non_const(::std::less<T>()));
 #endif // _PSTL_TEST_STABLE_SORT
     }
 };

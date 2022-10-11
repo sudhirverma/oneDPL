@@ -643,7 +643,7 @@ DEFINE_TEST(test_stable_sort)
         dpl::copy_n(host_keys.get(), n, host_vals.get());
         update_data(host_keys, host_vals);
 
-        ::std::stable_sort(make_new_policy<new_kernel_name<Policy, 0>>(exec), oneapi::dpl::make_zip_iterator(first1, first2),
+        dpl::stable_sort(make_new_policy<new_kernel_name<Policy, 0>>(exec), oneapi::dpl::make_zip_iterator(first1, first2),
                          oneapi::dpl::make_zip_iterator(last1, last2),
                          TuplePredicate<::std::greater<T>, 0>{::std::greater<T>{}});
 #if _PSTL_SYCL_TEST_USM

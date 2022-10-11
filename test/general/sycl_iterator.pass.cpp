@@ -2796,7 +2796,7 @@ DEFINE_TEST(test_stable_sort)
         ::std::iota(host_keys.get(), host_keys.get() + n, value);
         host_keys.update_data();
 
-        ::std::stable_sort(make_new_policy<new_kernel_name<Policy, 0>>(exec), first1, last1);
+        dpl::stable_sort(make_new_policy<new_kernel_name<Policy, 0>>(exec), first1, last1);
 #if _PSTL_SYCL_TEST_USM
         exec.queue().wait_and_throw();
 #endif
@@ -2817,7 +2817,7 @@ DEFINE_TEST(test_stable_sort)
             EXPECT_TRUE(dpl::is_sorted(host_first1, host_first1 + n), "wrong effect from stable_sort_1");
         }
 
-        ::std::stable_sort(make_new_policy<new_kernel_name<Policy, 1>>(exec), first1, last1, ::std::greater<T1>());
+        dpl::stable_sort(make_new_policy<new_kernel_name<Policy, 1>>(exec), first1, last1, ::std::greater<T1>());
 #if _PSTL_SYCL_TEST_USM
         exec.queue().wait_and_throw();
 #endif
