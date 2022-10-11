@@ -14,6 +14,7 @@
 //===----------------------------------------------------------------------===//
 
 #include <oneapi/dpl/execution>
+#include <oneapi/dpl/algorithm>
 
 #include "support/test_config.h"
 
@@ -40,7 +41,7 @@ main()
     auto z = zip_view(__nanorange::nano::views::all(data), __nanorange::nano::views::all(key));
 
     //check access
-    EXPECT_TRUE(::std::get<0>(z[2]) == 'g', "wrong effect with zip_view");
+    EXPECT_TRUE(dpl::get<0>(z[2]) == 'g', "wrong effect with zip_view");
 
     int64_t max_int32p2 = (size_t)::std::numeric_limits<int32_t>::max() + 2L;
 
@@ -60,11 +61,11 @@ main()
     size_t i = large_z.size() - 1;
 
     auto expected_key = key[i % max_n];
-    auto actual_key = ::std::get<1>(large_z[i]);
+    auto actual_key = dpl::get<1>(large_z[i]);
     EXPECT_EQ(expected_key, actual_key, "wrong effect with zip_view bracket operator");
 
     char expected_data = data[i % max_n];
-    char actual_data = ::std::get<0>(large_z[i]);
+    char actual_data = dpl::get<0>(large_z[i]);
     EXPECT_EQ(expected_data, actual_data, "wrong effect with zip_view bracket operator");
 
 #endif //_ENABLE_RANGES_TESTING

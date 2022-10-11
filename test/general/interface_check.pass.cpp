@@ -55,7 +55,7 @@ int main()
     auto e = oneapi::dpl::end(buf);
 #endif
     auto z = make_zip_iterator(counting_iterator<int>(), discard_iterator());
-    std::get<1>(z[0]) = oneapi::dpl::identity()(*counting_iterator<int>());
+    dpl::get<1>(z[0]) = oneapi::dpl::identity()(*counting_iterator<int>());
 
     return TestUtils::done();
 }

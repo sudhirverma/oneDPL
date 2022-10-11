@@ -146,7 +146,7 @@ struct test_counting_iterator {
 struct sort_fun{
     template<typename T1, typename T2>
     bool operator()(T1 a1, T2 a2) const {
-        return ::std::get<0>(a1) < ::std::get<0>(a2);
+        return dpl::get<0>(a1) < dpl::get<0>(a2);
     }
 };
 
@@ -174,11 +174,11 @@ struct test_zip_iterator {
 
         //simple check for-loop.
         {
-        dpl::for_each(b, e, [](const ::std::tuple<T1&, T2&>& a) { ::std::get<0>(a) = 1, ::std::get<1>(a) = 1;});
-        auto res = dpl::all_of(b, e, [](const ::std::tuple<T1&, T2&>& a) {return ::std::get<0>(a) == 1 && ::std::get<1>(a) == 1;});
+        dpl::for_each(b, e, [](const ::std::tuple<T1&, T2&>& a) { dpl::get<0>(a) = 1, dpl::get<1>(a) = 1;});
+        auto res = dpl::all_of(b, e, [](const ::std::tuple<T1&, T2&>& a) {return dpl::get<0>(a) == 1 && dpl::get<1>(a) == 1;});
         EXPECT_TRUE(res, "wrong result sequence assignment to (1,1) with zip_iterator iterator");
         //all_of check for iterator which is constructed passing variadic arguments
-        res = dpl::all_of(c, e, [](const ::std::tuple<T1&, T2&>& a) {return ::std::get<0>(a) == 1 && ::std::get<1>(a) == 1;});
+        res = dpl::all_of(c, e, [](const ::std::tuple<T1&, T2&>& a) {return dpl::get<0>(a) == 1 && dpl::get<1>(a) == 1;});
         EXPECT_TRUE(res, "wrong result of all_of algorithm with zip_iterator iterator which is constructed passing variadic arguments");
         }
 
@@ -188,10 +188,10 @@ struct test_zip_iterator {
         auto t = ::std::make_tuple(T1(3), T2(2));
         *b = t;
         t = *(b + 1);
-        EXPECT_TRUE(::std::get<0>(t) == 1 && ::std::get<1>(t) == 1, "wrong result of assignment from zip_iterator");
+        EXPECT_TRUE(dpl::get<0>(t) == 1 && dpl::get<1>(t) == 1, "wrong result of assignment from zip_iterator");
         swap(*b, *(b + 1));
-        EXPECT_TRUE(::std::get<0>(*b) == 1 && ::std::get<1>(*b) == 1, "wrong result swapping zip-iterator");
-        EXPECT_TRUE(::std::get<0>(*(b + 1)) == 3 && ::std::get<1>(*(b + 1)) == 2, "wrong result swapping zip-iterator");
+        EXPECT_TRUE(dpl::get<0>(*b) == 1 && dpl::get<1>(*b) == 1, "wrong result swapping zip-iterator");
+        EXPECT_TRUE(dpl::get<0>(*(b + 1)) == 3 && dpl::get<1>(*(b + 1)) == 2, "wrong result swapping zip-iterator");
         // Test leaves sequence un-sorted.
         }
 
@@ -209,8 +209,8 @@ struct test_zip_iterator {
         }
         test_explicit_move(b, b+1);
         auto iter_base = b.base();
-        EXPECT_TRUE(::std::get<0>(iter_base) == in1.begin(), "wrong result from base (get<0>)");
-        EXPECT_TRUE(::std::get<1>(iter_base) == in2.begin(), "wrong result from base (get<1>)");
+        EXPECT_TRUE(dpl::get<0>(iter_base) == in1.begin(), "wrong result from base (get<0>)");
+        EXPECT_TRUE(dpl::get<1>(iter_base) == in2.begin(), "wrong result from base (get<1>)");
 
         test_random_iterator(b);
     }

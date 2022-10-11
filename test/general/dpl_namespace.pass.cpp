@@ -44,7 +44,7 @@ int main()
     dpl::for_each(dpl::execution::make_device_policy<class ForEach>(dpl::execution::dpcpp_default),
 		zip_first, zip_first + n,
         [](std::tuple<T, T> x){
-            std::get<1>(x) = (2 * std::get<0>(x)) / n;
+            dpl::get<1>(x) = (2 * dpl::get<0>(x)) / n;
         });
     // val_buf = {0,1,2,...,n-1}
     dpl::transform(dpl::execution::make_device_policy<class Transform>(dpl::execution::dpcpp_default),

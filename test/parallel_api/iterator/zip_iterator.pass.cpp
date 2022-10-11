@@ -84,7 +84,7 @@ struct TupleNoOp
     }
 };
 
-using ::std::get;
+using dpl::get;
 template <typename Predicate, int KeyIndex>
 struct TuplePredicate
 {
@@ -706,7 +706,7 @@ DEFINE_TEST(test_lexicographical_compare)
 struct Assigner{
     template<typename T>
     bool operator()(T x) const {
-        using ::std::get;
+        using dpl::get;
         return get<1>(x) != 0;
     }
 };
