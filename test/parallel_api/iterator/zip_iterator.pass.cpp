@@ -114,7 +114,7 @@ DEFINE_TEST(test_for_each)
 
         auto value = T1(6);
         auto f = [](T1& val) { ++val; };
-        ::std::fill(host_keys.get(), host_keys.get() + n, value);
+        dpl::fill(host_keys.get(), host_keys.get() + n, value);
         host_keys.update_data();
 
         auto tuple_first1 = oneapi::dpl::make_zip_iterator(std::make_tuple(first1, first1));
@@ -146,7 +146,7 @@ DEFINE_TEST(test_for_each_structured_binding)
 
         auto value = T1(6);
         auto f = [](T1& val) { ++val; };
-        ::std::fill(host_keys.get(), host_keys.get() + n, value);
+        dpl::fill(host_keys.get(), host_keys.get() + n, value);
         host_keys.update_data();
 
         auto tuple_first1 = oneapi::dpl::make_zip_iterator(first1, first1);
@@ -181,7 +181,7 @@ DEFINE_TEST(test_transform_reduce_unary)
         typedef typename ::std::iterator_traits<Iterator1>::value_type T1;
 
         auto value = T1(1);
-        ::std::fill(host_keys.get(), host_keys.get() + n, value);
+        dpl::fill(host_keys.get(), host_keys.get() + n, value);
         host_keys.update_data();
 
         auto tuple_first1 = oneapi::dpl::make_zip_iterator(first1, first1);
@@ -208,7 +208,7 @@ DEFINE_TEST(test_transform_reduce_binary)
         typedef typename ::std::iterator_traits<Iterator1>::value_type T1;
 
         auto value = T1(1);
-        ::std::fill(host_keys.get(), host_keys.get() + n, value);
+        dpl::fill(host_keys.get(), host_keys.get() + n, value);
         host_keys.update_data();
 
         auto tuple_first1 = oneapi::dpl::make_zip_iterator(first1, first1);
@@ -435,7 +435,7 @@ DEFINE_TEST(test_find_if)
         EXPECT_TRUE(tuple_res3 == tuple_first1, "wrong effect from find_if_3 (tuple)");
 
         // current test doesn't work with zip iterators
-        auto tuple_res4 = ::std::find(make_new_policy<new_kernel_name<Policy, 3>>(exec), tuple_first1, tuple_last1,
+        auto tuple_res4 = dpl::find(make_new_policy<new_kernel_name<Policy, 3>>(exec), tuple_first1, tuple_last1,
                                     ::std::make_tuple(T1{-1}, T1{-1}));
 #if _PSTL_SYCL_TEST_USM
         exec.queue().wait_and_throw();
@@ -456,7 +456,7 @@ DEFINE_TEST(test_transform_inclusive_scan)
 
         typedef typename ::std::iterator_traits<Iterator1>::value_type T1;
 
-        ::std::fill(host_keys.get(), host_keys.get() + n, T1(1));
+        dpl::fill(host_keys.get(), host_keys.get() + n, T1(1));
         host_keys.update_data();
 
         auto tuple_first1 = oneapi::dpl::make_zip_iterator(first1, first1);
@@ -530,7 +530,7 @@ DEFINE_TEST(test_unique_copy)
         int index = 0;
         ::std::for_each(host_keys.get(), host_keys.get() + n,
                         [&index](Iterator1ValueType& value) { value = (index++ + 4) / 4; });
-        ::std::fill(host_vals.get(), host_vals.get() + n, Iterator1ValueType{-1});
+        dpl::fill(host_vals.get(), host_vals.get() + n, Iterator1ValueType{-1});
         update_data(host_keys, host_vals);
 
         const std::int64_t expected_size = (n - 1) / 4 + 1;
@@ -589,7 +589,7 @@ DEFINE_TEST(test_merge)
                             value = even;
                             even += 2;
                         });
-        ::std::fill(host_res.get(), host_res.get() + n, T3{ -1 });
+        dpl::fill(host_res.get(), host_res.get() + n, T3{ -1 });
         update_data(host_keys, host_vals, host_res);
 
         auto tuple_first1 = oneapi::dpl::make_zip_iterator(first1, first1);
@@ -727,8 +727,8 @@ DEFINE_TEST(test_counting_zip_transform)
 
         using ValueType = typename ::std::iterator_traits<Iterator2>::value_type;
 
-        ::std::fill(host_keys.get(), host_keys.get() + n, ValueType{0});
-        ::std::fill(host_vals.get(), host_vals.get() + n, ValueType{0});
+        dpl::fill(host_keys.get(), host_keys.get() + n, ValueType{0});
+        dpl::fill(host_vals.get(), host_vals.get() + n, ValueType{0});
         *(host_keys.get() + (n / 3)) = 10;
         *(host_keys.get() + (n / 3 * 2)) = 100;
         update_data(host_keys, host_vals);

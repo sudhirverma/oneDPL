@@ -36,7 +36,7 @@ int main() {
     const auto policy = TestUtils::default_dpcpp_policy;
     auto buf_begin_discard_write = oneapi::dpl::begin(buf, sycl::write_only, __dpl_sycl::__no_init{});
 
-    ::std::fill(policy, buf_begin_discard_write, buf_begin_discard_write + n, 1);
+    dpl::fill(policy, buf_begin_discard_write, buf_begin_discard_write + n, 1);
 #if __SYCL_UNNAMED_LAMBDA__
     ::std::sort(policy, buf_begin, buf_end);
     ::std::for_each(policy, buf_begin, buf_end, [](int& x) { x += 41; });
@@ -53,7 +53,7 @@ int main() {
     ::std::inclusive_scan(policy, buf_begin, buf_end, buf_out_begin);
     bool is_equal = dpl::equal(policy, buf_begin, buf_end, buf_out_begin);
     EXPECT_TRUE(!is_equal, "wrong return value from equal");
-    auto does_1_exist = ::std::find(policy, buf_begin, buf_end, 1);
+    auto does_1_exist = dpl::find(policy, buf_begin, buf_end, 1);
     EXPECT_TRUE(does_1_exist - buf_begin == 1000, "wrong return value from find");
 #endif // !ONEDPL_FPGA_DEVICE
 

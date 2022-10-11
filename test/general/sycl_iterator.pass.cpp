@@ -122,8 +122,8 @@ DEFINE_TEST(test_uninitialized_copy)
         using IteratorValueType = typename ::std::iterator_traits<Iterator1>::value_type;
         auto value = IteratorValueType(42);
 
-        ::std::fill(host_keys.get(), host_keys.get() + n, value);
-        ::std::fill(host_vals.get(), host_vals.get() + n, IteratorValueType{ -1 });
+        dpl::fill(host_keys.get(), host_keys.get() + n, value);
+        dpl::fill(host_vals.get(), host_vals.get() + n, IteratorValueType{ -1 });
         update_data(host_keys, host_vals);
 
         ::std::uninitialized_copy(make_new_policy<new_kernel_name<Policy, 0>>(exec), first1, last1, first2);
@@ -149,8 +149,8 @@ DEFINE_TEST(test_uninitialized_copy_n)
         using IteratorValueType = typename ::std::iterator_traits<Iterator1>::value_type;
         auto value = IteratorValueType(42);
 
-        ::std::fill_n(host_keys.get(), n, value);
-        ::std::fill_n(host_vals.get(), n, IteratorValueType{0});
+        dpl::fill_n(host_keys.get(), n, value);
+        dpl::fill_n(host_vals.get(), n, IteratorValueType{0});
         update_data(host_keys, host_vals);
 
         ::std::uninitialized_copy_n(make_new_policy<new_kernel_name<Policy, 0>>(exec), first1, n, first2);
@@ -175,8 +175,8 @@ DEFINE_TEST(test_uninitialized_move)
 
         using IteratorValueType = typename ::std::iterator_traits<Iterator1>::value_type;
         auto value = IteratorValueType(42);
-        ::std::fill_n(host_keys.get(), n, value);
-        ::std::fill_n(host_vals.get(), n, IteratorValueType{ -1 });
+        dpl::fill_n(host_keys.get(), n, value);
+        dpl::fill_n(host_vals.get(), n, IteratorValueType{ -1 });
         update_data(host_keys, host_vals);
 
         ::std::uninitialized_move(make_new_policy<new_kernel_name<Policy, 0>>(exec), first1, last1, first2);
@@ -202,8 +202,8 @@ DEFINE_TEST(test_uninitialized_move_n)
         using IteratorValueType = typename ::std::iterator_traits<Iterator1>::value_type;
         auto value = IteratorValueType(42);
 
-        ::std::fill_n(host_keys.get(), n, value);
-        ::std::fill_n(host_vals.get(), n, IteratorValueType{ -1 });
+        dpl::fill_n(host_keys.get(), n, value);
+        dpl::fill_n(host_vals.get(), n, IteratorValueType{ -1 });
         update_data(host_keys, host_vals);
 
         ::std::uninitialized_move_n(make_new_policy<new_kernel_name<Policy, 0>>(exec), first1, n, first2);
@@ -279,7 +279,7 @@ DEFINE_TEST(test_uninitialized_default_construct)
         auto value = T1{ 2 };
 
         T1 exp_value; // default-constructed value
-        ::std::fill(host_keys.get(), host_keys.get() + n, value);
+        dpl::fill(host_keys.get(), host_keys.get() + n, value);
         host_keys.update_data();
 
         ::std::uninitialized_default_construct(make_new_policy<new_kernel_name<Policy, 0>>(exec),
@@ -307,7 +307,7 @@ DEFINE_TEST(test_uninitialized_default_construct_n)
         auto value = T1{ 2 };
 
         T1 exp_value; // default-constructed value
-        ::std::fill(host_keys.get(), host_keys.get() + n, value);
+        dpl::fill(host_keys.get(), host_keys.get() + n, value);
         host_keys.update_data();
 
         ::std::uninitialized_default_construct_n(make_new_policy<new_kernel_name<Policy, 0>>(exec), first1, n);
@@ -332,7 +332,7 @@ DEFINE_TEST(test_uninitialized_value_construct)
 
         typedef typename ::std::iterator_traits<Iterator1>::value_type T1;
         auto value = T1(2);
-        ::std::fill(host_keys.get(), host_keys.get() + n, value);
+        dpl::fill(host_keys.get(), host_keys.get() + n, value);
         host_keys.update_data();
 
         ::std::uninitialized_value_construct(make_new_policy<new_kernel_name<Policy, 0>>(exec),
@@ -359,7 +359,7 @@ DEFINE_TEST(test_uninitialized_value_construct_n)
         typedef typename ::std::iterator_traits<Iterator1>::value_type T1;
         auto value = T1(2);
 
-        ::std::fill(host_keys.get(), host_keys.get() + n, value);
+        dpl::fill(host_keys.get(), host_keys.get() + n, value);
         host_keys.update_data();
 
         ::std::uninitialized_value_construct_n(make_new_policy<new_kernel_name<Policy, 0>>(exec), first1, n);
@@ -384,7 +384,7 @@ DEFINE_TEST(test_destroy)
 
         typedef typename ::std::iterator_traits<Iterator1>::value_type T1;
         auto value = T1{ 2 };
-        ::std::fill(host_keys.get(), host_keys.get() + n, value);
+        dpl::fill(host_keys.get(), host_keys.get() + n, value);
         host_keys.update_data();
 
         ::std::destroy(make_new_policy<policy_name_wrapper<new_kernel_name<Policy, 0>, T1>>(exec), first1 + (n / 3),
@@ -413,7 +413,7 @@ DEFINE_TEST(test_destroy_n)
         typedef typename ::std::iterator_traits<Iterator1>::value_type T1;
         auto value = T1{ 2 };
 
-        ::std::fill(host_keys.get(), host_keys.get() + n, value);
+        dpl::fill(host_keys.get(), host_keys.get() + n, value);
         host_keys.update_data();
 
         ::std::destroy_n(make_new_policy<policy_name_wrapper<new_kernel_name<Policy, 0>, T1>>(exec), first1, n);
@@ -441,7 +441,7 @@ DEFINE_TEST(test_fill)
         typedef typename ::std::iterator_traits<Iterator1>::value_type T1;
         auto value = T1(2);
 
-        ::std::fill(make_new_policy<new_kernel_name<Policy, 0>>(exec), first1 + (n / 3), first1 + (n / 2), value);
+        dpl::fill(make_new_policy<new_kernel_name<Policy, 0>>(exec), first1 + (n / 3), first1 + (n / 2), value);
 #if _PSTL_SYCL_TEST_USM
         exec.queue().wait_and_throw();
 #endif
@@ -463,7 +463,7 @@ DEFINE_TEST(test_fill_n)
         typedef typename ::std::iterator_traits<Iterator1>::value_type T1;
         auto value = T1(2);
 
-        ::std::fill_n(make_new_policy<new_kernel_name<Policy, 0>>(exec), first1, n, value + 1);
+        dpl::fill_n(make_new_policy<new_kernel_name<Policy, 0>>(exec), first1, n, value + 1);
 #if _PSTL_SYCL_TEST_USM
         exec.queue().wait_and_throw();
 #endif
@@ -532,8 +532,8 @@ DEFINE_TEST(test_for_each)
         typedef typename ::std::iterator_traits<Iterator1>::value_type T1;
         auto value = T1(6);
 
-        ::std::fill(host_keys.get(), host_keys.get() + n, value);
-        ::std::fill(host_keys.get() + (n / 3), host_keys.get() + (n / 2), value - 1);
+        dpl::fill(host_keys.get(), host_keys.get() + n, value);
+        dpl::fill(host_keys.get() + (n / 3), host_keys.get() + (n / 2), value - 1);
         host_keys.update_data();
 
         ::std::for_each(make_new_policy<new_kernel_name<Policy, 0>>(exec), first1 + (n / 3), first1 + (n / 2), Inc());
@@ -562,7 +562,7 @@ DEFINE_TEST(test_for_each_n)
         typedef typename ::std::iterator_traits<Iterator1>::value_type T1;
         auto value = T1(6);
 
-        ::std::fill(host_keys.get(), host_keys.get() + n, value);
+        dpl::fill(host_keys.get(), host_keys.get() + n, value);
         host_keys.update_data();
 
         ::std::for_each_n(make_new_policy<new_kernel_name<Policy, 0>>(exec), first1, n, Inc());
@@ -589,8 +589,8 @@ DEFINE_TEST(test_transform_unary)
         typedef typename ::std::iterator_traits<Iterator1>::value_type T1;
         auto value = T1(2);
 
-        ::std::fill(host_keys.get(), host_keys.get() + n, value);
-        ::std::fill(host_vals.get(), host_vals.get() + n, value + 1);
+        dpl::fill(host_keys.get(), host_keys.get() + n, value);
+        dpl::fill(host_vals.get(), host_vals.get() + n, value + 1);
         update_data(host_keys, host_vals);
 
         ::std::transform(make_new_policy<new_kernel_name<Policy, 0>>(exec), first1 + n / 2, last1, first2 + n / 2, Flip(7));
@@ -620,7 +620,7 @@ DEFINE_TEST(test_transform_binary)
         typedef typename ::std::iterator_traits<Iterator1>::value_type T1;
         auto value = T1(3);
 
-        ::std::fill(host_keys.get(), host_keys.get() + n, value);
+        dpl::fill(host_keys.get(), host_keys.get() + n, value);
         host_keys.update_data();
 
         ::std::transform(make_new_policy<new_kernel_name<Policy, 0>>(exec), first1, last1, first1, first2, Plus());
@@ -646,7 +646,7 @@ DEFINE_TEST(test_replace)
         typedef typename ::std::iterator_traits<Iterator1>::value_type T1;
         auto value = T1(5);
 
-        ::std::fill(host_keys.get(), host_keys.get() + n, value);
+        dpl::fill(host_keys.get(), host_keys.get() + n, value);
         host_keys.update_data();
 
         ::std::replace(make_new_policy<new_kernel_name<Policy, 0>>(exec), first1, last1, value, T1(value + 1));
@@ -671,7 +671,7 @@ DEFINE_TEST(test_replace_if)
 
         typedef typename ::std::iterator_traits<Iterator1>::value_type T1;
         auto value = T1(6);
-        ::std::fill(host_keys.get(), host_keys.get() + n, value);
+        dpl::fill(host_keys.get(), host_keys.get() + n, value);
         host_keys.update_data();
 
         ::std::replace_if(make_new_policy<new_kernel_name<Policy, 0>>(exec), first1, last1,
@@ -698,7 +698,7 @@ DEFINE_TEST(test_replace_copy)
 
         typedef typename ::std::iterator_traits<Iterator1>::value_type T1;
         auto value = T1(5);
-        ::std::fill(host_keys.get(), host_keys.get() + n, value);
+        dpl::fill(host_keys.get(), host_keys.get() + n, value);
         host_keys.update_data();
 
         ::std::replace_copy(make_new_policy<new_kernel_name<Policy, 0>>(exec), first1, last1, first2, value, T1(value + 1));
@@ -724,7 +724,7 @@ DEFINE_TEST(test_replace_copy_if)
 
         typedef typename ::std::iterator_traits<Iterator1>::value_type T1;
         auto value = T1(6);
-        ::std::fill(host_keys.get(), host_keys.get() + n, value);
+        dpl::fill(host_keys.get(), host_keys.get() + n, value);
         host_keys.update_data();
 
         ::std::replace_copy_if(make_new_policy<new_kernel_name<Policy, 0>>(exec), first1, last1, first2,
@@ -751,8 +751,8 @@ DEFINE_TEST(test_copy)
 
         using IteratorValueType = typename ::std::iterator_traits<Iterator1>::value_type;
         auto value = IteratorValueType(42);
-        ::std::fill(host_keys.get(), host_keys.get() + n, value);
-        ::std::fill(host_vals.get(), host_vals.get() + n, IteratorValueType{0});
+        dpl::fill(host_keys.get(), host_keys.get() + n, value);
+        dpl::fill(host_vals.get(), host_vals.get() + n, IteratorValueType{0});
         update_data(host_keys, host_vals);
 
         dpl::copy(make_new_policy<new_kernel_name<Policy, 0>>(exec), first1, last1, first2);
@@ -779,8 +779,8 @@ DEFINE_TEST(test_copy_n)
         using IteratorValueType = typename ::std::iterator_traits<Iterator1>::value_type;
         auto value = IteratorValueType(42);
 
-        ::std::fill(host_keys.get(), host_keys.get() + n, value);
-        ::std::fill(host_vals.get(), host_vals.get() + n, IteratorValueType{ 0 });
+        dpl::fill(host_keys.get(), host_keys.get() + n, value);
+        dpl::fill(host_vals.get(), host_vals.get() + n, IteratorValueType{ 0 });
         update_data(host_keys, host_vals);
 
         dpl::copy_n(make_new_policy<new_kernel_name<Policy, 0>>(exec), first1, n, first2);
@@ -806,8 +806,8 @@ DEFINE_TEST(test_move)
         using IteratorValueType = typename ::std::iterator_traits<Iterator1>::value_type;
         auto value = IteratorValueType(42);
 
-        ::std::fill(host_keys.get(), host_keys.get() + n, value);
-        ::std::fill(host_vals.get(), host_vals.get() + n, IteratorValueType{ 0 });
+        dpl::fill(host_keys.get(), host_keys.get() + n, value);
+        dpl::fill(host_vals.get(), host_vals.get() + n, IteratorValueType{ 0 });
         update_data(host_keys, host_vals);
 
         ::std::move(make_new_policy<new_kernel_name<Policy, 0>>(exec), first1, last1, first2);
@@ -842,7 +842,7 @@ DEFINE_TEST(test_adjacent_difference)
         // init
         ::std::for_each(host_keys.get(), host_keys.get() + n,
                         [&fill_value](Iterator1ValueType& val) { val = (fill_value++ % 10) + 1; });
-        ::std::fill(host_vals.get(), host_vals.get() + n, blank_value);
+        dpl::fill(host_vals.get(), host_vals.get() + n, blank_value);
         update_data(host_keys, host_vals);
 
         // test with custom functor
@@ -865,7 +865,7 @@ DEFINE_TEST(test_adjacent_difference)
         }
 
         // test with default functor
-        ::std::fill(host_vals.get(), host_vals.get() + n, blank_value);
+        dpl::fill(host_vals.get(), host_vals.get() + n, blank_value);
         host_vals.update_data();
 
         ::std::adjacent_difference(make_new_policy<new_kernel_name<Policy, 1>>(exec), first1, last1, first2);
@@ -899,8 +899,8 @@ DEFINE_TEST(test_reduce)
         typedef typename ::std::iterator_traits<Iterator1>::value_type T1;
         auto value = T1(2);
 
-        ::std::fill(host_keys.get(), host_keys.get() + n, T1(0));
-        ::std::fill(host_keys.get() + (n / 3), host_keys.get() + (n / 2), value);
+        dpl::fill(host_keys.get(), host_keys.get() + n, T1(0));
+        dpl::fill(host_keys.get() + (n / 3), host_keys.get() + (n / 2), value);
         host_keys.update_data();
 
         // without initial value
@@ -933,7 +933,7 @@ DEFINE_TEST(test_transform_reduce_unary)
         typedef typename ::std::iterator_traits<Iterator1>::value_type T1;
         auto value = T1(1);
 
-        ::std::fill(host_keys.get(), host_keys.get() + n, value);
+        dpl::fill(host_keys.get(), host_keys.get() + n, value);
         host_keys.update_data();
 
         auto result = ::std::transform_reduce(make_new_policy<new_kernel_name<Policy, 0>>(exec), first1, last1, T1(42),
@@ -958,7 +958,7 @@ DEFINE_TEST(test_transform_reduce_binary)
         typedef typename ::std::iterator_traits<Iterator1>::value_type T1;
         auto value = T1(1);
 
-        ::std::fill(host_keys.get(), host_keys.get() + n, value);
+        dpl::fill(host_keys.get(), host_keys.get() + n, value);
         host_keys.update_data();
 
         auto result =
@@ -1451,7 +1451,7 @@ DEFINE_TEST(test_count)
 #    endif
 
         // check when all should be counted
-        ::std::fill(host_keys.get(), host_keys.get() + n, ValueType{7});
+        dpl::fill(host_keys.get(), host_keys.get() + n, ValueType{7});
         host_keys.update_data();
 
         expected = n;
@@ -1666,9 +1666,9 @@ DEFINE_TEST(test_equal)
         auto new_start = n / 3;
         auto new_end = n / 2;
 
-        ::std::fill(host_keys.get(), host_keys.get() + n, value);
-        ::std::fill(host_vals.get(), host_vals.get() + n, T{0});
-        ::std::fill(host_vals.get() + new_start, host_vals.get() + new_end, value);
+        dpl::fill(host_keys.get(), host_keys.get() + n, value);
+        dpl::fill(host_vals.get(), host_vals.get() + n, T{0});
+        dpl::fill(host_vals.get() + new_start, host_vals.get() + new_end, value);
         update_data(host_keys, host_vals);
 
         auto expected  = new_end - new_start > 0;
@@ -1711,7 +1711,7 @@ DEFINE_TEST(test_find_if)
             exec.queue().wait_and_throw();
 #endif
             EXPECT_TRUE(res0 == first1, "wrong effect from find_if_0");
-            res0 = ::std::find(make_new_policy<new_kernel_name<Policy, 1>>(exec), first1, first1, T1(1));
+            res0 = dpl::find(make_new_policy<new_kernel_name<Policy, 1>>(exec), first1, first1, T1(1));
 #if _PSTL_SYCL_TEST_USM
             exec.queue().wait_and_throw();
 #endif
@@ -1740,7 +1740,7 @@ DEFINE_TEST(test_find_if)
         EXPECT_TRUE(res3 == first1, "wrong effect from find_if_3");
 
         //find
-        auto res4 = ::std::find(make_new_policy<new_kernel_name<Policy, 5>>(exec), first1, last1, T1(-1));
+        auto res4 = dpl::find(make_new_policy<new_kernel_name<Policy, 5>>(exec), first1, last1, T1(-1));
 #if _PSTL_SYCL_TEST_USM
         exec.queue().wait_and_throw();
 #endif
@@ -1762,7 +1762,7 @@ DEFINE_TEST(test_find_first_of)
         typedef typename ::std::iterator_traits<Iterator1>::value_type T1;
 
         // Reset values after previous execution
-        ::std::fill(host_keys.get(), host_keys.get() + n, T1(0));
+        dpl::fill(host_keys.get(), host_keys.get() + n, T1(0));
         host_keys.update_data();
 
         if (n < 2)
@@ -1909,7 +1909,7 @@ DEFINE_TEST(test_search_n)
         {
             auto start = (n > 3) ? (n / 3 * 2) : (n - 1);
 
-            ::std::fill(host_keys.get() + start, host_keys.get() + n, T(11));
+            dpl::fill(host_keys.get() + start, host_keys.get() + n, T(11));
             host_keys.update_data();
 
             auto res = ::std::search_n(make_new_policy<new_kernel_name<Policy, 0>>(exec), first, last, n - start, T(11));
@@ -1923,7 +1923,7 @@ DEFINE_TEST(test_search_n)
             auto start = (n > 3) ? (n / 3) : (n - 1);
             auto end = (n > 3) ? (n / 3 * 2) : n;
 
-            ::std::fill(host_keys.get() + start, host_keys.get() + end, T(22));
+            dpl::fill(host_keys.get() + start, host_keys.get() + end, T(22));
             host_keys.update_data();
 
             auto res = ::std::search_n(make_new_policy<new_kernel_name<Policy, 1>>(exec), first, last, end - start, T(22));
@@ -1944,7 +1944,7 @@ DEFINE_TEST(test_search_n)
         {
             auto end = n / 3;
 
-            ::std::fill(host_keys.get(), host_keys.get() + end, T(33));
+            dpl::fill(host_keys.get(), host_keys.get() + end, T(33));
             host_keys.update_data();
 
             auto res = ::std::search_n(make_new_policy<new_kernel_name<Policy, 3>>(exec), first, last, end, T(33));
@@ -1955,7 +1955,7 @@ DEFINE_TEST(test_search_n)
         }
         // Search for sequence that covers the whole range
         {
-            ::std::fill(host_keys.get(), host_keys.get() + n, T(44));
+            dpl::fill(host_keys.get(), host_keys.get() + n, T(44));
             host_keys.update_data();
 
             auto res = ::std::search_n(make_new_policy<new_kernel_name<Policy, 4>>(exec), first, last, n, T(44));
@@ -1997,8 +1997,8 @@ DEFINE_TEST(test_search_n)
             auto start2 = (2 * n) / 3;
             auto end2 = (5 * n) / 6;
 
-            ::std::fill(host_keys.get() + start1, host_keys.get() + end1, T(66));
-            ::std::fill(host_keys.get() + start2, host_keys.get() + end2, T(66));
+            dpl::fill(host_keys.get() + start1, host_keys.get() + end1, T(66));
+            dpl::fill(host_keys.get() + start2, host_keys.get() + end2, T(66));
             host_keys.update_data();
 
             auto res = ::std::search_n(make_new_policy<new_kernel_name<Policy, 8>>(exec), first, last,
@@ -2014,7 +2014,7 @@ DEFINE_TEST(test_search_n)
             auto seq_len = 3;
 
             // Should fail when searching for sequence which is placed before our first iterator.
-            ::std::fill(host_keys.get(), host_keys.get() + seq_len, T(77));
+            dpl::fill(host_keys.get(), host_keys.get() + seq_len, T(77));
             host_keys.update_data();
 
             auto res = ::std::search_n(make_new_policy<new_kernel_name<Policy, 9>>(exec), first + 1, last, seq_len, T(77));
@@ -2085,7 +2085,7 @@ DEFINE_TEST(test_transform_inclusive_scan)
         typedef typename ::std::iterator_traits<Iterator1>::value_type T1;
         auto value = T1(333);
 
-        ::std::fill(host_keys.get(), host_keys.get() + n, T1(1));
+        dpl::fill(host_keys.get(), host_keys.get() + n, T1(1));
         host_keys.update_data();
 
         auto res1 = ::std::transform_inclusive_scan(
@@ -2144,7 +2144,7 @@ DEFINE_TEST(test_transform_exclusive_scan)
 
         typedef typename ::std::iterator_traits<Iterator1>::value_type T1;
 
-        ::std::fill(host_keys.get(), host_keys.get() + n, T1(1));
+        dpl::fill(host_keys.get(), host_keys.get() + n, T1(1));
         host_keys.update_data();
 
         auto res1 =
@@ -2316,7 +2316,7 @@ DEFINE_TEST(test_unique_copy)
         // init
         int index = 0;
         ::std::for_each(host_keys.get(), host_keys.get() + n, [&index](Iterator1ValueType& value) { value = (index++ + 4) / 4; });
-        ::std::fill(host_vals.get(), host_vals.get() + n, Iterator1ValueType{ -1 });
+        dpl::fill(host_vals.get(), host_vals.get() + n, Iterator1ValueType{ -1 });
         update_data(host_keys, host_vals);
 
         // invoke
@@ -2425,8 +2425,8 @@ DEFINE_TEST(test_partition_copy)
 
         // init
         ::std::iota(host_keys.get(), host_keys.get() + n, Iterator1ValueType{0});
-        ::std::fill(host_vals.get(), host_vals.get() + n, Iterator2ValueType{-1});
-        ::std::fill(host_res.get(),   host_res.get() + n, Iterator3ValueType{-2});
+        dpl::fill(host_vals.get(), host_vals.get() + n, Iterator2ValueType{-1});
+        dpl::fill(host_res.get(),   host_res.get() + n, Iterator3ValueType{-2});
         update_data(host_keys, host_vals, host_res);
 
         // invoke
@@ -2975,7 +2975,7 @@ DEFINE_TEST(test_find_end)
 
         // Reset after previous run
         {
-            ::std::fill(host_keys.get(), host_keys.get() + n, T1(0));
+            dpl::fill(host_keys.get(), host_keys.get() + n, T1(0));
         }
 
         if (n <= 2)

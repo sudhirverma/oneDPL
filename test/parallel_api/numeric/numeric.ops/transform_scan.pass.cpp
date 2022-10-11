@@ -37,7 +37,7 @@ void
 check_and_reset(Iterator expected_first, Iterator out_first, Size n, T trash)
 {
     EXPECT_EQ_N(expected_first, out_first, n, "wrong result from transform_..._scan");
-    ::std::fill_n(out_first, n, trash);
+    dpl::fill_n(out_first, n, trash);
 }
 
 template <typename Type>
@@ -56,7 +56,7 @@ struct test_transform_exclusive_scan
         auto orr2 = transform_exclusive_scan(exec, first, last, out_first, init, binary_op, unary_op);
         EXPECT_TRUE(out_last == orr2, "transform_exclusive_scan returned wrong iterator");
         EXPECT_EQ_N(expected_first, out_first, n, "wrong result from transform_exclusive_scan");
-        ::std::fill_n(out_first, n, trash);
+        dpl::fill_n(out_first, n, trash);
     }
 
     template <typename Policy, typename InputIterator, typename OutputIterator, typename Size, typename UnaryOp,
@@ -85,7 +85,7 @@ struct test_transform_inclusive_scan_init
         auto orr2 = transform_inclusive_scan(exec, first, last, out_first, binary_op, unary_op, init);
         EXPECT_TRUE(out_last == orr2, "transform_inclusive_scan returned wrong iterator");
         EXPECT_EQ_N(expected_first, out_first, n, "wrong result from transform_inclusive_scan");
-        ::std::fill_n(out_first, n, trash);
+        dpl::fill_n(out_first, n, trash);
     }
 
     template <typename Policy, typename InputIterator, typename OutputIterator, typename Size, typename UnaryOp,
@@ -116,7 +116,7 @@ struct test_transform_inclusive_scan
             auto orr2 = transform_inclusive_scan(exec, first, last, out_first, binary_op, unary_op);
             EXPECT_TRUE(out_last == orr2, "transform_inclusive_scan returned wrong iterator");
             EXPECT_EQ_N(expected_first, out_first, n, "wrong result from transform_inclusive_scan");
-            ::std::fill_n(out_first, n, trash);
+            dpl::fill_n(out_first, n, trash);
         }
     }
 

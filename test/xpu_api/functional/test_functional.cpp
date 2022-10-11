@@ -54,7 +54,7 @@ int main() {
         std::vector<T> result(8);
 
         data[0] = 1; data[1] = 0; data[2] = 0; data[3] = 1; data[4] = 0; data[5] = 1; data[6] = 0; data[7] = 1;
-        std::fill( oneapi::dpl::execution::par, result.begin(), result.end(), T(0) );
+        dpl::fill( oneapi::dpl::execution::par, result.begin(), result.end(), T(0) );
 
         auto t = dpl::copy_if( oneapi::dpl::execution::par, data.begin(), data.end(), result.begin(), oneapi::dpl::identity() );
 
@@ -67,7 +67,7 @@ int main() {
         std::vector<T> result(8);
 
         data[0] = 3; data[1] = -1; data[2] = -4; data[3] = 1; data[4] = -5; data[5] = -9; data[6] = 2; data[7] = 6;
-        std::fill( oneapi::dpl::execution::par, result.begin(), result.end(), T(0) );
+        dpl::fill( oneapi::dpl::execution::par, result.begin(), result.end(), T(0) );
 
         std::exclusive_scan( oneapi::dpl::execution::par, data.begin(), data.begin() + 8, result.begin(), T(0) , oneapi::dpl::minimum<T>() );
 
@@ -87,7 +87,7 @@ int main() {
         std::vector<T> result(8);
 
         data[0] = -3; data[1] = 1; data[2] = 4; data[3] = -1; data[4] = 5; data[5] = 9; data[6] = -2; data[7] = 6;
-        std::fill( oneapi::dpl::execution::par, result.begin(), result.end(), T(0) );
+        dpl::fill( oneapi::dpl::execution::par, result.begin(), result.end(), T(0) );
 
         std::exclusive_scan( oneapi::dpl::execution::par, data.begin(), data.begin() + 8, result.begin(), T(0) , oneapi::dpl::maximum<T>() );
 

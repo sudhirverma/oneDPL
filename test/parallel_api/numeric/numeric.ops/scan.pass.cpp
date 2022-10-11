@@ -17,6 +17,7 @@
 
 #include _PSTL_TEST_HEADER(execution)
 #include _PSTL_TEST_HEADER(numeric)
+#include _PSTL_TEST_HEADER(algorithm)
 
 #include "support/utils.h"
 #include "support/scan_serial_impl.h"
@@ -47,7 +48,7 @@ struct test_inclusive_scan_with_plus
         auto orr = inclusive_scan(exec, in_first, in_last, out_first);
         EXPECT_TRUE(out_last == orr, "inclusive_scan returned wrong iterator");
         EXPECT_EQ_N(expected_first, out_first, n, "wrong result from inclusive_scan");
-        ::std::fill_n(out_first, n, trash);
+        dpl::fill_n(out_first, n, trash);
     }
 };
 
@@ -65,7 +66,7 @@ struct test_exclusive_scan_with_plus
         auto orr = exclusive_scan(exec, in_first, in_last, out_first, init);
         EXPECT_TRUE(out_last == orr, "exclusive_scan returned wrong iterator");
         EXPECT_EQ_N(expected_first, out_first, n, "wrong result from exclusive_scan");
-        ::std::fill_n(out_first, n, trash);
+        dpl::fill_n(out_first, n, trash);
     }
 };
 
@@ -135,7 +136,7 @@ struct test_inclusive_scan_with_binary_op
 
         EXPECT_TRUE(out_last == orr, "inclusive_scan with binary operator returned wrong iterator");
         EXPECT_EQ_N(expected_first, out_first, n, "wrong result from inclusive_scan with binary operator");
-        ::std::fill_n(out_first, n, trash);
+        dpl::fill_n(out_first, n, trash);
     }
 
     template <typename Policy, typename Iterator1, typename Iterator2, typename Iterator3, typename Size, typename T,
@@ -151,7 +152,7 @@ struct test_inclusive_scan_with_binary_op
 
         EXPECT_TRUE(out_last == orr, "inclusive_scan with binary operator without init returned wrong iterator");
         EXPECT_EQ_N(expected_first, out_first, n, "wrong result from inclusive_scan with binary operator without init");
-        ::std::fill_n(out_first, n, trash);
+        dpl::fill_n(out_first, n, trash);
     }
 
     template <typename Policy, typename Iterator1, typename Iterator2, typename Iterator3, typename Size, typename T,
@@ -188,7 +189,7 @@ struct test_exclusive_scan_with_binary_op
 
         EXPECT_TRUE(out_last == orr, "exclusive_scan with binary operator returned wrong iterator");
         EXPECT_EQ_N(expected_first, out_first, n, "wrong result from exclusive_scan with binary operator");
-        ::std::fill_n(out_first, n, trash);
+        dpl::fill_n(out_first, n, trash);
     }
 
     template <typename Policy, typename Iterator1, typename Iterator2, typename Iterator3, typename Size, typename T,

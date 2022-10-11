@@ -62,8 +62,8 @@ struct run_copy_if
                Predicate pred, T trash)
     {
         // Cleaning
-        ::std::fill_n(expected_first, n, trash);
-        ::std::fill_n(out_first, n, trash);
+        dpl::fill_n(expected_first, n, trash);
+        dpl::fill_n(out_first, n, trash);
 
         // Run copy_if
         auto i = copy_if(first, last, expected_first, pred);
@@ -118,8 +118,8 @@ template <typename InputIterator, typename OutputIterator, typename OutputIterat
                Predicate pred, T trash)
     {
         // Cleaning
-        ::std::fill_n(expected_first, n, trash);
-        ::std::fill_n(out_first, n, trash);
+        dpl::fill_n(expected_first, n, trash);
+        dpl::fill_n(out_first, n, trash);
 
         // Run remove_copy_if
         auto i = remove_copy_if(first, last, expected_first, [=](const T& x) { return !pred(x); });

@@ -264,7 +264,7 @@ struct test_transform_iterator {
         ::std::forward_list<int> f_list{1, 2, 3, 4, 5, 6};
         auto list_it1 = oneapi::dpl::make_transform_iterator(f_list.begin(), ref_functor);
         auto list_it2 = oneapi::dpl::make_transform_iterator(f_list.end(), ref_functor);
-        ::std::fill(list_it1, list_it2, 7);
+        dpl::fill(list_it1, list_it2, 7);
         EXPECT_TRUE(dpl::all_of(f_list.begin(), f_list.end(), [](int x){ return x == 7; }), 
             "wrong result from fill with forward_iterator wrapped with transform_iterator");
 

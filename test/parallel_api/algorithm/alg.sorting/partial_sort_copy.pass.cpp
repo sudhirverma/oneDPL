@@ -100,8 +100,8 @@ struct test_one_policy
         ::std::srand(42);
         ::std::generate(first, last, [n1]() { return T(rand() % (2 * n1 + 1)); });
 
-        ::std::fill(exp_first, exp_last, trash);
-        ::std::fill(d_first, d_last, trash);
+        dpl::fill(exp_first, exp_last, trash);
+        dpl::fill(d_first, d_last, trash);
     }
 };
 

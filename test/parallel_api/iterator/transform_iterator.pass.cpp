@@ -91,7 +91,7 @@ void test_simple_copy(size_t buffer_size)
     int identity = 0;
     auto& sycl_src_buf = test_base_data.get_buffer(UDTKind::eKeys);
     auto host_source_begin = sycl_src_buf.get_host_access(sycl::write_only).get_pointer();
-    ::std::fill_n(host_source_begin, buffer_size, identity);
+    dpl::fill_n(host_source_begin, buffer_size, identity);
 
     test_copy<int> test(test_base_data);
     TestUtils::invoke_on_all_hetero_policies<0>()(test, tr_sycl_source_begin, tr_sycl_source_end, sycl_result_begin, buffer_size, identity + 1);
@@ -122,8 +122,8 @@ void test_ignore_copy(size_t buffer_size)
     auto tr_sycl_result_begin = oneapi::dpl::make_transform_iterator(sycl_result_begin, transformation);
 
     int ignored = -100;
-    ::std::fill_n(host_source_begin, buffer_size, 1);
-    ::std::fill_n(host_result_begin, buffer_size, ignored);
+    dpl::fill_n(host_source_begin, buffer_size, 1);
+    dpl::fill_n(host_result_begin, buffer_size, ignored);
 
     test_copy<int> test(test_base_data);
     TestUtils::invoke_on_all_hetero_policies<1>()(test, sycl_source_begin, sycl_source_end, tr_sycl_result_begin, buffer_size, ignored);
@@ -156,7 +156,7 @@ void test_multi_transform_copy(size_t buffer_size)
     auto tr3_sycl_source_end = tr3_sycl_source_begin + buffer_size;
 
     int identity = 0;
-    ::std::fill_n(host_source_begin, buffer_size, identity);
+    dpl::fill_n(host_source_begin, buffer_size, identity);
 
     test_copy<int> test(test_base_data);
     TestUtils::invoke_on_all_hetero_policies<2>()(test, tr3_sycl_source_begin, tr3_sycl_source_end, sycl_result_begin, buffer_size, identity + 3);

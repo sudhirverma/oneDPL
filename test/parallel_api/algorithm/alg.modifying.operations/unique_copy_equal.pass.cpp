@@ -56,8 +56,8 @@ struct run_unique_copy
                Size n, T trash)
     {
         // Cleaning
-        ::std::fill_n(expected_first, n, trash);
-        ::std::fill_n(out_first, n, trash);
+        dpl::fill_n(expected_first, n, trash);
+        dpl::fill_n(out_first, n, trash);
 
         // Run unique_copy
         auto i = unique_copy(first, last, expected_first);
@@ -115,8 +115,8 @@ struct run_unique_copy_predicate
                Predicate pred, T trash)
     {
         // Cleaning
-        ::std::fill_n(expected_first, n, trash);
-        ::std::fill_n(out_first, n, trash);
+        dpl::fill_n(expected_first, n, trash);
+        dpl::fill_n(out_first, n, trash);
 
         // Run unique_copy with predicate
         auto i = unique_copy(first, last, expected_first, pred);

@@ -36,8 +36,8 @@ struct run_remove_copy
                const T& value, T trash)
     {
         // Cleaning
-        ::std::fill_n(expected_first, n, trash);
-        ::std::fill_n(out_first, n, trash);
+        dpl::fill_n(expected_first, n, trash);
+        dpl::fill_n(out_first, n, trash);
 
         // Run copy_if
         auto i = remove_copy(first, last, expected_first, value);
