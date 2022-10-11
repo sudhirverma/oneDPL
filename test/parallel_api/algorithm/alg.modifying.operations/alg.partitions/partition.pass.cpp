@@ -77,7 +77,7 @@ struct test_partition
     {
         fill_data(first, last, generator);
         BiDirIt actual_ret = ::std::partition(exec, first, last, unary_op);
-        EXPECT_TRUE(dpl::all_of(first, actual_ret, unary_op) && !::std::any_of(actual_ret, last, unary_op),
+        EXPECT_TRUE(dpl::all_of(first, actual_ret, unary_op) && !dpl::any_of(actual_ret, last, unary_op),
                     "wrong effect from partition");
     }
 

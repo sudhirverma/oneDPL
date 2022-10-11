@@ -1592,8 +1592,8 @@ DEFINE_TEST(test_any_all_none_of)
         // empty sequence case
         if (n == 1)
         {
-            auto res0 = ::std::any_of(make_new_policy<new_kernel_name<Policy, 0>>(exec), first1, first1,
-                                      [n](T1 x) { return x == n - 1; });
+            auto res0 = dpl::any_of(make_new_policy<new_kernel_name<Policy, 0>>(exec), first1, first1,
+                                    [n](T1 x) { return x == n - 1; });
 #if _PSTL_SYCL_TEST_USM
             exec.queue().wait_and_throw();
 #endif
@@ -1612,20 +1612,20 @@ DEFINE_TEST(test_any_all_none_of)
             EXPECT_TRUE(res0, "wrong effect from all_of_0");
         }
         // any_of
-        auto res1 = ::std::any_of(make_new_policy<new_kernel_name<Policy, 3>>(exec), first1, last1,
-                                  [n](T1 x) { return x == n - 1; });
+        auto res1 = dpl::any_of(make_new_policy<new_kernel_name<Policy, 3>>(exec), first1, last1,
+                                [n](T1 x) { return x == n - 1; });
 #if _PSTL_SYCL_TEST_USM
         exec.queue().wait_and_throw();
 #endif
         EXPECT_TRUE(res1, "wrong effect from any_of_1");
-        auto res2 = ::std::any_of(make_new_policy<new_kernel_name<Policy, 4>>(exec), first1, last1,
-                                  [](T1 x) { return x == -1; });
+        auto res2 =
+            dpl::any_of(make_new_policy<new_kernel_name<Policy, 4>>(exec), first1, last1, [](T1 x) { return x == -1; });
 #if _PSTL_SYCL_TEST_USM
         exec.queue().wait_and_throw();
 #endif
         EXPECT_TRUE(!res2, "wrong effect from any_of_2");
-        auto res3 = ::std::any_of(make_new_policy<new_kernel_name<Policy, 5>>(exec), first1, last1,
-                                  [](T1 x) { return x % 2 == 0; });
+        auto res3 = dpl::any_of(make_new_policy<new_kernel_name<Policy, 5>>(exec), first1, last1,
+                                [](T1 x) { return x % 2 == 0; });
 #if _PSTL_SYCL_TEST_USM
         exec.queue().wait_and_throw();
 #endif
@@ -2510,7 +2510,7 @@ DEFINE_TEST(test_partition)
         // check
         host_keys.retrieve_data();
         EXPECT_TRUE(dpl::all_of(host_keys.get(), host_keys.get() + (res - first), unary_op) &&
-                        !::std::any_of(host_keys.get() + (res - first), host_keys.get() + n, unary_op),
+                        !dpl::any_of(host_keys.get() + (res - first), host_keys.get() + n, unary_op),
                     "wrong effect from partition");
         // init
         ::std::iota(host_keys.get(), host_keys.get() + n, IteratorValueType{0});
@@ -2524,7 +2524,7 @@ DEFINE_TEST(test_partition)
 
         host_keys.retrieve_data();
         EXPECT_TRUE(dpl::all_of(host_keys.get(), host_keys.get() + (res - first), unary_op) &&
-                        !::std::any_of(host_keys.get() + (res - first), host_keys.get() + n, unary_op) &&
+                        !dpl::any_of(host_keys.get() + (res - first), host_keys.get() + n, unary_op) &&
                         ::std::is_sorted(host_keys.get(), host_keys.get() + (res - first)) &&
                         ::std::is_sorted(host_keys.get() + (res - first), host_keys.get() + n),
                     "wrong effect from stable_partition");
