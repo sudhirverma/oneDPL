@@ -995,13 +995,13 @@ DEFINE_TEST(test_min_element)
         }
         host_keys.update_data();
 
-        auto result_min = ::std::min_element(make_new_policy<new_kernel_name<Policy, 0>>(exec), first, last);
+        auto result_min = dpl::min_element(make_new_policy<new_kernel_name<Policy, 0>>(exec), first, last);
 #if _PSTL_SYCL_TEST_USM
         exec.queue().wait_and_throw();
 #endif
         host_keys.retrieve_data();
 
-        auto expected_min = ::std::min_element(host_keys.get(), host_keys.get() + n);
+        auto expected_min = dpl::min_element(host_keys.get(), host_keys.get() + n);
 
         EXPECT_TRUE(result_min - first == expected_min - host_keys.get(),
                     "wrong effect from min_element");

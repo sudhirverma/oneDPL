@@ -40,8 +40,8 @@ struct check_minelement
     void
     operator()(Policy&& exec, Iterator begin, Iterator end)
     {
-        const Iterator expect = ::std::min_element(begin, end);
-        const Iterator result = ::std::min_element(exec, begin, end);
+        const Iterator expect = dpl::min_element(begin, end);
+        const Iterator result = dpl::min_element(exec, begin, end);
         EXPECT_TRUE(expect == result, "wrong return result from min_element");
     }
 };
@@ -54,8 +54,8 @@ struct check_minelement_predicate
     operator()(Policy&& exec, Iterator begin, Iterator end)
     {
         typedef typename ::std::iterator_traits<Iterator>::value_type T;
-        const Iterator expect = ::std::min_element(begin, end);
-        const Iterator result_pred = ::std::min_element(exec, begin, end, ::std::less<T>());
+        const Iterator expect = dpl::min_element(begin, end);
+        const Iterator result_pred = dpl::min_element(exec, begin, end, ::std::less<T>());
         EXPECT_TRUE(expect == result_pred, "wrong return result from min_element with predicate");
     }
 };

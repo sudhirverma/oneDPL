@@ -251,12 +251,12 @@ DEFINE_TEST(test_min_element)
         auto tuple_last = oneapi::dpl::make_zip_iterator(last, last);
 
         auto tuple_result =
-            ::std::min_element(make_new_policy<new_kernel_name<Policy, 0>>(exec), tuple_first, tuple_last,
+            dpl::min_element(make_new_policy<new_kernel_name<Policy, 0>>(exec), tuple_first, tuple_last,
                              TuplePredicate<::std::less<IteratorValueType>, 0>{::std::less<IteratorValueType>{}});
 #if _PSTL_SYCL_TEST_USM
         exec.queue().wait_and_throw();
 #endif
-        auto expected_min = ::std::min_element(host_keys.get(), host_keys.get() + n);
+        auto expected_min = dpl::min_element(host_keys.get(), host_keys.get() + n);
 
         EXPECT_TRUE((tuple_result - tuple_first) == (expected_min - host_keys.get()),
                     "wrong effect from min_element(tuple)");
