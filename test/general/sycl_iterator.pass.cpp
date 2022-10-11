@@ -2373,7 +2373,7 @@ DEFINE_TEST(test_unique)
 
         // invoke
         auto f = [](IteratorValueType a, IteratorValueType b) { return a == b; };
-        auto result_last = ::std::unique(make_new_policy<new_kernel_name<Policy, 0>>(exec), first, last, f);
+        auto result_last = dpl::unique(make_new_policy<new_kernel_name<Policy, 0>>(exec), first, last, f);
 #if _PSTL_SYCL_TEST_USM
         exec.queue().wait_and_throw();
 #endif

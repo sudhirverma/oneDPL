@@ -498,7 +498,7 @@ DEFINE_TEST(test_unique)
         auto tuple_last1 = oneapi::dpl::make_zip_iterator(last1, last1);
 
         auto tuple_lastnew =
-            ::std::unique(make_new_policy<new_kernel_name<Policy, 0>>(exec), tuple_first1, tuple_last1,
+            dpl::unique(make_new_policy<new_kernel_name<Policy, 0>>(exec), tuple_first1, tuple_last1,
                         TuplePredicate<::std::equal_to<Iterator1ValueType>, 0>{::std::equal_to<Iterator1ValueType>{}});
 #if _PSTL_SYCL_TEST_USM
         exec.queue().wait_and_throw();
