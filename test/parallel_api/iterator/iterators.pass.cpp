@@ -222,11 +222,8 @@ void test_transform_effect(VecIt1 first1, VecIt1 last1, VecIt2 first2) {
         return typename ::std::iterator_traits<VecIt2>::value_type (3 * val);
     };
 
-    ::std::copy(
-        oneapi::dpl::make_transform_iterator(first1, triple),
-        oneapi::dpl::make_transform_iterator(last1,  triple),
-        first2
-    );
+    dpl::copy(oneapi::dpl::make_transform_iterator(first1, triple), oneapi::dpl::make_transform_iterator(last1, triple),
+              first2);
 
     for (typename ::std::iterator_traits<VecIt1>::difference_type i = 0; i < last1 - first1; ++i)
         if ( first2[i] != (typename ::std::iterator_traits<VecIt2>::value_type) triple(first1[i]) ) {
@@ -295,7 +292,7 @@ struct test_permutation_iterator
         auto perm_end = oneapi::dpl::make_permutation_iterator(in1.begin(), in2.begin()) + iota_max;
 
         ::std::vector<T1> result(iota_max);
-        ::std::copy(perm_begin, perm_end, result.begin());
+        dpl::copy(perm_begin, perm_end, result.begin());
 
         EXPECT_TRUE(::std::is_sorted(result.begin(), result.end(), ::std::greater<T1>()),
                     "wrong result from copy with permutation_iterator");

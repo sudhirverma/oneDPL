@@ -44,8 +44,8 @@ int main() {
 #if !ONEDPL_FPGA_DEVICE
     sycl::buffer<float> out_buf_2{ sycl::range<1>(n) };
     auto buf_out_begin_2 = oneapi::dpl::begin(out_buf_2);
-    ::std::copy(policy, buf_begin, buf_end, buf_out_begin_2);
-    ::std::copy(policy, buf_out_begin_2, buf_out_begin_2 + n, buf_begin);
+    dpl::copy(policy, buf_begin, buf_end, buf_out_begin_2);
+    dpl::copy(policy, buf_out_begin_2, buf_out_begin_2 + n, buf_begin);
     ::std::inplace_merge(policy, buf_begin, buf_begin + n / 2, buf_end);
     auto red_val = ::std::reduce(policy, buf_begin, buf_end, 1);
     EXPECT_TRUE(red_val == 42001, "wrong return value from reduce");

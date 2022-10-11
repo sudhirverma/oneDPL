@@ -38,8 +38,8 @@ struct run_remove
                const T& value)
     {
         // Cleaning
-        ::std::copy(first, last, expected_first);
-        ::std::copy(first, last, out_first);
+        dpl::copy(first, last, expected_first);
+        dpl::copy(first, last, out_first);
 
         // Run remove
         OutputIterator i = remove(expected_first, expected_last, value);
@@ -59,8 +59,8 @@ struct run_remove_if
                Predicate pred)
     {
         // Cleaning
-        ::std::copy(first, last, expected_first);
-        ::std::copy(first, last, out_first);
+        dpl::copy(first, last, expected_first);
+        dpl::copy(first, last, out_first);
 
         // Run remove_if
         OutputIterator i = remove_if(expected_first, expected_last, pred);

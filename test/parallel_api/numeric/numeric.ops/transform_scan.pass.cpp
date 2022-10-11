@@ -210,7 +210,7 @@ test(UnaryOp unary_op, Out init, BinaryOp binary_op, Out trash)
                                     out.end(), expected1.begin(), expected1.end(), in.size(), unary_op, init,
                                     binary_op, trash);
 #endif
-        ::std::copy(in.begin(), in.end(), out.begin());
+        dpl::copy(in.begin(), in.end(), out.begin());
         invoke_on_all_policies<13>()(test_transform_exclusive_scan<In>(), out.begin(), out.end(), out.begin(), out.end(),
                                     expected1.begin(), expected1.end(), in.size(), unary_op, init, binary_op, trash);
 #endif // _PSTL_TEST_TRANSFORM_EXCLUSIVE_SCAN

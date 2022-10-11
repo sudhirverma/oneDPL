@@ -755,7 +755,7 @@ DEFINE_TEST(test_copy)
         ::std::fill(host_vals.get(), host_vals.get() + n, IteratorValueType{0});
         update_data(host_keys, host_vals);
 
-        ::std::copy(make_new_policy<new_kernel_name<Policy, 0>>(exec), first1, last1, first2);
+        dpl::copy(make_new_policy<new_kernel_name<Policy, 0>>(exec), first1, last1, first2);
 #if _PSTL_SYCL_TEST_USM
         exec.queue().wait_and_throw();
 #endif
@@ -3484,8 +3484,8 @@ DEFINE_TEST(test_includes)
         last1 = first1 + na;
         last2 = first2 + nb;
 
-        ::std::copy(a, a + na, host_keys.get());
-        ::std::copy(b, b + nb, host_vals.get());
+        dpl::copy(a, a + na, host_keys.get());
+        dpl::copy(b, b + nb, host_vals.get());
         host_keys.update_data(na);
         host_vals.update_data(nb);
 
@@ -3496,7 +3496,7 @@ DEFINE_TEST(test_includes)
         EXPECT_TRUE(result, "wrong effect from includes a, b");
 
         host_vals.retrieve_data();
-        ::std::copy(c, c + nc, host_vals.get());
+        dpl::copy(c, c + nc, host_vals.get());
         host_vals.update_data(nc);
 
         result = ::std::includes(make_new_policy<new_kernel_name<Policy, 1>>(exec), first1, last1, first2, last2);
@@ -3524,8 +3524,8 @@ DEFINE_TEST(test_set_intersection)
         //first test case
         last1 = first1 + na;
         last2 = first2 + nb;
-        ::std::copy(a, a + na, host_keys.get());
-        ::std::copy(b, b + nb, host_vals.get());
+        dpl::copy(a, a + na, host_keys.get());
+        dpl::copy(b, b + nb, host_vals.get());
         host_keys.update_data(na);
         host_vals.update_data(nb);
 
@@ -3549,8 +3549,8 @@ DEFINE_TEST(test_set_intersection)
         { //second test case
 
             last2 = first2 + nd;
-            ::std::copy(a, a + na, host_keys.get());
-            ::std::copy(d, d + nd, host_vals.get());
+            dpl::copy(a, a + na, host_keys.get());
+            dpl::copy(d, d + nd, host_vals.get());
             host_keys.update_data(na);
             host_vals.update_data(nb);
 
@@ -3581,8 +3581,8 @@ DEFINE_TEST(test_set_difference)
         last1 = first1 + na;
         last2 = first2 + nb;
 
-        ::std::copy(a, a + na, host_keys.get());
-        ::std::copy(b, b + nb, host_vals.get());
+        dpl::copy(a, a + na, host_keys.get());
+        dpl::copy(b, b + nb, host_vals.get());
         host_keys.update_data(na);
         host_vals.update_data(nb);
 
@@ -3613,8 +3613,8 @@ DEFINE_TEST(test_set_union)
         last1 = first1 + na;
         last2 = first2 + nb;
 
-        ::std::copy(a, a + na, host_keys.get());
-        ::std::copy(b, b + nb, host_vals.get());
+        dpl::copy(a, a + na, host_keys.get());
+        dpl::copy(b, b + nb, host_vals.get());
         host_keys.update_data(na);
         host_vals.update_data(nb);
 
@@ -3646,8 +3646,8 @@ DEFINE_TEST(test_set_symmetric_difference)
         last1 = first1 + na;
         last2 = first2 + nb;
 
-        ::std::copy(a, a + na, host_keys.get());
-        ::std::copy(b, b + nb, host_vals.get());
+        dpl::copy(a, a + na, host_keys.get());
+        dpl::copy(b, b + nb, host_vals.get());
         host_keys.update_data(na);
         host_vals.update_data(nb);
 

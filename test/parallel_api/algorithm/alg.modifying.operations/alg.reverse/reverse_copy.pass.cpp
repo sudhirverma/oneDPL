@@ -66,7 +66,7 @@ struct test_one_policy
 
         const auto n = ::std::distance(data_b, data_e);
         Sequence<T2> res(n);
-        ::std::copy(::std::reverse_iterator<Iterator1>(data_e), ::std::reverse_iterator<Iterator1>(data_b), res.begin());
+        dpl::copy(::std::reverse_iterator<Iterator1>(data_e), ::std::reverse_iterator<Iterator1>(data_b), res.begin());
 
         EXPECT_EQ_N(res.begin(), actual_b, n, "wrong effect of reverse_copy");
     }

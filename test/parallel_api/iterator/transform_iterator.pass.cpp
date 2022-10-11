@@ -36,7 +36,7 @@ DEFINE_TEST(test_copy)
     {
         TestDataTransfer<UDTKind::eVals, Size> host_vals(*this, n);
 
-        ::std::copy(::std::forward<ExecutionPolicy>(exec), first1, last1, first2);
+        dpl::copy(::std::forward<ExecutionPolicy>(exec), first1, last1, first2);
 
         host_vals.retrieve_data();
         auto res_begin = host_vals.get();

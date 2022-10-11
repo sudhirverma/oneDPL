@@ -22,6 +22,8 @@
 #include <iterator>
 #include <vector>
 
+#include <oneapi/dpl/algorithm>
+
 #include "iterator_utils.h"
 
 // Please uncomment this define if required to print full content of sequence.
