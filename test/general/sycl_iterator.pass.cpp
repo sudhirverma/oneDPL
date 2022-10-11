@@ -2431,7 +2431,7 @@ DEFINE_TEST(test_partition_copy)
 
         // invoke
         auto res =
-            ::std::partition_copy(make_new_policy<new_kernel_name<Policy, 0>>(exec), first1, last1, first2, first3, f);
+            dpl::partition_copy(make_new_policy<new_kernel_name<Policy, 0>>(exec), first1, last1, first2, first3, f);
 #if _PSTL_SYCL_TEST_USM
         exec.queue().wait_and_throw();
 #endif
@@ -2444,7 +2444,7 @@ DEFINE_TEST(test_partition_copy)
         auto exp_false_first = exp_false.begin();
 
         // invoke for expected
-        auto exp = ::std::partition_copy(host_keys.get(), host_keys.get() + n, exp_true_first, exp_false_first, f);
+        auto exp = dpl::partition_copy(host_keys.get(), host_keys.get() + n, exp_true_first, exp_false_first, f);
 
         // check
         bool is_correct = (exp.first - exp_true_first) == (res.first - first2) &&
