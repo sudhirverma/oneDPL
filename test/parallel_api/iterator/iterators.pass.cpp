@@ -285,7 +285,7 @@ struct test_permutation_iterator
     {
         T1 iota_max = ::std::numeric_limits<T1>::max() < in1.size() ? ::std::numeric_limits<T1>::max() : in1.size();
         ::std::iota(in1.begin(), in1.begin() + iota_max, T1(0));
-        ::std::reverse_copy(in1.begin(), in1.begin() + iota_max, in2.begin());
+        dpl::reverse_copy(in1.begin(), in1.begin() + iota_max, in2.begin());
 
         oneapi::dpl::permutation_iterator<typename ::std::vector<T1>::iterator, typename ::std::vector<T2>::iterator> perm_begin;
         perm_begin = oneapi::dpl::make_permutation_iterator(in1.begin(), in2.begin());

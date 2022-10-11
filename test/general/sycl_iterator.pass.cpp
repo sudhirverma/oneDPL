@@ -3385,7 +3385,7 @@ DEFINE_TEST(test_reverse_copy)
         local_copy.assign(host_keys.get(), host_keys.get() + n);
         dpl::reverse(local_copy.begin(), local_copy.end());
 
-        ::std::reverse_copy(make_new_policy<new_kernel_name<Policy, 0>>(exec), first, last, result_first);
+        dpl::reverse_copy(make_new_policy<new_kernel_name<Policy, 0>>(exec), first, last, result_first);
 #if _PSTL_SYCL_TEST_USM
         exec.queue().wait_and_throw();
 #endif
