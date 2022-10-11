@@ -56,7 +56,7 @@ int main() {
         data[0] = 1; data[1] = 0; data[2] = 0; data[3] = 1; data[4] = 0; data[5] = 1; data[6] = 0; data[7] = 1;
         std::fill( oneapi::dpl::execution::par, result.begin(), result.end(), T(0) );
 
-        auto t = std::copy_if( oneapi::dpl::execution::par, data.begin(), data.end(), result.begin(), oneapi::dpl::identity() );
+        auto t = dpl::copy_if( oneapi::dpl::execution::par, data.begin(), data.end(), result.begin(), oneapi::dpl::identity() );
 
         ASSERT_EQUAL(std::distance(result.begin(),t),4);
     }
@@ -124,7 +124,7 @@ int main() {
         // create named policy from existing one
         auto new_policy = oneapi::dpl::execution::make_device_policy<class IdentX>(oneapi::dpl::execution::dpcpp_default);
 
-        auto t = std::copy_if( new_policy, data_it, data_end_it, result_it, oneapi::dpl::identity() );
+        auto t = dpl::copy_if( new_policy, data_it, data_end_it, result_it, oneapi::dpl::identity() );
 
         auto count = std::distance(result_it,t);
 

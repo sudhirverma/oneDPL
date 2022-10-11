@@ -2186,8 +2186,8 @@ DEFINE_TEST(test_copy_if)
         ::std::iota(host_keys.get(), host_keys.get() + n, T1(222));
         host_keys.update_data();
 
-        auto res1 = ::std::copy_if(make_new_policy<new_kernel_name<Policy, 0>>(exec), first1, last1, first2,
-                                   [](T1 x) { return x > -1; });
+        dpl::copy_if(make_new_policy<new_kernel_name<Policy, 0>>(exec), first1, last1, first2,
+                     [](T1 x) { return x > -1; });
 #if _PSTL_SYCL_TEST_USM
         exec.queue().wait_and_throw();
 #endif
@@ -2205,7 +2205,7 @@ DEFINE_TEST(test_copy_if)
             EXPECT_TRUE(host_first2[i] == exp, "wrong effect from copy_if_1");
         }
 
-        auto res2 = ::std::copy_if(make_new_policy<new_kernel_name<Policy, 1>>(exec), first1, last1, first2,
+        auto res2 = dpl::copy_if(make_new_policy<new_kernel_name<Policy, 1>>(exec), first1, last1, first2,
                                  [](T1 x) { return x % 2 == 1; });
 #if _PSTL_SYCL_TEST_USM
         exec.queue().wait_and_throw();
