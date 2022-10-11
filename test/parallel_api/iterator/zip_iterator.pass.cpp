@@ -539,7 +539,7 @@ DEFINE_TEST(test_unique_copy)
         auto tuple_last1 = oneapi::dpl::make_zip_iterator(last1, last1);
         auto tuple_first2 = oneapi::dpl::make_zip_iterator(first2, first2);
 
-        auto tuple_last2 = ::std::unique_copy(
+        auto tuple_last2 = dpl::unique_copy(
             make_new_policy<new_kernel_name<Policy, 0>>(exec), tuple_first1, tuple_last1, tuple_first2,
             TuplePredicate<::std::equal_to<Iterator1ValueType>, 0>{::std::equal_to<Iterator1ValueType>{}});
 #if _PSTL_SYCL_TEST_USM

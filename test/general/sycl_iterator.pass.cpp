@@ -2323,7 +2323,7 @@ DEFINE_TEST(test_unique_copy)
         auto f = [](Iterator1ValueType a, Iterator1ValueType b) { return a == b; };
         auto result_first = first2;
         auto result_last =
-            ::std::unique_copy(make_new_policy<new_kernel_name<Policy, 0>>(exec), first1, last1, result_first, f);
+            dpl::unique_copy(make_new_policy<new_kernel_name<Policy, 0>>(exec), first1, last1, result_first, f);
 #if _PSTL_SYCL_TEST_USM
         exec.queue().wait_and_throw();
 #endif
