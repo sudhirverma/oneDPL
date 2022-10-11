@@ -14,6 +14,7 @@
 //===----------------------------------------------------------------------===//
 
 #include <oneapi/dpl/execution>
+#include <oneapi/dpl/algorithm>
 
 #include "support/test_config.h"
 
@@ -55,13 +56,13 @@ main()
 
     //check result
     bool res1 = ::std::is_sorted(out1, out1 + out_n, ::std::less<T>());
-    res1 &= ::std::includes(out1, out1 + out_n, in1, in1 + in_n, ::std::less<T>());
-    res1 &= ::std::includes(out1, out1 + out_n, in2, in2 + in_n, ::std::less<T>());
+    res1 &= dpl::includes(out1, out1 + out_n, in1, in1 + in_n, ::std::less<T>());
+    res1 &= dpl::includes(out1, out1 + out_n, in2, in2 + in_n, ::std::less<T>());
     EXPECT_TRUE(res1, "wrong effect from 'merge' with sycl ranges");
 
     bool res2 = ::std::is_sorted(out2, out2 + out_n, ::std::less<T>());
-    res2 &= ::std::includes(out2, out2 + out_n, in1, in1 + in_n, ::std::less<T>());
-    res2 &= ::std::includes(out2, out2 + out_n, in2, in2 + in_n, ::std::less<T>());
+    res2 &= dpl::includes(out2, out2 + out_n, in1, in1 + in_n, ::std::less<T>());
+    res2 &= dpl::includes(out2, out2 + out_n, in2, in2 + in_n, ::std::less<T>());
     EXPECT_TRUE(res2, "wrong effect from 'merge' with sycl ranges with predicate");
 #endif //_ENABLE_RANGES_TESTING
 

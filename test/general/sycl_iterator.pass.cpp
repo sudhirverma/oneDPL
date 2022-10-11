@@ -3489,7 +3489,7 @@ DEFINE_TEST(test_includes)
         host_keys.update_data(na);
         host_vals.update_data(nb);
 
-        auto result = ::std::includes(make_new_policy<new_kernel_name<Policy, 0>>(exec), first1, last1, first2, last2);
+        auto result = dpl::includes(make_new_policy<new_kernel_name<Policy, 0>>(exec), first1, last1, first2, last2);
 #if _PSTL_SYCL_TEST_USM
         exec.queue().wait_and_throw();
 #endif
@@ -3499,7 +3499,7 @@ DEFINE_TEST(test_includes)
         dpl::copy(c, c + nc, host_vals.get());
         host_vals.update_data(nc);
 
-        result = ::std::includes(make_new_policy<new_kernel_name<Policy, 1>>(exec), first1, last1, first2, last2);
+        result = dpl::includes(make_new_policy<new_kernel_name<Policy, 1>>(exec), first1, last1, first2, last2);
 #if _PSTL_SYCL_TEST_USM
         exec.queue().wait_and_throw();
 #endif
@@ -3539,8 +3539,8 @@ DEFINE_TEST(test_set_intersection)
 
         EXPECT_TRUE(nres == 6, "wrong size of intersection of a, b");
 
-        auto result = ::std::includes(host_keys.get(), host_keys.get() + na, host_res.get(), host_res.get() + nres) &&
-                      ::std::includes(host_vals.get(), host_vals.get() + nb, host_res.get(), host_res.get() + nres);
+        auto result = dpl::includes(host_keys.get(), host_keys.get() + na, host_res.get(), host_res.get() + nres) &&
+                      dpl::includes(host_vals.get(), host_vals.get() + nb, host_res.get(), host_res.get() + nres);
 #if _PSTL_SYCL_TEST_USM
         exec.queue().wait_and_throw();
 #endif
