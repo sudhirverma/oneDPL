@@ -50,7 +50,7 @@ enum_val_to_index(TEnum enumVal)
 ////////////////////////////////////////////////////////////////////////////////
 /// First field - data size
 /// Second field - offset from test data
-using InitParams = ::std::initializer_list<::std::pair<::std::size_t, ::std::size_t>>;
+using InitParams = ::std::initializer_list<dpl::pair<::std::size_t, ::std::size_t>>;
 
 ////////////////////////////////////////////////////////////////////////////////
 /// struct test_base_data - test source data base class

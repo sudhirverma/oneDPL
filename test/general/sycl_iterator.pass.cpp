@@ -20,6 +20,7 @@
 #include _PSTL_TEST_HEADER(numeric)
 #include _PSTL_TEST_HEADER(memory)
 #include _PSTL_TEST_HEADER(iterator)
+#include _PSTL_TEST_HEADER(utility)
 
 #include "support/utils.h"
 #include "oneapi/dpl/pstl/utils.h"
@@ -1286,7 +1287,7 @@ DEFINE_TEST(test_minmax_element)
         auto expected = dpl::minmax_element(host_keys.get(), host_keys.get() + n);
         auto expected_min = expected.first - host_keys.get();
         auto expected_max = expected.second - host_keys.get();
-        ::std::pair<Size, Size> expected_offset = { expected_min, expected_max };
+        dpl::pair<Size, Size> expected_offset = { expected_min, expected_max };
 
         auto result = dpl::minmax_element(make_new_policy<new_kernel_name<Policy, 0>>(exec), first, last);
         auto result_min = result.first - first;

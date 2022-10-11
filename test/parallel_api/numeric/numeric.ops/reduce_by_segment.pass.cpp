@@ -261,7 +261,7 @@ void test_on_host() {
     T C[N];                         // output keys
     T D[N];                         // output values
 
-    std::pair<T*, T*> new_end;
+    dpl:pair<T*, T*> new_end;
     new_end = oneapi::dpl::reduce_by_segment(oneapi::dpl::execution::par, A, A + N, B, C, D, std::equal_to<T>(),
                                     std::plus<T>());
     // The first four keys in C are now {1, 3, 2, 1} and new_end.first - C is 4.

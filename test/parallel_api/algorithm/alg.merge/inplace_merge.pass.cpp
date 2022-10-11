@@ -50,9 +50,10 @@ struct test_one_policy
         EXPECT_EQ_N(first1, first2, n, "wrong effect from inplace_merge without predicate");
     }
 
-    template<typename BiDirIt, typename Generator1, typename Generator2, typename Size>
-    ::std::pair<const BiDirIt, const BiDirIt> init(BiDirIt first1, BiDirIt last1, BiDirIt first2, BiDirIt last2,
-                                                    Generator1 generator1, Generator2 generator2, Size m)
+    template <typename BiDirIt, typename Generator1, typename Generator2, typename Size>
+    dpl::pair<const BiDirIt, const BiDirIt>
+    init(BiDirIt first1, BiDirIt last1, BiDirIt first2, BiDirIt last2, Generator1 generator1, Generator2 generator2,
+         Size m)
     {
         const BiDirIt mid1 = ::std::next(first1, m);
         fill_data(first1, mid1, generator1);

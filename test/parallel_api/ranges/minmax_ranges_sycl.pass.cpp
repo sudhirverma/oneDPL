@@ -14,6 +14,7 @@
 //===----------------------------------------------------------------------===//
 
 #include <oneapi/dpl/execution>
+#include <oneapi/dpl/utility>
 
 #include "support/test_config.h"
 
@@ -38,8 +39,8 @@ main()
     const int idx_max = max_n - 1;
 
     int res1 = -1, res2 = - 1, res3 = -1, res4 = -1, res5 = -1;
-    ::std::pair<int, int> res_minmax1(-1, -1);
-    ::std::pair<int, int> res_minmax2(-1, -1);
+    dpl::pair<int, int> res_minmax1(-1, -1);
+    dpl::pair<int, int> res_minmax2(-1, -1);
     using namespace TestUtils;
     using namespace oneapi::dpl::experimental::ranges;
     {

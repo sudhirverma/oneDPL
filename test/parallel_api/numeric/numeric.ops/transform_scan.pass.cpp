@@ -135,7 +135,7 @@ const std::uint32_t encryption_mask = 0x314;
 
 template <typename InputIterator, typename OutputIterator, typename UnaryOperation, typename T,
           typename BinaryOperation>
-::std::pair<OutputIterator, T>
+dpl::pair<OutputIterator, T>
 transform_inclusive_scan_serial(InputIterator first, InputIterator last, OutputIterator result, UnaryOperation unary_op,
                                 T init, BinaryOperation binary_op) noexcept
 {
@@ -149,7 +149,7 @@ transform_inclusive_scan_serial(InputIterator first, InputIterator last, OutputI
 
 template <typename InputIterator, typename OutputIterator, typename UnaryOperation, typename T,
           typename BinaryOperation>
-::std::pair<OutputIterator, T>
+dpl::pair<OutputIterator, T>
 transform_exclusive_scan_serial(InputIterator first, InputIterator last, OutputIterator result, UnaryOperation unary_op,
                                 T init, BinaryOperation binary_op) noexcept
 {
