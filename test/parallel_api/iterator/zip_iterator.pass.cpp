@@ -287,7 +287,7 @@ DEFINE_TEST(test_count_if)
         auto comp = [](ValueType const& value) { return value % 10 == 0; };
         ReturnType expected = (n - 1) / 10 + 1;
 
-        auto result = ::std::count_if(make_new_policy<new_kernel_name<Policy, 0>>(exec), tuple_first, tuple_last,
+        auto result = dpl::count_if(make_new_policy<new_kernel_name<Policy, 0>>(exec), tuple_first, tuple_last,
                                     TuplePredicate<decltype(comp), 0>{comp});
 #if _PSTL_SYCL_TEST_USM
         exec.queue().wait_and_throw();

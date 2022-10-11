@@ -38,10 +38,10 @@ struct test_partition_copy
 
         auto actual_ret = ::std::partition_copy(exec, first, last, true_first, false_first, unary_op);
 
-        EXPECT_TRUE(::std::distance(true_first, actual_ret.first) == ::std::count_if(first, last, unary_op),
+        EXPECT_TRUE(::std::distance(true_first, actual_ret.first) == dpl::count_if(first, last, unary_op),
                     "partition_copy has wrong effect from true sequence");
         EXPECT_TRUE(::std::distance(false_first, actual_ret.second) ==
-                        ::std::count_if(first, last, oneapi::dpl::__internal::__not_pred<UnaryOp>(unary_op)),
+                        dpl::count_if(first, last, oneapi::dpl::__internal::__not_pred<UnaryOp>(unary_op)),
                     "partition_copy has wrong effect from false sequence");
     }
 

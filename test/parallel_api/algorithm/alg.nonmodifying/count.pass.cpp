@@ -48,8 +48,8 @@ struct test_count_if
     void
     operator()(Policy&& exec, Iterator first, Iterator last, Predicate pred)
     {
-        auto expected = ::std::count_if(first, last, pred);
-        auto result = ::std::count_if(exec, first, last, pred);
+        auto expected = dpl::count_if(first, last, pred);
+        auto result = dpl::count_if(exec, first, last, pred);
         EXPECT_EQ(expected, result, "wrong count_if result");
     }
 };

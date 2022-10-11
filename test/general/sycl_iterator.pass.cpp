@@ -1485,8 +1485,8 @@ DEFINE_TEST(test_count_if)
 
         // check when arbitrary should be counted
         ReturnType expected = (n - 1) / 10 + 1;
-        ReturnType result = ::std::count_if(make_new_policy<new_kernel_name<Policy, 0>>(exec), first, last,
-                                            [](ValueType const& value) { return value % 10 == 0; });
+        ReturnType result = dpl::count_if(make_new_policy<new_kernel_name<Policy, 0>>(exec), first, last,
+                                          [](ValueType const& value) { return value % 10 == 0; });
 #if _PSTL_SYCL_TEST_USM
         exec.queue().wait_and_throw();
 #endif
@@ -1497,8 +1497,8 @@ DEFINE_TEST(test_count_if)
 
         // check when none should be counted
         expected = 0;
-        result = ::std::count_if(make_new_policy<new_kernel_name<Policy, 1>>(exec), first, last,
-                                 [](ValueType const& value) { return value > 10; });
+        result = dpl::count_if(make_new_policy<new_kernel_name<Policy, 1>>(exec), first, last,
+                               [](ValueType const& value) { return value > 10; });
 #if _PSTL_SYCL_TEST_USM
         exec.queue().wait_and_throw();
 #endif
@@ -1509,8 +1509,8 @@ DEFINE_TEST(test_count_if)
 
         // check when all should be counted
         expected = n;
-        result = ::std::count_if(make_new_policy<new_kernel_name<Policy, 2>>(exec), first, last,
-                                 [](ValueType const& value) { return value < 10; });
+        result = dpl::count_if(make_new_policy<new_kernel_name<Policy, 2>>(exec), first, last,
+                               [](ValueType const& value) { return value < 10; });
 #if _PSTL_SYCL_TEST_USM
         exec.queue().wait_and_throw();
 #endif
