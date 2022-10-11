@@ -3102,7 +3102,7 @@ DEFINE_TEST(test_lexicographical_compare)
         auto comp = [](ValueType const& first, ValueType const& second) { return first < second; };
 
         // CHECK 1.1: S1 == S2 && len(S1) == len(S2)
-        bool is_less_res = ::std::lexicographical_compare(make_new_policy<new_kernel_name<Policy, 0>>(exec), first1,
+        bool is_less_res = dpl::lexicographical_compare(make_new_policy<new_kernel_name<Policy, 0>>(exec), first1,
                                                           last1, first2, last2, comp);
 #if _PSTL_SYCL_TEST_USM
         exec.queue().wait_and_throw();
@@ -3112,7 +3112,7 @@ DEFINE_TEST(test_lexicographical_compare)
         EXPECT_TRUE(is_less_res == 0, "wrong effect from lex_compare Test 1.1: S1 == S2 && len(S1) == len(S2)");
 
         // CHECK 1.2: S1 == S2 && len(S1) < len(S2)
-        is_less_res = ::std::lexicographical_compare(make_new_policy<new_kernel_name<Policy, 1>>(exec), first1, last1 - 1,
+        is_less_res = dpl::lexicographical_compare(make_new_policy<new_kernel_name<Policy, 1>>(exec), first1, last1 - 1,
                                                    first2, last2, comp);
 #if _PSTL_SYCL_TEST_USM
         exec.queue().wait_and_throw();
@@ -3122,7 +3122,7 @@ DEFINE_TEST(test_lexicographical_compare)
         EXPECT_TRUE(is_less_res == 1, "wrong effect from lex_compare Test 1.2: S1 == S2 && len(S1) < len(S2)");
 
         // CHECK 1.3: S1 == S2 && len(S1) > len(S2)
-        is_less_res = ::std::lexicographical_compare(make_new_policy<new_kernel_name<Policy, 2>>(exec), first1, last1, first2,
+        is_less_res = dpl::lexicographical_compare(make_new_policy<new_kernel_name<Policy, 2>>(exec), first1, last1, first2,
                                                    last2 - 1, comp);
 #if _PSTL_SYCL_TEST_USM
         exec.queue().wait_and_throw();
@@ -3138,7 +3138,7 @@ DEFINE_TEST(test_lexicographical_compare)
         }
 
         // CHECK 2.1: S1 < S2 (PRE-LAST ELEMENT) && len(S1) == len(S2)
-        is_less_res = ::std::lexicographical_compare(make_new_policy<new_kernel_name<Policy, 3>>(exec), first1, last1, first2,
+        is_less_res = dpl::lexicographical_compare(make_new_policy<new_kernel_name<Policy, 3>>(exec), first1, last1, first2,
                                                    last2, comp);
 #if _PSTL_SYCL_TEST_USM
         exec.queue().wait_and_throw();
@@ -3150,7 +3150,7 @@ DEFINE_TEST(test_lexicographical_compare)
                     "wrong effect from lex_compare Test 2.1: S1 < S2 (PRE-LAST) && len(S1) == len(S2)");
 
         // CHECK 2.2: S1 < S2 (PRE-LAST ELEMENT) && len(S1) > len(S2)
-        is_less_res = ::std::lexicographical_compare(make_new_policy<new_kernel_name<Policy, 4>>(exec), first1, last1, first2,
+        is_less_res = dpl::lexicographical_compare(make_new_policy<new_kernel_name<Policy, 4>>(exec), first1, last1, first2,
                                                    last2 - 1, comp);
 #if _PSTL_SYCL_TEST_USM
         exec.queue().wait_and_throw();
@@ -3167,7 +3167,7 @@ DEFINE_TEST(test_lexicographical_compare)
         }
 
         // CHECK 3.1: S1 > S2 (PRE-LAST ELEMENT) && len(S1) == len(S2)
-        is_less_res = ::std::lexicographical_compare(make_new_policy<new_kernel_name<Policy, 5>>(exec), first1, last1, first2,
+        is_less_res = dpl::lexicographical_compare(make_new_policy<new_kernel_name<Policy, 5>>(exec), first1, last1, first2,
                                                    last2, comp);
 #if _PSTL_SYCL_TEST_USM
         exec.queue().wait_and_throw();
@@ -3178,7 +3178,7 @@ DEFINE_TEST(test_lexicographical_compare)
                     "wrong effect from lex_compare Test 3.1: S1 > S2 (PRE-LAST) && len(S1) == len(S2)");
 
         // CHECK 3.2: S1 > S2 (PRE-LAST ELEMENT) && len(S1) < len(S2)
-        is_less_res = ::std::lexicographical_compare(make_new_policy<new_kernel_name<Policy, 6>>(exec), first1, last1 - 1,
+        is_less_res = dpl::lexicographical_compare(make_new_policy<new_kernel_name<Policy, 6>>(exec), first1, last1 - 1,
                                                    first2, last2, comp);
 #if _PSTL_SYCL_TEST_USM
         exec.queue().wait_and_throw();
@@ -3194,7 +3194,7 @@ DEFINE_TEST(test_lexicographical_compare)
         }
 
         // CHECK 4.1: S1 < S2 (FIRST ELEMENT) && len(S1) == len(S2)
-        is_less_res = ::std::lexicographical_compare(make_new_policy<new_kernel_name<Policy, 7>>(exec), first1, last1, first2,
+        is_less_res = dpl::lexicographical_compare(make_new_policy<new_kernel_name<Policy, 7>>(exec), first1, last1, first2,
                                                    last2, comp);
 #if _PSTL_SYCL_TEST_USM
         exec.queue().wait_and_throw();
@@ -3204,7 +3204,7 @@ DEFINE_TEST(test_lexicographical_compare)
         EXPECT_TRUE(is_less_res == 1, "wrong effect from lex_compare Test 4.1: S1 < S2 (FIRST) && len(S1) == len(S2)");
 
         // CHECK 4.2: S1 < S2 (FIRST ELEMENT) && len(S1) > len(S2)
-        is_less_res = ::std::lexicographical_compare(make_new_policy<new_kernel_name<Policy, 8>>(exec), first1, last1, first2,
+        is_less_res = dpl::lexicographical_compare(make_new_policy<new_kernel_name<Policy, 8>>(exec), first1, last1, first2,
                                                    last2 - 1, comp);
 #if _PSTL_SYCL_TEST_USM
         exec.queue().wait_and_throw();
@@ -3220,7 +3220,7 @@ DEFINE_TEST(test_lexicographical_compare)
         }
 
         // CHECK 5.1: S1 > S2 (FIRST ELEMENT) && len(S1) == len(S2)
-        is_less_res = ::std::lexicographical_compare(make_new_policy<new_kernel_name<Policy, 9>>(exec), first1, last1, first2,
+        is_less_res = dpl::lexicographical_compare(make_new_policy<new_kernel_name<Policy, 9>>(exec), first1, last1, first2,
                                                    last2, comp);
 #if _PSTL_SYCL_TEST_USM
         exec.queue().wait_and_throw();
@@ -3230,7 +3230,7 @@ DEFINE_TEST(test_lexicographical_compare)
         EXPECT_TRUE(is_less_res == 0, "wrong effect from lex_compare Test 5.1: S1 > S2 (FIRST) && len(S1) == len(S2)");
 
         // CHECK 5.2: S1 > S2 (FIRST ELEMENT) && len(S1) < len(S2)
-        is_less_res = ::std::lexicographical_compare(make_new_policy<new_kernel_name<Policy, 10>>(exec), first1, last1 - 1,
+        is_less_res = dpl::lexicographical_compare(make_new_policy<new_kernel_name<Policy, 10>>(exec), first1, last1 - 1,
                                                    first2, last2, comp);
 #if _PSTL_SYCL_TEST_USM
         exec.queue().wait_and_throw();

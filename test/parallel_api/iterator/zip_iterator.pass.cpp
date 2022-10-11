@@ -690,7 +690,7 @@ DEFINE_TEST(test_lexicographical_compare)
 
         bool is_less_exp = n > 1 ? 1 : 0;
         bool is_less_res =
-            ::std::lexicographical_compare(make_new_policy<new_kernel_name<Policy, 0>>(exec), tuple_first1, tuple_last1,
+            dpl::lexicographical_compare(make_new_policy<new_kernel_name<Policy, 0>>(exec), tuple_first1, tuple_last1,
                                            tuple_first2, tuple_last2, TuplePredicate<decltype(comp), 0>{comp});
 #if _PSTL_SYCL_TEST_USM
         exec.queue().wait_and_throw();
