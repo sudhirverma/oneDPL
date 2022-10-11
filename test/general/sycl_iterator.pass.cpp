@@ -1847,30 +1847,30 @@ DEFINE_TEST(test_search)
         // empty sequence case
         if (n == 1)
         {
-            auto res0 = ::std::search(make_new_policy<new_kernel_name<Policy, 0>>(exec), first1, first1, first2, last2);
+            auto res0 = dpl::search(make_new_policy<new_kernel_name<Policy, 0>>(exec), first1, first1, first2, last2);
 #if _PSTL_SYCL_TEST_USM
             exec.queue().wait_and_throw();
 #endif
             EXPECT_TRUE(res0 == first1, "wrong effect from search_00");
-            res0 = ::std::search(make_new_policy<new_kernel_name<Policy, 1>>(exec), first1, last1, first2, first2);
+            res0 = dpl::search(make_new_policy<new_kernel_name<Policy, 1>>(exec), first1, last1, first2, first2);
 #if _PSTL_SYCL_TEST_USM
             exec.queue().wait_and_throw();
 #endif
             EXPECT_TRUE(res0 == first1, "wrong effect from search_01");
         }
-        auto res1 = ::std::search(make_new_policy<new_kernel_name<Policy, 1>>(exec), first1, last1, first2, last2);
+        auto res1 = dpl::search(make_new_policy<new_kernel_name<Policy, 1>>(exec), first1, last1, first2, last2);
         EXPECT_TRUE(res1 == last1, "wrong effect from search_1");
         if (n > 10)
         {
             // first n-10 elements of the subsequence are at the beginning of first sequence
-            auto res2 = ::std::search(make_new_policy<new_kernel_name<Policy, 3>>(exec), first1, last1, first2 + 10, last2);
+            auto res2 = dpl::search(make_new_policy<new_kernel_name<Policy, 3>>(exec), first1, last1, first2 + 10, last2);
 #if _PSTL_SYCL_TEST_USM
             exec.queue().wait_and_throw();
 #endif
             EXPECT_TRUE(res2 - first1 == 5, "wrong effect from search_2");
         }
         // subsequence consists of one element (last one)
-        auto res3 = ::std::search(make_new_policy<new_kernel_name<Policy, 4>>(exec), first1, last1, last1 - 1, last1);
+        auto res3 = dpl::search(make_new_policy<new_kernel_name<Policy, 4>>(exec), first1, last1, last1 - 1, last1);
 #if _PSTL_SYCL_TEST_USM
         exec.queue().wait_and_throw();
 #endif
@@ -1882,7 +1882,7 @@ DEFINE_TEST(test_search)
             ::std::iota(host_keys.get() + n / 2, host_keys.get() + n, T1(5));
             host_keys.update_data();
 
-            auto res4 = ::std::search(make_new_policy<new_kernel_name<Policy, 5>>(exec), first1, last1, first2 + 5, first2 + 6);
+            auto res4 = dpl::search(make_new_policy<new_kernel_name<Policy, 5>>(exec), first1, last1, first2 + 5, first2 + 6);
 #if _PSTL_SYCL_TEST_USM
             exec.queue().wait_and_throw();
 #endif
