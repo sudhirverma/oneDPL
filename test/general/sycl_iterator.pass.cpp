@@ -2517,7 +2517,7 @@ DEFINE_TEST(test_partition)
         host_keys.update_data();
 
         // invoke stable_partition
-        res = ::std::stable_partition(make_new_policy<new_kernel_name<Policy, 1>>(exec), first, last, unary_op);
+        res = dpl::stable_partition(make_new_policy<new_kernel_name<Policy, 1>>(exec), first, last, unary_op);
 #if _PSTL_SYCL_TEST_USM
         exec.queue().wait_and_throw();
 #endif
@@ -2658,7 +2658,7 @@ DEFINE_TEST(test_inplace_merge)
         ::std::vector<T> exp(n);
         ::std::iota(exp.begin(), exp.end(), value);
 
-        auto middle = ::std::stable_partition(host_keys.get(), host_keys.get() + n, [](const T& x) { return x % 2; });
+        auto middle = dpl::stable_partition(host_keys.get(), host_keys.get() + n, [](const T& x) { return x % 2; });
         host_keys.update_data();
 
         dpl::inplace_merge(make_new_policy<new_kernel_name<Policy, 0>>(exec), first, first + (middle - host_keys.get()), last);

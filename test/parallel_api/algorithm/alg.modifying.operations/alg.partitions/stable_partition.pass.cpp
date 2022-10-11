@@ -76,9 +76,9 @@ struct test_stable_partition
                UnaryOp unary_op, Generator generator)
     {
         fill_data(exp_first, exp_last, generator);
-        BiDirIt exp_ret = ::std::stable_partition(exp_first, exp_last, unary_op);
+        BiDirIt exp_ret = dpl::stable_partition(exp_first, exp_last, unary_op);
         fill_data(first, last, generator);
-        BiDirIt actual_ret = ::std::stable_partition(exec, first, last, unary_op);
+        BiDirIt actual_ret = dpl::stable_partition(exec, first, last, unary_op);
 
         EXPECT_TRUE(::std::distance(first, actual_ret) == ::std::distance(exp_first, exp_ret),
                     "wrong result from stable_partition");
