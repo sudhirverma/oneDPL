@@ -62,7 +62,7 @@ Ambiguous trunc(Ambiguous) { return Ambiguous(); }
 }; // namespace dpl
 }; // namespace oneapi
 
-template <class T, class = decltype(::std::abs(dpl::declval<T>()))>
+template <class T, class = decltype(dpl::abs(dpl::declval<T>()))>
 std::true_type has_abs_imp(int);
 template <class T>
 std::false_type has_abs_imp(...);
