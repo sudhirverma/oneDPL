@@ -1175,7 +1175,7 @@ DEFINE_TEST(test_is_sorted_until)
         host_keys.update_data();
 
         // check sorted
-        Iterator result = ::std::is_sorted_until(make_new_policy<new_kernel_name<Policy, 0>>(exec), first, last, comp);
+        Iterator result = dpl::is_sorted_until(make_new_policy<new_kernel_name<Policy, 0>>(exec), first, last, comp);
         Iterator expected = last;
 #if _PSTL_SYCL_TEST_USM
         exec.queue().wait_and_throw();
@@ -1193,7 +1193,7 @@ DEFINE_TEST(test_is_sorted_until)
             *(host_keys.get() + n - 1) = ValueType{0};
             host_keys.update_data();
         }
-        result = ::std::is_sorted_until(make_new_policy<new_kernel_name<Policy, 1>>(exec), first, last, comp);
+        result = dpl::is_sorted_until(make_new_policy<new_kernel_name<Policy, 1>>(exec), first, last, comp);
         expected = max_dis > 1 ? last - 1 : last;
 #if _PSTL_SYCL_TEST_USM
         exec.queue().wait_and_throw();
@@ -1214,7 +1214,7 @@ DEFINE_TEST(test_is_sorted_until)
             *(host_keys.get() + /*max_idx*/ max_dis / 2) = ValueType{0};
             host_keys.update_data();
         }
-        result = ::std::is_sorted_until(make_new_policy<new_kernel_name<Policy, 2>>(exec), first, last, comp);
+        result = dpl::is_sorted_until(make_new_policy<new_kernel_name<Policy, 2>>(exec), first, last, comp);
         expected = it;
 #if _PSTL_SYCL_TEST_USM
         exec.queue().wait_and_throw();
@@ -1226,7 +1226,7 @@ DEFINE_TEST(test_is_sorted_until)
                   << "expected: [" << ::std::distance(first, expected) << "]" << ::std::endl;
 #    endif
         // check unsorted: the middle element (no predicate)
-        result = ::std::is_sorted_until(make_new_policy<new_kernel_name<Policy, 3>>(exec), first, last);
+        result = dpl::is_sorted_until(make_new_policy<new_kernel_name<Policy, 3>>(exec), first, last);
 #if _PSTL_SYCL_TEST_USM
         exec.queue().wait_and_throw();
 #endif
@@ -1244,7 +1244,7 @@ DEFINE_TEST(test_is_sorted_until)
             *(host_keys.get() + 1) = ValueType{0};
             host_keys.update_data();
         }
-        result = ::std::is_sorted_until(make_new_policy<new_kernel_name<Policy, 4>>(exec), first, last, comp);
+        result = dpl::is_sorted_until(make_new_policy<new_kernel_name<Policy, 4>>(exec), first, last, comp);
         expected = n > 1 ? first + 1 : last;
 #if _PSTL_SYCL_TEST_USM
         exec.queue().wait_and_throw();
