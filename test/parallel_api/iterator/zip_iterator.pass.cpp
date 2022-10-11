@@ -598,8 +598,9 @@ DEFINE_TEST(test_merge)
         auto tuple_last2 = oneapi::dpl::make_zip_iterator(first2 + size2, first2 + size2);
         auto tuple_first3 = oneapi::dpl::make_zip_iterator(first3, first3);
 
-        auto tuple_last3 = ::std::merge(make_new_policy<new_kernel_name<Policy, 0>>(exec), tuple_first1, tuple_last1, tuple_first2,
-                                      tuple_last2, tuple_first3, TuplePredicate<::std::less<T2>, 0>{::std::less<T2>{}});
+        auto tuple_last3 =
+            dpl::merge(make_new_policy<new_kernel_name<Policy, 0>>(exec), tuple_first1, tuple_last1, tuple_first2,
+                       tuple_last2, tuple_first3, TuplePredicate<::std::less<T2>, 0>{::std::less<T2>{}});
 #if _PSTL_SYCL_TEST_USM
         exec.queue().wait_and_throw();
 #endif

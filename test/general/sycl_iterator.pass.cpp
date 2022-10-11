@@ -2701,8 +2701,8 @@ DEFINE_TEST(test_merge)
         update_data(host_keys, host_vals);
 
         ::std::vector<T3> exp(2 * n);
-        auto exp1 = ::std::merge(host_keys.get(), host_keys.get() + n, host_vals.get(), host_vals.get() + x, exp.begin());
-        auto res1 = ::std::merge(make_new_policy<new_kernel_name<Policy, 0>>(exec), first1, last1, first2, first2 + x, first3);
+        auto exp1 = dpl::merge(host_keys.get(), host_keys.get() + n, host_vals.get(), host_vals.get() + x, exp.begin());
+        auto res1 = dpl::merge(make_new_policy<new_kernel_name<Policy, 0>>(exec), first1, last1, first2, first2 + x, first3);
         TestDataTransfer<UDTKind::eRes, Size> host_res(*this, res1 - first3);
 #if _PSTL_SYCL_TEST_USM
         exec.queue().wait_and_throw();
