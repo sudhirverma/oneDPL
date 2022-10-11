@@ -1283,12 +1283,12 @@ DEFINE_TEST(test_minmax_element)
         }
         host_keys.update_data();
 
-        auto expected = ::std::minmax_element(host_keys.get(), host_keys.get() + n);
+        auto expected = dpl::minmax_element(host_keys.get(), host_keys.get() + n);
         auto expected_min = expected.first - host_keys.get();
         auto expected_max = expected.second - host_keys.get();
         ::std::pair<Size, Size> expected_offset = { expected_min, expected_max };
 
-        auto result = ::std::minmax_element(make_new_policy<new_kernel_name<Policy, 0>>(exec), first, last);
+        auto result = dpl::minmax_element(make_new_policy<new_kernel_name<Policy, 0>>(exec), first, last);
         auto result_min = result.first - first;
         auto result_max = result.second - first;
 
@@ -2046,23 +2046,23 @@ DEFINE_TEST(test_mismatch)
         // empty sequence case
         if (n == 1)
         {
-            auto res0 = ::std::mismatch(make_new_policy<new_kernel_name<Policy, 0>>(exec), first1, first1, first2, last2);
+            auto res0 = dpl::mismatch(make_new_policy<new_kernel_name<Policy, 0>>(exec), first1, first1, first2, last2);
 #if _PSTL_SYCL_TEST_USM
             exec.queue().wait_and_throw();
 #endif
             EXPECT_TRUE(res0.first == first1 && res0.second == first2, "wrong effect from mismatch_00");
-            res0 = ::std::mismatch(make_new_policy<new_kernel_name<Policy, 1>>(exec), first1, last1, first2, first2);
+            res0 = dpl::mismatch(make_new_policy<new_kernel_name<Policy, 1>>(exec), first1, last1, first2, first2);
 #if _PSTL_SYCL_TEST_USM
             exec.queue().wait_and_throw();
 #endif
             EXPECT_TRUE(res0.first == first1 && res0.second == first2, "wrong effect from mismatch_01");
         }
-        auto res1 = ::std::mismatch(make_new_policy<new_kernel_name<Policy, 2>>(exec), first1, last1, first2, last2);
+        auto res1 = dpl::mismatch(make_new_policy<new_kernel_name<Policy, 2>>(exec), first1, last1, first2, last2);
         EXPECT_TRUE(res1.first == first1 && res1.second == first2, "wrong effect from mismatch_1");
         if (n > 5)
         {
             // first n-10 elements of the subsequence are at the beginning of first sequence
-            auto res2 = ::std::mismatch(make_new_policy<new_kernel_name<Policy, 3>>(exec), first1, last1, first2 + 5, last2);
+            auto res2 = dpl::mismatch(make_new_policy<new_kernel_name<Policy, 3>>(exec), first1, last1, first2 + 5, last2);
 #if _PSTL_SYCL_TEST_USM
             exec.queue().wait_and_throw();
 #endif
