@@ -136,8 +136,8 @@ struct test_set_intersection
         auto sequences = init(first1, last1, first2, last2);
         auto expect = sequences.first;
         auto out = sequences.second;
-        auto expect_res = ::std::set_intersection(first1, last1, first2, last2, expect.begin(), comp);
-        auto res = ::std::set_intersection(exec, first1, last1, first2, last2, out.begin(), comp);
+        auto expect_res = dpl::set_intersection(first1, last1, first2, last2, expect.begin(), comp);
+        auto res = dpl::set_intersection(exec, first1, last1, first2, last2, out.begin(), comp);
 
         EXPECT_TRUE(expect_res - expect.begin() == res - out.begin(), "wrong result for set_intersection");
         EXPECT_EQ_N(expect.begin(), out.begin(), ::std::distance(out.begin(), res), "wrong set_intersection effect");
@@ -150,8 +150,8 @@ struct test_set_intersection
         auto sequences = init(first1, last1, first2, last2);
         auto expect = sequences.first;
         auto out = sequences.second;
-        auto expect_res = ::std::set_intersection(first1, last1, first2, last2, expect.begin());
-        auto res = ::std::set_intersection(exec, first1, last1, first2, last2, out.begin());
+        auto expect_res = dpl::set_intersection(first1, last1, first2, last2, expect.begin());
+        auto res = dpl::set_intersection(exec, first1, last1, first2, last2, out.begin());
 
         EXPECT_TRUE(expect_res - expect.begin() == res - out.begin(), "wrong result for set_intersection without comparator");
         EXPECT_EQ_N(expect.begin(), out.begin(), ::std::distance(out.begin(), res), "wrong set_intersection effect without comparator");

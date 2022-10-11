@@ -3529,7 +3529,7 @@ DEFINE_TEST(test_set_intersection)
         host_keys.update_data(na);
         host_vals.update_data(nb);
 
-        last3 = ::std::set_intersection(make_new_policy<new_kernel_name<Policy, 0>>(exec), first1, last1, first2, last2,
+        last3 = dpl::set_intersection(make_new_policy<new_kernel_name<Policy, 0>>(exec), first1, last1, first2, last2,
                                       first3);
 #if _PSTL_SYCL_TEST_USM
         exec.queue().wait_and_throw();
@@ -3554,7 +3554,7 @@ DEFINE_TEST(test_set_intersection)
             host_keys.update_data(na);
             host_vals.update_data(nb);
 
-            last3 = ::std::set_intersection(make_new_policy<new_kernel_name<Policy, 1>>(exec), first1, last1, first2,
+            last3 = dpl::set_intersection(make_new_policy<new_kernel_name<Policy, 1>>(exec), first1, last1, first2,
                                           last2, first3);
 #if _PSTL_SYCL_TEST_USM
             exec.queue().wait_and_throw();
