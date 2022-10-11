@@ -3261,7 +3261,7 @@ DEFINE_TEST(test_swap_ranges)
         ::std::iota(host_vals.get(), host_vals.get() + n, value_type(n));
         update_data(host_keys, host_vals);
 
-        Iterator2 actual_return = ::std::swap_ranges(make_new_policy<new_kernel_name<Policy, 0>>(exec), first1, last1, first2);
+        Iterator2 actual_return = dpl::swap_ranges(make_new_policy<new_kernel_name<Policy, 0>>(exec), first1, last1, first2);
 
 #if _PSTL_SYCL_TEST_USM
         exec.queue().wait_and_throw();
