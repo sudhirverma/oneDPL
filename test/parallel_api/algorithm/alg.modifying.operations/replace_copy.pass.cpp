@@ -43,8 +43,8 @@ struct test_replace_copy
         dpl::fill_n(expected_first, n, trash);
         dpl::fill_n(out_first, n, trash);
         // Run replace_copy
-        ::std::replace_copy(first, last, expected_first, old_value, new_value);
-        auto k = ::std::replace_copy(exec, first, last, out_first, old_value, new_value);
+        dpl::replace_copy(first, last, expected_first, old_value, new_value);
+        auto k = dpl::replace_copy(exec, first, last, out_first, old_value, new_value);
         EXPECT_EQ_N(expected_first, out_first, n, "wrong replace_copy effect");
         EXPECT_TRUE(out_last == k, "wrong return value from replace_copy");
     }
