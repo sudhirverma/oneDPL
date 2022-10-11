@@ -14,6 +14,7 @@
 //===----------------------------------------------------------------------===//
 
 #include "oneapi/dpl/execution"
+#include "oneapi/dpl/utility"
 #include "oneapi/dpl/pstl/experimental/algorithm"
 
 #include <type_traits>
@@ -38,7 +39,7 @@ test_body_reduction(Policy&& exec, Iterator first, Iterator last, Iterator /* ex
     T var1 = var1_init;
     T var2 = var2_init;
 
-    ::std::experimental::for_loop(::std::forward<Policy>(exec), first, last,
+    ::std::experimental::for_loop(dpl::forward<Policy>(exec), first, last,
                                 ::std::experimental::reduction(var1, T(0), ::std::plus<T>{}),
                                 ::std::experimental::reduction(var2, T(var2_init), oneapi::dpl::__internal::__pstl_min{}),
                                 [](Iterator iter, T& acc1, T& acc2) {
@@ -65,7 +66,7 @@ struct test_body
     void
     operator()(Policy&& exec, Iterator first, Iterator last, Iterator expected_first, Iterator expected_last, Size n)
     {
-        test_body_reduction(::std::forward<Policy>(exec), first, last, expected_first, expected_last, n);
+        test_body_reduction(dpl::forward<Policy>(exec), first, last, expected_first, expected_last, n);
     }
 };
 
@@ -99,7 +100,7 @@ struct test_body_predefined
         T max_var = 5, max_exp = 5;
 
         ::std::experimental::for_loop(
-            ::std::forward<Policy>(exec), first, last, ::std::experimental::reduction_plus(plus_var),
+            dpl::forward<Policy>(exec), first, last, ::std::experimental::reduction_plus(plus_var),
             ::std::experimental::reduction_multiplies(mult_var), ::std::experimental::reduction_min(min_var),
             ::std::experimental::reduction_max(max_var),
             [](Iterator iter, T& plus_acc, T& mult_acc, T& min_acc, T& max_acc) {
@@ -141,7 +142,7 @@ struct test_body_predefined_bits
         T bit_and_var = 15, bit_and_exp = 15;
 
         ::std::experimental::for_loop(
-            ::std::forward<Policy>(exec), first, last, ::std::experimental::reduction_bit_or(bit_or_var),
+            dpl::forward<Policy>(exec), first, last, ::std::experimental::reduction_bit_or(bit_or_var),
             ::std::experimental::reduction_bit_and(bit_and_var), ::std::experimental::reduction_bit_xor(bit_xor_var),
             [](Iterator iter, T& bit_or_acc, T& bit_and_acc, T& bit_xor_acc) {
                 bit_or_acc |= *iter;

@@ -17,6 +17,7 @@
 
 #include _PSTL_TEST_HEADER(execution)
 #include _PSTL_TEST_HEADER(algorithm)
+#include _PSTL_TEST_HEADER(utility)
 
 #if !defined(_PSTL_TEST_SORT) && !defined(_PSTL_TEST_STABLE_SORT)
 #define _PSTL_TEST_SORT
@@ -200,9 +201,9 @@ void
 sort_data(Params&& ...params)
 {
     if (Stable)
-        dpl::stable_sort(::std::forward<Params>(params)...);
+        dpl::stable_sort(dpl::forward<Params>(params)...);
     else
-        dpl::sort(::std::forward<Params>(params)...);
+        dpl::sort(dpl::forward<Params>(params)...);
 }
 
 template <typename OutputIterator1, typename OutputIterator2, typename Size, typename... Compare>
@@ -249,7 +250,7 @@ test_usm(Policy&& exec, OutputIterator tmp_first, OutputIterator tmp_last, Outpu
 
     // Call sort algorithm on prepared data
     const auto _size = _it_to - _it_from;
-    sort_data(::std::forward<Policy>(exec), sortingData, sortingData + _size, compare...);
+    sort_data(dpl::forward<Policy>(exec), sortingData, sortingData + _size, compare...);
 
     // check result
     dt_helper.retrieve_data(_it_from);
@@ -274,7 +275,7 @@ run_test(Policy&& exec, OutputIterator tmp_first, OutputIterator tmp_last, Outpu
 
     // Call sort algorithm on prepared data
     const std::int32_t count0 = KeyCount;
-    sort_data(::std::forward<Policy>(exec), tmp_first + 1, tmp_last - 1, compare...);
+    sort_data(dpl::forward<Policy>(exec), tmp_first + 1, tmp_last - 1, compare...);
 
     check_results(expected_first, tmp_first, n, "wrong result from sort without predicate #1", compare...);
 
@@ -291,10 +292,10 @@ run_test(Policy&& exec, OutputIterator tmp_first, OutputIterator tmp_last, Outpu
             OutputIterator2 expected_last, InputIterator first, InputIterator last, Size n, Compare ...compare)
 {
     // Run tests for USM shared memory (external testing for USM shared memory, once already covered in sycl_iterator.pass.cpp)
-    test_usm<sycl::usm::alloc::shared>(::std::forward<Policy>(exec), tmp_first, tmp_last, expected_first, expected_last,
+    test_usm<sycl::usm::alloc::shared>(dpl::forward<Policy>(exec), tmp_first, tmp_last, expected_first, expected_last,
                                        first, last, n, compare...);
     // Run tests for USM device memory
-    test_usm<sycl::usm::alloc::device>(::std::forward<Policy>(exec), tmp_first, tmp_last, expected_first, expected_last,
+    test_usm<sycl::usm::alloc::device>(dpl::forward<Policy>(exec), tmp_first, tmp_last, expected_first, expected_last,
                                        first, last, n, compare...);
 }
 #endif // _PSTL_SYCL_TEST_USM
@@ -311,7 +312,7 @@ struct test_sort_op
     operator()(Policy&& exec, OutputIterator tmp_first, OutputIterator tmp_last, OutputIterator2 expected_first,
                OutputIterator2 expected_last, InputIterator first, InputIterator last, Size n, Compare ...compare)
     {
-        run_test(::std::forward<Policy>(exec), tmp_first, tmp_last, expected_first, expected_last, first, last, n,
+        run_test(dpl::forward<Policy>(exec), tmp_first, tmp_last, expected_first, expected_last, first, last, n,
                  compare...);
     }
 
@@ -384,10 +385,10 @@ struct test_non_const
     operator()(Policy&& exec, Iterator iter)
     {
 #ifdef _PSTL_TEST_SORT
-        dpl::sort(::std::forward<Policy>(exec), iter, iter, TestUtils::non_const(::std::less<T>()));
+        dpl::sort(dpl::forward<Policy>(exec), iter, iter, TestUtils::non_const(::std::less<T>()));
 #endif // _PSTL_TEST_SORT
 #ifdef _PSTL_TEST_STABLE_SORT
-        dpl::stable_sort(::std::forward<Policy>(exec), iter, iter, TestUtils::non_const(::std::less<T>()));
+        dpl::stable_sort(dpl::forward<Policy>(exec), iter, iter, TestUtils::non_const(::std::less<T>()));
 #endif // _PSTL_TEST_STABLE_SORT
     }
 };

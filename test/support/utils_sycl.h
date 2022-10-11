@@ -33,6 +33,7 @@
 
 #include _PSTL_TEST_HEADER(iterator)
 #include _PSTL_TEST_HEADER(algorithm)
+#include _PSTL_TEST_HEADER(utility)
 #include "oneapi/dpl/pstl/hetero/dpcpp/parallel_backend_sycl.h"
 #include "iterator_utils.h"
 #include "utils_invoke.h"
@@ -87,9 +88,9 @@ template <typename _NewKernelName, typename _Policy,
           oneapi::dpl::__internal::__enable_if_device_execution_policy<_Policy, int> = 0>
 auto
 make_new_policy(_Policy&& __policy)
-    -> decltype(oneapi::dpl::execution::make_device_policy<_NewKernelName>(::std::forward<_Policy>(__policy)))
+    -> decltype(oneapi::dpl::execution::make_device_policy<_NewKernelName>(dpl::forward<_Policy>(__policy)))
 {
-    return oneapi::dpl::execution::make_device_policy<_NewKernelName>(::std::forward<_Policy>(__policy));
+    return oneapi::dpl::execution::make_device_policy<_NewKernelName>(dpl::forward<_Policy>(__policy));
 }
 
 #if ONEDPL_FPGA_DEVICE
@@ -98,10 +99,10 @@ template <typename _NewKernelName, typename _Policy,
 auto
 make_new_policy(_Policy&& __policy)
     -> decltype(oneapi::dpl::execution::make_fpga_policy<::std::decay<_Policy>::type::unroll_factor, _NewKernelName>(
-        ::std::forward<_Policy>(__policy)))
+        dpl::forward<_Policy>(__policy)))
 {
     return oneapi::dpl::execution::make_fpga_policy<::std::decay<_Policy>::type::unroll_factor, _NewKernelName>(
-        ::std::forward<_Policy>(__policy));
+        dpl::forward<_Policy>(__policy));
 }
 #endif
 

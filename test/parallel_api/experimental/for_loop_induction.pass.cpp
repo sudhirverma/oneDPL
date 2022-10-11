@@ -15,6 +15,7 @@
 
 #include "oneapi/dpl/execution"
 #include "oneapi/dpl/algorithm"
+#include "oneapi/dpl/utility"
 #include "oneapi/dpl/pstl/experimental/algorithm"
 
 #include <type_traits>
@@ -46,7 +47,7 @@ test_body_induction(Policy&& exec, Iterator /* first */, Iterator /* last */, It
     T rval_sind = ind_init;
 
     ::std::experimental::for_loop(
-        ::std::forward<Policy>(exec), Size(0), n, ::std::experimental::induction(lval_ind),
+        dpl::forward<Policy>(exec), Size(0), n, ::std::experimental::induction(lval_ind),
         ::std::experimental::induction(clval_ind), ::std::experimental::induction(dpl::move(rval_ind)),
         ::std::experimental::induction(lval_sind, stride), ::std::experimental::induction(clval_sind, stride),
         ::std::experimental::induction(dpl::move(rval_sind), stride),
@@ -83,7 +84,7 @@ test_body_induction_strided(Policy&& exec, Iterator first, Iterator last, Iterat
 
         using Ssize = typename ::std::make_signed<Size>::type;
 
-        ::std::experimental::for_loop_n_strided(::std::forward<Policy>(exec), Ssize(0), Ssize(n), loop_stride,
+        ::std::experimental::for_loop_n_strided(dpl::forward<Policy>(exec), Ssize(0), Ssize(n), loop_stride,
                                               ::std::experimental::induction(lval_ind),
                                               [ind_init, loop_stride](Ssize val, T ind) {
                                                   // We have either 0, stride, 2 * stride, .. or 0, -|stride|, 2 * -|stride|
@@ -115,7 +116,7 @@ test_body_induction_strided(Policy&& exec, Iterator first, Iterator last, Iterat
         lval_ind = ind_init;
 
         ::std::experimental::for_loop_strided(
-            ::std::forward<Policy>(exec), new_first, new_last, loop_stride, ::std::experimental::induction(lval_ind),
+            dpl::forward<Policy>(exec), new_first, new_last, loop_stride, ::std::experimental::induction(lval_ind),
             [ind_init, loop_stride, new_first](Iterator iter, T ind) {
                 auto dist = (loop_stride > 0) ? ::std::distance(new_first, iter) : ::std::distance(iter, new_first);
                 auto real_idx = dist / dpl::abs(loop_stride);
@@ -141,8 +142,8 @@ struct test_body
     void
     operator()(Policy&& exec, Iterator first, Iterator last, Iterator expected_first, Iterator expected_last, Size n)
     {
-        test_body_induction(::std::forward<Policy>(exec), first, last, expected_first, expected_last, n);
-        test_body_induction_strided(::std::forward<Policy>(exec), first, last, expected_first, expected_last, n);
+        test_body_induction(dpl::forward<Policy>(exec), first, last, expected_first, expected_last, n);
+        test_body_induction_strided(dpl::forward<Policy>(exec), first, last, expected_first, expected_last, n);
     }
 };
 

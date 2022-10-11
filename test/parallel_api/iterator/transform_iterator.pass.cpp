@@ -18,6 +18,7 @@
 #include _PSTL_TEST_HEADER(execution)
 #include _PSTL_TEST_HEADER(algorithm)
 #include _PSTL_TEST_HEADER(iterator)
+#include _PSTL_TEST_HEADER(utility)
 
 #include "support/utils.h"
 
@@ -36,7 +37,7 @@ DEFINE_TEST(test_copy)
     {
         TestDataTransfer<UDTKind::eVals, Size> host_vals(*this, n);
 
-        dpl::copy(::std::forward<ExecutionPolicy>(exec), first1, last1, first2);
+        dpl::copy(dpl::forward<ExecutionPolicy>(exec), first1, last1, first2);
 
         host_vals.retrieve_data();
         auto res_begin = host_vals.get();

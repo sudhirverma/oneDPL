@@ -18,6 +18,8 @@
 
 #include "test_config.h"
 
+#include _PSTL_TEST_HEADER(utility)
+
 // File contains common utilities for testing with different types of iterators
 namespace TestUtils
 {

@@ -17,6 +17,7 @@
 
 #include _PSTL_TEST_HEADER(execution)
 #include _PSTL_TEST_HEADER(algorithm)
+#include _PSTL_TEST_HEADER(utility)
 
 #include "support/utils.h"
 
@@ -47,7 +48,7 @@ struct test_shift
         It first_exp, typename ::std::iterator_traits<It>::difference_type n, Algo algo)
     {
         //run a test with host policy and host itertors
-        It res = algo(::std::forward<Policy>(exec), first, ::std::next(first, m), n);
+        It res = algo(dpl::forward<Policy>(exec), first, ::std::next(first, m), n);
         //check result
         algo.check(res, first, m, first_exp, n);
     }
@@ -69,7 +70,7 @@ struct test_shift
         TestUtils::usm_data_transfer<alloc_type, _ValueType> dt_helper(queue, first, m);
 
         auto ptr = dt_helper.get_data();
-        auto het_res = algo(oneapi::dpl::execution::make_device_policy<USM<Algo>>(::std::forward<Policy>(exec)),
+        auto het_res = algo(oneapi::dpl::execution::make_device_policy<USM<Algo>>(dpl::forward<Policy>(exec)),
                             ptr, ptr + m, n);
         _DiffType res_idx = het_res - ptr;
 
@@ -86,7 +87,7 @@ struct test_shift
         It first_exp, typename ::std::iterator_traits<It>::difference_type n, Algo algo)
     {
         //1.1 run a test with hetero policy and host itertors
-        auto res = algo(::std::forward<Policy>(exec), first, first + m, n);
+        auto res = algo(dpl::forward<Policy>(exec), first, first + m, n);
         //1.2 check result
         algo.check(res, first, m, first_exp, n);
 
@@ -102,7 +103,7 @@ struct test_shift
 
             auto het_begin = oneapi::dpl::begin(buf);
 
-            auto het_res = algo(::std::forward<Policy>(exec), het_begin, het_begin + m, n);
+            auto het_res = algo(dpl::forward<Policy>(exec), het_begin, het_begin + m, n);
             res_idx = het_res - het_begin;
         }
         //2.2 check result
@@ -122,7 +123,7 @@ struct shift_left_algo
     template <typename Policy, typename It>
     It operator()(Policy&& exec, It first, It last, typename ::std::iterator_traits<It>::difference_type n)
     {
-        return oneapi::dpl::shift_left(::std::forward<Policy>(exec), first, last, n);
+        return oneapi::dpl::shift_left(dpl::forward<Policy>(exec), first, last, n);
     }
 
     template <typename It, typename ItExp>
@@ -154,7 +155,7 @@ struct shift_right_algo
                             It>::type
     operator()(Policy&& exec, It first, It last, typename ::std::iterator_traits<It>::difference_type n)
     {
-        return oneapi::dpl::shift_right(::std::forward<Policy>(exec), first, last, n);
+        return oneapi::dpl::shift_right(dpl::forward<Policy>(exec), first, last, n);
     }
     //skip the test for non-bidirectional iterator (forward iterator, etc)
     template <typename Policy, typename It>

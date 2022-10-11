@@ -338,7 +338,7 @@ template <typename TTestDataTransfer, typename... Args>
 void retrieve_data(TTestDataTransfer& helper, Args&& ...args)
 {
     helper.retrieve_data();
-    retrieve_data(::std::forward<Args>(args)...);
+    retrieve_data(dpl::forward<Args>(args)...);
 }
 
 /// Copy data from local buffers into source test data storage
@@ -346,7 +346,7 @@ template <typename TTestDataTransfer, typename... Args>
 void update_data(TTestDataTransfer& helper, Args&& ...args)
 {
     helper.update_data();
-    update_data(::std::forward<Args>(args)...);
+    update_data(dpl::forward<Args>(args)...);
 }
 
 // 1) define class as

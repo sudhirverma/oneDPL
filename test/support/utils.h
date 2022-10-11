@@ -505,9 +505,9 @@ struct NonConstAdapter
     template <typename... Types>
     auto
     operator()(Types&&... args) -> decltype(dpl::declval<F>().
-                                            operator()(::std::forward<Types>(args)...))
+                                            operator()(dpl::forward<Types>(args)...))
     {
-        return my_f(::std::forward<Types>(args)...);
+        return my_f(dpl::forward<Types>(args)...);
     }
 };
 
@@ -663,7 +663,7 @@ test_algo_basic_single(F&& f)
 {
     size_t N = 10;
     Sequence<T> in(N, [](size_t v) -> T { return T(v); });
-    invoke_on_all_host_policies()(::std::forward<F>(f), in.begin());
+    invoke_on_all_host_policies()(dpl::forward<F>(f), in.begin());
 }
 
 // Should be used with binary predicate
@@ -674,7 +674,7 @@ test_algo_basic_double(F&& f)
     size_t N = 10;
     Sequence<T> in(N, [](size_t v) -> T { return T(v); });
     Sequence<T> out(N, [](size_t v) -> T { return T(v); });
-    invoke_on_all_host_policies()(::std::forward<F>(f), in.begin(), out.begin());
+    invoke_on_all_host_policies()(dpl::forward<F>(f), in.begin(), out.begin());
 }
 
 template <typename Policy, typename F>

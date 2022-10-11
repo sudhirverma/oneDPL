@@ -17,6 +17,7 @@
 
 #include _PSTL_TEST_HEADER(execution)
 #include _PSTL_TEST_HEADER(algorithm)
+#include _PSTL_TEST_HEADER(utility)
 
 #include "support/utils.h"
 
@@ -89,7 +90,7 @@ struct test_without_compare
         fill_data(first2, mid2, generator1);
         fill_data(mid2, last2, generator2);
         dpl::nth_element(first1, mid1, last1);
-        dpl::nth_element(::std::forward<Policy>(exec), first2, mid2, last2);
+        dpl::nth_element(dpl::forward<Policy>(exec), first2, mid2, last2);
         if (m > 0 && m < n)
         {
             EXPECT_TRUE(is_equal(*mid1, *mid2), "wrong result from nth_element without predicate");
@@ -125,7 +126,7 @@ struct test_with_compare
         fill_data(first2, mid2, generator1);
         fill_data(mid2, last2, generator2);
         dpl::nth_element(first1, mid1, last1, comp);
-        dpl::nth_element(::std::forward<Policy>(exec), first2, mid2, last2, comp);
+        dpl::nth_element(dpl::forward<Policy>(exec), first2, mid2, last2, comp);
         if (m > 0 && m < n)
         {
             EXPECT_TRUE(is_equal(*mid1, *mid2), "wrong result from nth_element with predicate");

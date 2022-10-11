@@ -16,6 +16,7 @@
 #include "oneapi/dpl/execution"
 #include "oneapi/dpl/algorithm"
 #include "oneapi/dpl/cmath"
+#include "oneapi/dpl/utility"
 #include "oneapi/dpl/pstl/experimental/algorithm"
 
 #include "support/utils.h"
@@ -225,8 +226,8 @@ struct test_for_loop_impl
     void
     operator()(Policy&& exec, Iterator first, Iterator last, Iterator expected_first, Iterator expected_last, Size n)
     {
-        test_body_for_loop(::std::forward<Policy>(exec), first, last, expected_first, expected_last, n);
-        test_body_for_loop_integral(::std::forward<Policy>(exec), first, last, expected_first, expected_last, n);
+        test_body_for_loop(dpl::forward<Policy>(exec), first, last, expected_first, expected_last, n);
+        test_body_for_loop_integral(dpl::forward<Policy>(exec), first, last, expected_first, expected_last, n);
     }
 };
 
@@ -252,7 +253,7 @@ test_body_for_loop_strided_neg(Policy&& exec, Iterator first, Iterator /* last *
 
     auto new_expected_last = expected_first;
 
-    test_body_for_loop_strided(::std::forward<Policy>(exec), new_first, new_last, new_expected_first, new_expected_last,
+    test_body_for_loop_strided(dpl::forward<Policy>(exec), new_first, new_last, new_expected_first, new_expected_last,
                                n > 0 ? n - 1 : 0, loop_stride);
 }
 
@@ -273,19 +274,19 @@ struct test_for_loop_strided_impl
     operator()(Policy&& exec, Iterator first, Iterator last, Iterator expected_first, Iterator expected_last, Size n,
                size_t stride)
     {
-        test_body_for_loop_strided(::std::forward<Policy>(exec), first, last, expected_first, expected_last, n, stride);
-        test_body_for_loop_strided_n(::std::forward<Policy>(exec), first, last, expected_first, expected_last, n, stride);
+        test_body_for_loop_strided(dpl::forward<Policy>(exec), first, last, expected_first, expected_last, n, stride);
+        test_body_for_loop_strided_n(dpl::forward<Policy>(exec), first, last, expected_first, expected_last, n, stride);
 
-        test_body_for_loop_strided_integral(::std::forward<Policy>(exec), first, last, expected_first, expected_last, n,
+        test_body_for_loop_strided_integral(dpl::forward<Policy>(exec), first, last, expected_first, expected_last, n,
                                             stride);
 
-        test_body_for_loop_strided_n_integral(::std::forward<Policy>(exec), first, last, expected_first, expected_last, n,
+        test_body_for_loop_strided_n_integral(dpl::forward<Policy>(exec), first, last, expected_first, expected_last, n,
                                               (long)stride);
 
         // Additionally check negative stride with integral and iterator sequence.
-        test_body_for_loop_strided_n_integral(::std::forward<Policy>(exec), first, last, expected_first, expected_last, n,
+        test_body_for_loop_strided_n_integral(dpl::forward<Policy>(exec), first, last, expected_first, expected_last, n,
                                               -(long)stride);
-        test_body_for_loop_strided_neg(::std::forward<Policy>(exec), first, last, expected_first, expected_last, n,
+        test_body_for_loop_strided_neg(dpl::forward<Policy>(exec), first, last, expected_first, expected_last, n,
                                        -(long)stride);
     }
 };
