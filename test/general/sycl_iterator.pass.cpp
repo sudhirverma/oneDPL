@@ -1598,7 +1598,7 @@ DEFINE_TEST(test_any_all_none_of)
             exec.queue().wait_and_throw();
 #endif
             EXPECT_TRUE(!res0, "wrong effect from any_of_0");
-            res0 = ::std::none_of(make_new_policy<new_kernel_name<Policy, 1>>(exec), first1, first1,
+            res0 = dpl::none_of(make_new_policy<new_kernel_name<Policy, 1>>(exec), first1, first1,
                                   [](T1 x) { return x == -1; });
 #if _PSTL_SYCL_TEST_USM
             exec.queue().wait_and_throw();
@@ -1632,7 +1632,7 @@ DEFINE_TEST(test_any_all_none_of)
         EXPECT_TRUE(res3, "wrong effect from any_of_3");
 
         //none_of
-        auto res4 = ::std::none_of(make_new_policy<new_kernel_name<Policy, 6>>(exec), first1, last1,
+        auto res4 = dpl::none_of(make_new_policy<new_kernel_name<Policy, 6>>(exec), first1, last1,
                                    [](T1 x) { return x == -1; });
 #if _PSTL_SYCL_TEST_USM
         exec.queue().wait_and_throw();
