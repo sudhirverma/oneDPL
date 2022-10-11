@@ -91,8 +91,8 @@ struct test_set_union
         auto sequences = init(first1, last1, first2, last2);
         auto expect = sequences.first;
         auto out = sequences.second;
-        auto expect_res = ::std::set_union(first1, last1, first2, last2, expect.begin(), comp);
-        auto res = ::std::set_union(exec, first1, last1, first2, last2, out.begin(), comp);
+        auto expect_res = dpl::set_union(first1, last1, first2, last2, expect.begin(), comp);
+        auto res = dpl::set_union(exec, first1, last1, first2, last2, out.begin(), comp);
 
         EXPECT_TRUE(expect_res - expect.begin() == res - out.begin(), "wrong result for set_union");
         EXPECT_EQ_N(expect.begin(), out.begin(), ::std::distance(out.begin(), res), "wrong set_union effect");
@@ -105,8 +105,8 @@ struct test_set_union
         auto sequences = init(first1, last1, first2, last2);
         auto expect = sequences.first;
         auto out = sequences.second;
-        auto expect_res = ::std::set_union(first1, last1, first2, last2, expect.begin());
-        auto res = ::std::set_union(exec, first1, last1, first2, last2, out.begin());
+        auto expect_res = dpl::set_union(first1, last1, first2, last2, expect.begin());
+        auto res = dpl::set_union(exec, first1, last1, first2, last2, out.begin());
 
         EXPECT_TRUE(expect_res - expect.begin() == res - out.begin(), "wrong result for set_union without comparator");
         EXPECT_EQ_N(expect.begin(), out.begin(), ::std::distance(out.begin(), res), "wrong set_union effect without comparator");

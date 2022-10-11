@@ -3618,14 +3618,15 @@ DEFINE_TEST(test_set_union)
         host_keys.update_data(na);
         host_vals.update_data(nb);
 
-        last3 = ::std::set_union(make_new_policy<new_kernel_name<Policy, 0>>(exec), first1, last1, first2, last2, first3);
+        last3 = dpl::set_union(make_new_policy<new_kernel_name<Policy, 0>>(exec), first1, last1, first2, last2, first3);
 #if _PSTL_SYCL_TEST_USM
         exec.queue().wait_and_throw();
 #endif
         int res_expect[na + nb];
         host_res.retrieve_data();
         auto nres_expect =
-            ::std::set_union(host_keys.get(), host_keys.get() + na, host_vals.get(), host_vals.get() + nb, res_expect) - res_expect;
+            dpl::set_union(host_keys.get(), host_keys.get() + na, host_vals.get(), host_vals.get() + nb, res_expect) -
+            res_expect;
         EXPECT_EQ_N(host_res.get(), res_expect, nres_expect, "wrong effect from set_union a, b");
     }
 };
