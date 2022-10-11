@@ -2595,14 +2595,14 @@ DEFINE_TEST(test_is_heap)
         ::std::make_heap(host_keys.get(), host_keys.get());
         host_keys.update_data();
 
-        auto actual = ::std::is_heap(make_new_policy<new_kernel_name<Policy, 0>>(exec), first, last);
+        auto actual = dpl::is_heap(make_new_policy<new_kernel_name<Policy, 0>>(exec), first, last);
         // True only when n == 1
 #if _PSTL_SYCL_TEST_USM
         exec.queue().wait_and_throw();
 #endif
         EXPECT_TRUE(actual == (n == 1), "wrong result of is_heap_11");
 
-        actual = ::std::is_heap(make_new_policy<new_kernel_name<Policy, 1>>(exec), first, first);
+        actual = dpl::is_heap(make_new_policy<new_kernel_name<Policy, 1>>(exec), first, first);
 #if _PSTL_SYCL_TEST_USM
         exec.queue().wait_and_throw();
 #endif
@@ -2615,14 +2615,14 @@ DEFINE_TEST(test_is_heap)
         ::std::make_heap(host_keys.get(), host_keys.get() + n / 2);
         host_keys.update_data();
 
-        actual = ::std::is_heap(make_new_policy<new_kernel_name<Policy, 0>>(exec), first, last);
+        actual = dpl::is_heap(make_new_policy<new_kernel_name<Policy, 0>>(exec), first, last);
 #if _PSTL_SYCL_TEST_USM
         exec.queue().wait_and_throw();
 #endif
         EXPECT_TRUE(actual == false, "wrong result of is_heap_21");
 
         auto end = first + n / 2;
-        actual = ::std::is_heap(make_new_policy<new_kernel_name<Policy, 1>>(exec), first, end);
+        actual = dpl::is_heap(make_new_policy<new_kernel_name<Policy, 1>>(exec), first, end);
 #if _PSTL_SYCL_TEST_USM
         exec.queue().wait_and_throw();
 #endif
@@ -2632,7 +2632,7 @@ DEFINE_TEST(test_is_heap)
         ::std::make_heap(host_keys.get(), host_keys.get() + n);
         host_keys.update_data();
 
-        actual = ::std::is_heap(make_new_policy<new_kernel_name<Policy, 2>>(exec), first, last);
+        actual = dpl::is_heap(make_new_policy<new_kernel_name<Policy, 2>>(exec), first, last);
 #if _PSTL_SYCL_TEST_USM
         exec.queue().wait_and_throw();
 #endif
