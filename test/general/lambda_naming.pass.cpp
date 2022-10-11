@@ -46,7 +46,7 @@ int main() {
     auto buf_out_begin_2 = oneapi::dpl::begin(out_buf_2);
     dpl::copy(policy, buf_begin, buf_end, buf_out_begin_2);
     dpl::copy(policy, buf_out_begin_2, buf_out_begin_2 + n, buf_begin);
-    ::std::inplace_merge(policy, buf_begin, buf_begin + n / 2, buf_end);
+    dpl::inplace_merge(policy, buf_begin, buf_begin + n / 2, buf_end);
     auto red_val = ::std::reduce(policy, buf_begin, buf_end, 1);
     EXPECT_TRUE(red_val == 42001, "wrong return value from reduce");
     auto buf_out_begin = oneapi::dpl::begin(out_buf);

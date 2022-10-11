@@ -33,8 +33,8 @@ struct test_one_policy
                Generator1 generator1, Generator2 generator2, Compare comp)
     {
         auto mid = init(first1, last1, first2, last2, generator1, generator2, m);
-        ::std::inplace_merge(first1, mid.first, last1, comp);
-        ::std::inplace_merge(exec, first2, mid.second, last2, comp);
+        dpl::inplace_merge(first1, mid.first, last1, comp);
+        dpl::inplace_merge(exec, first2, mid.second, last2, comp);
         EXPECT_EQ_N(first1, first2, n, "wrong effect from inplace_merge with predicate");
     }
 
