@@ -283,8 +283,8 @@ test_set(Compare compare, bool comp_flag)
             Sequence<T1> in1(n, [](::std::size_t k) { return rand() % (2 * k + 1); });
             Sequence<T2> in2(m, [m](::std::size_t k) { return (m % 2) * rand() + rand() % (k + 1); });
 
-            ::std::sort(in1.begin(), in1.end(), compare);
-            ::std::sort(in2.begin(), in2.end(), compare);
+            dpl::sort(in1.begin(), in1.end(), compare);
+            dpl::sort(in2.begin(), in2.end(), compare);
 
 #ifdef _PSTL_TEST_SET_UNION
             if(comp_flag)

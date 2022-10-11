@@ -38,7 +38,7 @@ int main() {
 
     dpl::fill(policy, buf_begin_discard_write, buf_begin_discard_write + n, 1);
 #if __SYCL_UNNAMED_LAMBDA__
-    ::std::sort(policy, buf_begin, buf_end);
+    dpl::sort(policy, buf_begin, buf_end);
     dpl::for_each(policy, buf_begin, buf_end, [](int& x) { x += 41; });
 
 #if !ONEDPL_FPGA_DEVICE

@@ -200,7 +200,7 @@ struct test_zip_iterator {
         // sanity check if sequence is un-sorted.
         auto res = dpl::is_sorted(b, e, sort_fun());
         EXPECT_TRUE(!res, "input sequence to be sorted is already sorted! Test might lead to false positives.");
-        ::std::sort(oneapi::dpl::make_zip_iterator(in1.begin(), in2.begin()),
+        dpl::sort(oneapi::dpl::make_zip_iterator(in1.begin(), in2.begin()),
                   oneapi::dpl::make_zip_iterator(in1.end(), in2.end()),
                   sort_fun());
         res = dpl::is_sorted(b, e, sort_fun());

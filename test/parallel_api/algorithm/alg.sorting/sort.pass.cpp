@@ -202,7 +202,7 @@ sort_data(Params&& ...params)
     if (Stable)
         ::std::stable_sort(::std::forward<Params>(params)...);
     else
-        ::std::sort(::std::forward<Params>(params)...);
+        dpl::sort(::std::forward<Params>(params)...);
 }
 
 template <typename OutputIterator1, typename OutputIterator2, typename Size, typename... Compare>
@@ -384,7 +384,7 @@ struct test_non_const
     operator()(Policy&& exec, Iterator iter)
     {
 #ifdef _PSTL_TEST_SORT
-        ::std::sort(::std::forward<Policy>(exec), iter, iter, TestUtils::non_const(::std::less<T>()));
+        dpl::sort(::std::forward<Policy>(exec), iter, iter, TestUtils::non_const(::std::less<T>()));
 #endif // _PSTL_TEST_SORT
 #ifdef _PSTL_TEST_STABLE_SORT
         ::std::stable_sort(::std::forward<Policy>(exec), iter, iter, TestUtils::non_const(::std::less<T>()));

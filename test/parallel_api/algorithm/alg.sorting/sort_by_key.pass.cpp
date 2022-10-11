@@ -49,7 +49,7 @@ test_with_usm(sycl::queue& q)
 
     auto myPolicy = oneapi::dpl::execution::make_device_policy<
         TestUtils::unique_kernel_name<class copy, TestUtils::uniq_kernel_index<alloc_type>()>>(q);
-    std::sort(myPolicy, first, last,
+    dpl::sort(myPolicy, first, last,
               [](const auto& item1, const auto& item2) { return std::get<0>(item1) > std::get<0>(item2); });
 
     int h_skey[N] = {};

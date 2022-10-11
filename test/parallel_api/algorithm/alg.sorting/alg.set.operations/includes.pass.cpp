@@ -105,10 +105,10 @@ test_includes(Compare compare)
     Sequence<T2> in4(n_max, [](::std::size_t k) { return rand() % (k/2 + 1); });
 
     //prepare the input ranges: 1-2 for testing with compare, 3-4 for testing without compare
-    ::std::sort(in1.begin(), in1.end(), compare);
-    ::std::sort(in2.begin(), in2.end(), compare);
-    ::std::sort(in3.begin(), in3.end());
-    ::std::sort(in4.begin(), in4.end());
+    dpl::sort(in1.begin(), in1.end(), compare);
+    dpl::sort(in2.begin(), in2.end(), compare);
+    dpl::sort(in3.begin(), in3.end());
+    dpl::sort(in4.begin(), in4.end());
 
     for (::std::size_t n = 0; n < n_max; n = n <= 16 ? n + 1 : size_t(3.1415 * n))
     {
