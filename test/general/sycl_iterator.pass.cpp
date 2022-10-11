@@ -810,7 +810,7 @@ DEFINE_TEST(test_move)
         dpl::fill(host_vals.get(), host_vals.get() + n, IteratorValueType{ 0 });
         update_data(host_keys, host_vals);
 
-        ::std::move(make_new_policy<new_kernel_name<Policy, 0>>(exec), first1, last1, first2);
+        dpl::move(make_new_policy<new_kernel_name<Policy, 0>>(exec), first1, last1, first2);
 #if _PSTL_SYCL_TEST_USM
         exec.queue().wait_and_throw();
 #endif

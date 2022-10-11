@@ -121,11 +121,11 @@ template <typename T>
 struct LocalWrapper
 {
     explicit LocalWrapper(std::int32_t k) : my_val(k) {}
-    LocalWrapper(LocalWrapper&& input) { my_val = ::std::move(input.my_val); }
+    LocalWrapper(LocalWrapper&& input) { my_val = dpl::move(input.my_val); }
     LocalWrapper&
     operator=(LocalWrapper&& input)
     {
-        my_val = ::std::move(input.my_val);
+        my_val = dpl::move(input.my_val);
         return *this;
     }
     bool

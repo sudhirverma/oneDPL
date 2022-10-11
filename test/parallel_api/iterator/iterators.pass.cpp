@@ -153,9 +153,9 @@ struct sort_fun{
 template <typename InputIterator>
 void test_explicit_move(InputIterator i, InputIterator j) {
     using value_type = typename ::std::iterator_traits<InputIterator>::value_type;
-    value_type t(::std::move(*i));
-    *i = ::std::move(*j);
-    *j = ::std::move(t);
+    value_type t(dpl::move(*i));
+    *i = dpl::move(*j);
+    *j = dpl::move(t);
 }
 
 struct test_zip_iterator {

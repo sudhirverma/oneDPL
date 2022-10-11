@@ -30,11 +30,11 @@ template <typename T>
 struct DataType
 {
     explicit DataType(std::int32_t k) : my_val(k) {}
-    DataType(DataType&& input) { my_val = ::std::move(input.my_val); }
+    DataType(DataType&& input) { my_val = dpl::move(input.my_val); }
     DataType&
     operator=(DataType&& input)
     {
-        my_val = ::std::move(input.my_val);
+        my_val = dpl::move(input.my_val);
         return *this;
     }
     T
