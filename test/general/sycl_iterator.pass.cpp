@@ -2862,7 +2862,7 @@ DEFINE_TEST(test_partial_sort)
         // Sort a subrange
         {
             auto end1 = first1 + end_idx;
-            ::std::partial_sort(make_new_policy<new_kernel_name<Policy, 0>>(exec), first1, end1, last1);
+            dpl::partial_sort(make_new_policy<new_kernel_name<Policy, 0>>(exec), first1, end1, last1);
 #if _PSTL_SYCL_TEST_USM
             exec.queue().wait_and_throw();
 #endif
@@ -2881,7 +2881,7 @@ DEFINE_TEST(test_partial_sort)
         // Sort a whole sequence
         if (end_idx > last1 - first1)
         {
-            ::std::partial_sort(make_new_policy<new_kernel_name<Policy, 1>>(exec), first1, last1, last1);
+            dpl::partial_sort(make_new_policy<new_kernel_name<Policy, 1>>(exec), first1, last1, last1);
 #if _PSTL_SYCL_TEST_USM
             exec.queue().wait_and_throw();
 #endif

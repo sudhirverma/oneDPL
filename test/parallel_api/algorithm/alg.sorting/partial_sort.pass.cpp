@@ -72,11 +72,11 @@ struct test_brick_partial_sort
             auto m1 = tmp_first + p;
             auto m2 = exp_first + p;
 
-            ::std::partial_sort(exp_first, m2, exp_last, compare);
+            dpl::partial_sort(exp_first, m2, exp_last, compare);
 #if !TEST_DPCPP_BACKEND_PRESENT
             count_comp = 0;
 #endif
-            ::std::partial_sort(exec, tmp_first, m1, tmp_last, compare);
+            dpl::partial_sort(exec, tmp_first, m1, tmp_last, compare);
             EXPECT_EQ_N(exp_first, tmp_first, p, "wrong effect from partial_sort with predicate");
 
 #if !TEST_DPCPP_BACKEND_PRESENT
@@ -124,8 +124,8 @@ struct test_brick_partial_sort
             auto m1 = tmp_first + p;
             auto m2 = exp_first + p;
 
-            ::std::partial_sort(exp_first, m2, exp_last);
-            ::std::partial_sort(exec, tmp_first, m1, tmp_last);
+            dpl::partial_sort(exp_first, m2, exp_last);
+            dpl::partial_sort(exec, tmp_first, m1, tmp_last);
             EXPECT_EQ_N(exp_first, tmp_first, p, "wrong effect from partial_sort without predicate");
         }
     }
