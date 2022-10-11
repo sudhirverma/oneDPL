@@ -1137,9 +1137,9 @@ DEFINE_TEST(test_max_element)
         }
         host_keys.update_data();
 
-        auto expected_max_offset = ::std::max_element(host_keys.get(), host_keys.get() + n) - host_keys.get();
+        auto expected_max_offset = dpl::max_element(host_keys.get(), host_keys.get() + n) - host_keys.get();
 
-        auto result_max_offset = ::std::max_element(make_new_policy<new_kernel_name<Policy, 0>>(exec), first, last) - first;
+        auto result_max_offset = dpl::max_element(make_new_policy<new_kernel_name<Policy, 0>>(exec), first, last) - first;
 #if _PSTL_SYCL_TEST_USM
         exec.queue().wait_and_throw();
 #endif

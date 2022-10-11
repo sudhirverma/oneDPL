@@ -67,8 +67,8 @@ struct check_maxelement
     void
     operator()(Policy&& exec, Iterator begin, Iterator end)
     {
-        const Iterator expect = ::std::max_element(begin, end);
-        const Iterator result = ::std::max_element(exec, begin, end);
+        const Iterator expect = dpl::max_element(begin, end);
+        const Iterator result = dpl::max_element(exec, begin, end);
         EXPECT_TRUE(expect == result, "wrong return result from max_element");
     }
 };
@@ -81,8 +81,8 @@ struct check_maxelement_predicate
     operator()(Policy&& exec, Iterator begin, Iterator end)
     {
         typedef typename ::std::iterator_traits<Iterator>::value_type T;
-        const Iterator expect = ::std::max_element(begin, end);
-        const Iterator result_pred = ::std::max_element(exec, begin, end, ::std::less<T>());
+        const Iterator expect = dpl::max_element(begin, end);
+        const Iterator result_pred = dpl::max_element(exec, begin, end, ::std::less<T>());
         EXPECT_TRUE(expect == result_pred, "wrong return result from max_element with predicate");
     }
 };
