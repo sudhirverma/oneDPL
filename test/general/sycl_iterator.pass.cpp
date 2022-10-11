@@ -1771,7 +1771,7 @@ DEFINE_TEST(test_find_first_of)
             host_vals.update_data();
 
             auto res =
-                ::std::find_first_of(make_new_policy<new_kernel_name<Policy, 0>>(exec), first1, first1, first2, last2);
+                dpl::find_first_of(make_new_policy<new_kernel_name<Policy, 0>>(exec), first1, first1, first2, last2);
 #if _PSTL_SYCL_TEST_USM
             exec.queue().wait_and_throw();
 #endif
@@ -1779,7 +1779,7 @@ DEFINE_TEST(test_find_first_of)
         }
         else if (n >= 2 && n < 10)
         {
-            auto res = ::std::find_first_of(make_new_policy<new_kernel_name<Policy, 1>>(exec), first1, last1,
+            auto res = dpl::find_first_of(make_new_policy<new_kernel_name<Policy, 1>>(exec), first1, last1,
                                             first2, first2);
 #if _PSTL_SYCL_TEST_USM
             exec.queue().wait_and_throw();
@@ -1790,7 +1790,7 @@ DEFINE_TEST(test_find_first_of)
             ::std::iota(host_vals.get(), host_vals.get() + n, T1(5));
             host_vals.update_data();
 
-            res = ::std::find_first_of(make_new_policy<new_kernel_name<Policy, 2>>(exec), first1, last1, first2, last2);
+            res = dpl::find_first_of(make_new_policy<new_kernel_name<Policy, 2>>(exec), first1, last1, first2, last2);
 #if _PSTL_SYCL_TEST_USM
             exec.queue().wait_and_throw();
 #endif
@@ -1808,7 +1808,7 @@ DEFINE_TEST(test_find_first_of)
             ::std::iota(host_keys.get() + pos2, host_keys.get() + pos2 + num, T1(7));
             host_keys.update_data();
 
-            auto res = ::std::find_first_of(make_new_policy<new_kernel_name<Policy, 3>>(exec), first1, last1, first2, last2);
+            auto res = dpl::find_first_of(make_new_policy<new_kernel_name<Policy, 3>>(exec), first1, last1, first2, last2);
 #if _PSTL_SYCL_TEST_USM
             exec.queue().wait_and_throw();
 #endif
@@ -1818,7 +1818,7 @@ DEFINE_TEST(test_find_first_of)
             ::std::iota(host_keys.get() + pos1, host_keys.get() + pos1 + num, T1(6));
             host_keys.update_data();
 
-            res = ::std::find_first_of(make_new_policy<new_kernel_name<Policy, 4>>(exec), first1, last1, first2, last2);
+            res = dpl::find_first_of(make_new_policy<new_kernel_name<Policy, 4>>(exec), first1, last1, first2, last2);
 #if _PSTL_SYCL_TEST_USM
             exec.queue().wait_and_throw();
 #endif
@@ -3331,7 +3331,7 @@ DEFINE_TEST(test_nth_element)
                       << ::std::endl;
         }
         is_correct =
-            ::std::find_first_of(host_first1, host_first1 + n / 2, host_first1 + n / 2, host_first1 + n,
+            dpl::find_first_of(host_first1, host_first1 + n / 2, host_first1 + n / 2, host_first1 + n,
                                [comp](T1& x, T2& y) { return comp(y, x); }) ==
                      host_first1 + n / 2;
         EXPECT_TRUE(is_correct, "wrong effect from nth_element");
