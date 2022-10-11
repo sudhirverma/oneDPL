@@ -1562,7 +1562,7 @@ DEFINE_TEST(test_is_partitioned)
         EXPECT_TRUE(result_bool == expected_bool_is_odd, "wrong effect from is_partitioned (Test #2 is odd)");
 
         // The code as below was added to prevent accessor destruction working with host memory
-        ::std::partition(host_keys.get(), host_keys.get() + n, is_odd);
+        dpl::partition(host_keys.get(), host_keys.get() + n, is_odd);
         expected_bool_is_odd = dpl::is_partitioned(host_keys.get(), host_keys.get() + n, is_odd);
         host_keys.update_data();
 
@@ -2502,7 +2502,7 @@ DEFINE_TEST(test_partition)
 
         // invoke partition
         auto unary_op = [](IteratorValueType value) { return (value % 3 == 0) && (value % 2 == 0); };
-        auto res = ::std::partition(make_new_policy<new_kernel_name<Policy, 0>>(exec), first, last, unary_op);
+        auto res = dpl::partition(make_new_policy<new_kernel_name<Policy, 0>>(exec), first, last, unary_op);
 #if _PSTL_SYCL_TEST_USM
         exec.queue().wait_and_throw();
 #endif

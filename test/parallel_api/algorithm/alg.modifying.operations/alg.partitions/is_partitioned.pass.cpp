@@ -46,7 +46,7 @@ test(Predicate pred)
     for (::std::size_t n1 = 0; n1 <= max_n; n1 = n1 <= 16 ? n1 + 1 : ::std::size_t(3.1415 * n1))
     {
         invoke_on_all_policies<0>()(test_is_partitioned<T>(), in.begin(), in.begin() + n1, pred);
-        ::std::partition(in.begin(), in.begin() + n1, pred);
+        dpl::partition(in.begin(), in.begin() + n1, pred);
         invoke_on_all_policies<1>()(test_is_partitioned<T>(), in.cbegin(), in.cbegin() + n1, pred);
     }
 }

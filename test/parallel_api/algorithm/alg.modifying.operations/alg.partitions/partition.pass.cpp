@@ -76,7 +76,7 @@ struct test_partition
                UnaryOp unary_op, Generator generator)
     {
         fill_data(first, last, generator);
-        BiDirIt actual_ret = ::std::partition(exec, first, last, unary_op);
+        BiDirIt actual_ret = dpl::partition(exec, first, last, unary_op);
         EXPECT_TRUE(dpl::all_of(first, actual_ret, unary_op) && !dpl::any_of(actual_ret, last, unary_op),
                     "wrong effect from partition");
     }
