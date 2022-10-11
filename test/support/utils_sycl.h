@@ -32,6 +32,7 @@
 #include "test_config.h"
 
 #include _PSTL_TEST_HEADER(iterator)
+#include _PSTL_TEST_HEADER(algorithm)
 #include "oneapi/dpl/pstl/hetero/dpcpp/parallel_backend_sycl.h"
 #include "iterator_utils.h"
 #include "utils_invoke.h"
@@ -63,7 +64,7 @@ template <typename Iterator, typename T>
 bool
 check_values(Iterator first, Iterator last, const T& val)
 {
-    return ::std::all_of(first, last, [&val](const T& x) { return x == val; });
+    return dpl::all_of(first, last, [&val](const T& x) { return x == val; });
 }
 
 auto async_handler = [](sycl::exception_list ex_list) {

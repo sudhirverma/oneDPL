@@ -87,7 +87,7 @@ struct test_replace
     typename ::std::enable_if<::std::is_same<T, copy_int>::value, bool>::type_t
     check(Iterator1 b, Iterator1 e)
     {
-        return ::std::all_of(b, e, [](const copy_int& elem) { return elem.copied_times == 0; });
+        return dpl::all_of(b, e, [](const copy_int& elem) { return elem.copied_times == 0; });
     }
 };
 

@@ -1604,8 +1604,8 @@ DEFINE_TEST(test_any_all_none_of)
             exec.queue().wait_and_throw();
 #endif
             EXPECT_TRUE(res0, "wrong effect from none_of_0");
-            res0 = ::std::all_of(make_new_policy<new_kernel_name<Policy, 2>>(exec), first1, first1,
-                                 [](T1 x) { return x % 2 == 0; });
+            res0 = dpl::all_of(make_new_policy<new_kernel_name<Policy, 2>>(exec), first1, first1,
+                               [](T1 x) { return x % 2 == 0; });
 #if _PSTL_SYCL_TEST_USM
             exec.queue().wait_and_throw();
 #endif
@@ -1640,8 +1640,8 @@ DEFINE_TEST(test_any_all_none_of)
         EXPECT_TRUE(res4, "wrong effect from none_of");
 
         //all_of
-        auto res5 = ::std::all_of(make_new_policy<new_kernel_name<Policy, 7>>(exec), first1, last1,
-                                  [](T1 x) { return x % 2 == 0; });
+        auto res5 = dpl::all_of(make_new_policy<new_kernel_name<Policy, 7>>(exec), first1, last1,
+                                [](T1 x) { return x % 2 == 0; });
 #if _PSTL_SYCL_TEST_USM
         exec.queue().wait_and_throw();
 #endif
@@ -2509,7 +2509,7 @@ DEFINE_TEST(test_partition)
 
         // check
         host_keys.retrieve_data();
-        EXPECT_TRUE(::std::all_of(host_keys.get(), host_keys.get() + (res - first), unary_op) &&
+        EXPECT_TRUE(dpl::all_of(host_keys.get(), host_keys.get() + (res - first), unary_op) &&
                         !::std::any_of(host_keys.get() + (res - first), host_keys.get() + n, unary_op),
                     "wrong effect from partition");
         // init
@@ -2523,7 +2523,7 @@ DEFINE_TEST(test_partition)
 #endif
 
         host_keys.retrieve_data();
-        EXPECT_TRUE(::std::all_of(host_keys.get(), host_keys.get() + (res - first), unary_op) &&
+        EXPECT_TRUE(dpl::all_of(host_keys.get(), host_keys.get() + (res - first), unary_op) &&
                         !::std::any_of(host_keys.get() + (res - first), host_keys.get() + n, unary_op) &&
                         ::std::is_sorted(host_keys.get(), host_keys.get() + (res - first)) &&
                         ::std::is_sorted(host_keys.get() + (res - first), host_keys.get() + n),
@@ -2873,7 +2873,7 @@ DEFINE_TEST(test_partial_sort)
             auto host_first1 = host_keys.get();
             EXPECT_TRUE(::std::is_sorted(host_first1, host_first1 + end_idx), "wrong effect from partial_sort_1");
 
-            auto res = ::std::all_of(host_first1 + end_idx, host_first1 + n,
+            auto res = dpl::all_of(host_first1 + end_idx, host_first1 + n,
                                    [&](T1 val) { return val >= *(host_first1 + end_idx - 1); });
             EXPECT_TRUE(res, "wrong effect from partial_sort_1");
         }
@@ -2932,7 +2932,7 @@ DEFINE_TEST(test_partial_sort_copy)
 
             // Now ensure that the original sequence wasn't changed by partial_sort_copy
             auto init = value;
-            auto res = ::std::all_of(host_first1, host_first1 + n, [&init](T1 val) { return val == init--; });
+            auto res = dpl::all_of(host_first1, host_first1 + n, [&init](T1 val) { return val == init--; });
             EXPECT_TRUE(res, "original sequence was changed by partial_sort_copy_1");
         }
 
@@ -2953,7 +2953,7 @@ DEFINE_TEST(test_partial_sort_copy)
 
             // Now ensure that partial_sort_copy hasn't change the unsorted part of original sequence
             auto init = value - end_idx;
-            auto res = ::std::all_of(host_first1 + end_idx, host_first1 + n, [&init](T1 val) { return val == init--; });
+            auto res = dpl::all_of(host_first1 + end_idx, host_first1 + n, [&init](T1 val) { return val == init--; });
             EXPECT_TRUE(res, "original sequence was changed by partial_sort_copy_2");
         }
     }
@@ -3277,8 +3277,8 @@ DEFINE_TEST(test_swap_ranges)
             auto host_first1 = host_keys.get();
             auto host_first2 = host_vals.get();
             bool check =
-                ::std::all_of(host_first2, host_first2 + n, [&i](reference a) { return a == value_type(i++); }) &&
-                ::std::all_of(host_first1, host_first1 + n, [&i](reference a) { return a == value_type(i++); });
+                dpl::all_of(host_first2, host_first2 + n, [&i](reference a) { return a == value_type(i++); }) &&
+                dpl::all_of(host_first1, host_first1 + n, [&i](reference a) { return a == value_type(i++); });
 
             EXPECT_TRUE(check, "wrong effect of swap_ranges");
         }

@@ -41,7 +41,7 @@ void test_policy_instance(const Policy& policy)
 #if _PSTL_SYCL_TEST_USM
     policy.queue().wait_and_throw();
 #endif
-    EXPECT_TRUE(::std::all_of(a.begin(), a.end(), [](int i) { return i == -1; }), "wrong result of ::std::fill with policy");
+    EXPECT_TRUE(dpl::all_of(a.begin(), a.end(), [](int i) { return i == -1; }), "wrong result of ::std::fill with policy");
 }
 #endif // TEST_DPCPP_BACKEND_PRESENT
 

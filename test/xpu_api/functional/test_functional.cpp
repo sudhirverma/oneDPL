@@ -36,8 +36,7 @@
 template<typename Iterator, typename T>
 bool check_values(Iterator first, Iterator last, const T& val)
 {
-    return std::all_of(first, last,
-                       [&val](const T& x) { return x == val; });
+    return dpl::all_of(first, last, [&val](const T& x) { return x == val; });
 }
 
 

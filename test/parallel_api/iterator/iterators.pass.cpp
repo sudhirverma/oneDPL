@@ -128,13 +128,13 @@ struct test_counting_iterator {
         //checks in using
         ::std::for_each(b, e, [&in, &value](IntType i) { in[i] = value; });
 
-        auto res = ::std::all_of(in.begin(), in.begin() + begin, [&value](const T& a) {return a!=value;});
+        auto res = dpl::all_of(in.begin(), in.begin() + begin, [&value](const T& a) {return a!=value;});
         EXPECT_TRUE(res, "wrong result with counting_iterator in vector's begin portion");
 
-        res = ::std::all_of(in.begin() + begin, in.begin() + end, [&value](const T& a) {return a==value;});
+        res = dpl::all_of(in.begin() + begin, in.begin() + end, [&value](const T& a) {return a==value;});
         EXPECT_TRUE(res, "wrong result with counting_iterator in vector's main portion");
 
-        res = ::std::all_of(in.begin() + end, in.end(), [&value](const T& a) {return a!=value;});
+        res = dpl::all_of(in.begin() + end, in.end(), [&value](const T& a) {return a!=value;});
         EXPECT_TRUE(res, "wrong result with counting_iterator in vector's end portion");
 
         //explicit checks of the counting iterator specific
@@ -175,10 +175,10 @@ struct test_zip_iterator {
         //simple check for-loop.
         {
         ::std::for_each(b, e, [](const ::std::tuple<T1&, T2&>& a) { ::std::get<0>(a) = 1, ::std::get<1>(a) = 1;});
-        auto res = ::std::all_of(b, e, [](const ::std::tuple<T1&, T2&>& a) {return ::std::get<0>(a) == 1 && ::std::get<1>(a) == 1;});
+        auto res = dpl::all_of(b, e, [](const ::std::tuple<T1&, T2&>& a) {return ::std::get<0>(a) == 1 && ::std::get<1>(a) == 1;});
         EXPECT_TRUE(res, "wrong result sequence assignment to (1,1) with zip_iterator iterator");
         //all_of check for iterator which is constructed passing variadic arguments
-        res = ::std::all_of(c, e, [](const ::std::tuple<T1&, T2&>& a) {return ::std::get<0>(a) == 1 && ::std::get<1>(a) == 1;});
+        res = dpl::all_of(c, e, [](const ::std::tuple<T1&, T2&>& a) {return ::std::get<0>(a) == 1 && ::std::get<1>(a) == 1;});
         EXPECT_TRUE(res, "wrong result of all_of algorithm with zip_iterator iterator which is constructed passing variadic arguments");
         }
 
@@ -268,7 +268,7 @@ struct test_transform_iterator {
         auto list_it1 = oneapi::dpl::make_transform_iterator(f_list.begin(), ref_functor);
         auto list_it2 = oneapi::dpl::make_transform_iterator(f_list.end(), ref_functor);
         ::std::fill(list_it1, list_it2, 7);
-        EXPECT_TRUE(::std::all_of(f_list.begin(), f_list.end(), [](int x){ return x == 7; }), 
+        EXPECT_TRUE(dpl::all_of(f_list.begin(), f_list.end(), [](int x){ return x == 7; }), 
             "wrong result from fill with forward_iterator wrapped with transform_iterator");
 
         auto test_lambda = [](T2& x){ return x + 1; };
