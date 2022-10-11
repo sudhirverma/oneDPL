@@ -2919,7 +2919,7 @@ DEFINE_TEST(test_partial_sort_copy)
             auto end2 = first2 + end_idx;
 
             auto last_sorted =
-                ::std::partial_sort_copy(make_new_policy<new_kernel_name<Policy, 0>>(exec), first1, last1, first2, end2);
+                dpl::partial_sort_copy(make_new_policy<new_kernel_name<Policy, 0>>(exec), first1, last1, first2, end2);
 #if _PSTL_SYCL_TEST_USM
             exec.queue().wait_and_throw();
 #endif
@@ -2940,7 +2940,7 @@ DEFINE_TEST(test_partial_sort_copy)
         if (end_idx > last1 - first1)
         {
             auto last_sorted =
-                ::std::partial_sort_copy(make_new_policy<new_kernel_name<Policy, 2>>(exec), first1, last1, first2, last2);
+                dpl::partial_sort_copy(make_new_policy<new_kernel_name<Policy, 2>>(exec), first1, last1, first2, last2);
 #if _PSTL_SYCL_TEST_USM
             exec.queue().wait_and_throw();
 #endif
