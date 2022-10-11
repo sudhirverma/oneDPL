@@ -35,8 +35,8 @@ struct test_count
     void
     operator()(Policy&& exec, Iterator first, Iterator last, T needle)
     {
-        auto expected = ::std::count(first, last, needle);
-        auto result = ::std::count(exec, first, last, needle);
+        auto expected = dpl::count(first, last, needle);
+        auto result = dpl::count(exec, first, last, needle);
         EXPECT_EQ(expected, result, "wrong count result");
     }
 };

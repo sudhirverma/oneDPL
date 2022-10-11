@@ -1430,7 +1430,7 @@ DEFINE_TEST(test_count)
 
         // check when arbitrary should be counted
         ReturnType expected = (n - 1) / 10 + 1;
-        ReturnType result = ::std::count(make_new_policy<new_kernel_name<Policy, 0>>(exec), first, last, ValueType{0});
+        ReturnType result = dpl::count(make_new_policy<new_kernel_name<Policy, 0>>(exec), first, last, ValueType{0});
 #if _PSTL_SYCL_TEST_USM
         exec.queue().wait_and_throw();
 #endif
@@ -1441,7 +1441,7 @@ DEFINE_TEST(test_count)
 
         // check when none should be counted
         expected = 0;
-        result = ::std::count(make_new_policy<new_kernel_name<Policy, 0>>(exec), first, last, ValueType{12});
+        result = dpl::count(make_new_policy<new_kernel_name<Policy, 0>>(exec), first, last, ValueType{12});
 #if _PSTL_SYCL_TEST_USM
         exec.queue().wait_and_throw();
 #endif
@@ -1455,7 +1455,7 @@ DEFINE_TEST(test_count)
         host_keys.update_data();
 
         expected = n;
-        result = ::std::count(make_new_policy<new_kernel_name<Policy, 0>>(exec), first, last, ValueType{7});
+        result = dpl::count(make_new_policy<new_kernel_name<Policy, 0>>(exec), first, last, ValueType{7});
 #if _PSTL_SYCL_TEST_USM
         exec.queue().wait_and_throw();
 #endif
