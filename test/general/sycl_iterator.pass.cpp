@@ -1705,7 +1705,7 @@ DEFINE_TEST(test_find_if)
         // empty sequence case
         if (n == 1)
         {
-            auto res0 = ::std::find_if(make_new_policy<new_kernel_name<Policy, 0>>(exec), first1, first1,
+            auto res0 = dpl::find_if(make_new_policy<new_kernel_name<Policy, 0>>(exec), first1, first1,
                                        [n](T1 x) { return x == n - 1; });
 #if _PSTL_SYCL_TEST_USM
             exec.queue().wait_and_throw();
@@ -1718,21 +1718,21 @@ DEFINE_TEST(test_find_if)
             EXPECT_TRUE(res0 == first1, "wrong effect from find_0");
         }
         // find_if
-        auto res1 = ::std::find_if(make_new_policy<new_kernel_name<Policy, 2>>(exec), first1, last1,
+        auto res1 = dpl::find_if(make_new_policy<new_kernel_name<Policy, 2>>(exec), first1, last1,
                                    [n](T1 x) { return x == n - 1; });
 #if _PSTL_SYCL_TEST_USM
         exec.queue().wait_and_throw();
 #endif
         EXPECT_TRUE((res1 - first1) == n - 1, "wrong effect from find_if_1");
 
-        auto res2 = ::std::find_if(make_new_policy<new_kernel_name<Policy, 3>>(exec), first1, last1,
+        auto res2 = dpl::find_if(make_new_policy<new_kernel_name<Policy, 3>>(exec), first1, last1,
                                    [](T1 x) { return x == -1; });
 #if _PSTL_SYCL_TEST_USM
         exec.queue().wait_and_throw();
 #endif
         EXPECT_TRUE(res2 == last1, "wrong effect from find_if_2");
 
-        auto res3 = ::std::find_if(make_new_policy<new_kernel_name<Policy, 4>>(exec), first1, last1,
+        auto res3 = dpl::find_if(make_new_policy<new_kernel_name<Policy, 4>>(exec), first1, last1,
                                    [](T1 x) { return x % 2 == 0; });
 #if _PSTL_SYCL_TEST_USM
         exec.queue().wait_and_throw();
