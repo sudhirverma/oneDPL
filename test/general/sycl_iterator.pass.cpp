@@ -1912,7 +1912,7 @@ DEFINE_TEST(test_search_n)
             dpl::fill(host_keys.get() + start, host_keys.get() + n, T(11));
             host_keys.update_data();
 
-            auto res = ::std::search_n(make_new_policy<new_kernel_name<Policy, 0>>(exec), first, last, n - start, T(11));
+            auto res = dpl::search_n(make_new_policy<new_kernel_name<Policy, 0>>(exec), first, last, n - start, T(11));
 #if _PSTL_SYCL_TEST_USM
             exec.queue().wait_and_throw();
 #endif
@@ -1926,14 +1926,14 @@ DEFINE_TEST(test_search_n)
             dpl::fill(host_keys.get() + start, host_keys.get() + end, T(22));
             host_keys.update_data();
 
-            auto res = ::std::search_n(make_new_policy<new_kernel_name<Policy, 1>>(exec), first, last, end - start, T(22));
+            auto res = dpl::search_n(make_new_policy<new_kernel_name<Policy, 1>>(exec), first, last, end - start, T(22));
 #if _PSTL_SYCL_TEST_USM
             exec.queue().wait_and_throw();
 #endif
             EXPECT_TRUE(res - first == start, "wrong effect from search_20");
 
             // Search for sequence of lesser size
-            res = ::std::search_n(make_new_policy<new_kernel_name<Policy, 2>>(exec), first, last,
+            res = dpl::search_n(make_new_policy<new_kernel_name<Policy, 2>>(exec), first, last,
                                 ::std::max(end - start - 1, (size_t)1), T(22));
 #if _PSTL_SYCL_TEST_USM
             exec.queue().wait_and_throw();
@@ -1947,7 +1947,7 @@ DEFINE_TEST(test_search_n)
             dpl::fill(host_keys.get(), host_keys.get() + end, T(33));
             host_keys.update_data();
 
-            auto res = ::std::search_n(make_new_policy<new_kernel_name<Policy, 3>>(exec), first, last, end, T(33));
+            auto res = dpl::search_n(make_new_policy<new_kernel_name<Policy, 3>>(exec), first, last, end, T(33));
 #if _PSTL_SYCL_TEST_USM
             exec.queue().wait_and_throw();
 #endif
@@ -1958,7 +1958,7 @@ DEFINE_TEST(test_search_n)
             dpl::fill(host_keys.get(), host_keys.get() + n, T(44));
             host_keys.update_data();
 
-            auto res = ::std::search_n(make_new_policy<new_kernel_name<Policy, 4>>(exec), first, last, n, T(44));
+            auto res = dpl::search_n(make_new_policy<new_kernel_name<Policy, 4>>(exec), first, last, n, T(44));
 #if _PSTL_SYCL_TEST_USM
             exec.queue().wait_and_throw();
 #endif
@@ -1966,14 +1966,14 @@ DEFINE_TEST(test_search_n)
         }
         // Search for sequence which is not there
         {
-            auto res = ::std::search_n(make_new_policy<new_kernel_name<Policy, 5>>(exec), first, last, 2, T(55));
+            auto res = dpl::search_n(make_new_policy<new_kernel_name<Policy, 5>>(exec), first, last, 2, T(55));
 #if _PSTL_SYCL_TEST_USM
             exec.queue().wait_and_throw();
 #endif
             EXPECT_TRUE(res == last, "wrong effect from search_50");
 
             // Sequence is there but of lesser size(see search_n_3)
-            res = ::std::search_n(make_new_policy<new_kernel_name<Policy, 6>>(exec), first, last, (n / 3 + 1), T(33));
+            res = dpl::search_n(make_new_policy<new_kernel_name<Policy, 6>>(exec), first, last, (n / 3 + 1), T(33));
 #if _PSTL_SYCL_TEST_USM
             exec.queue().wait_and_throw();
 #endif
@@ -1982,7 +1982,7 @@ DEFINE_TEST(test_search_n)
 
         // empty sequence case
         {
-            auto res = ::std::search_n(make_new_policy<new_kernel_name<Policy, 7>>(exec), first, first, 1, T(5 + n - 1));
+            auto res = dpl::search_n(make_new_policy<new_kernel_name<Policy, 7>>(exec), first, first, 1, T(5 + n - 1));
 #if _PSTL_SYCL_TEST_USM
             exec.queue().wait_and_throw();
 #endif
@@ -2001,7 +2001,7 @@ DEFINE_TEST(test_search_n)
             dpl::fill(host_keys.get() + start2, host_keys.get() + end2, T(66));
             host_keys.update_data();
 
-            auto res = ::std::search_n(make_new_policy<new_kernel_name<Policy, 8>>(exec), first, last,
+            auto res = dpl::search_n(make_new_policy<new_kernel_name<Policy, 8>>(exec), first, last,
                                      ::std::min(end1 - start1, end2 - start2), T(66));
 #if _PSTL_SYCL_TEST_USM
             exec.queue().wait_and_throw();
@@ -2017,7 +2017,7 @@ DEFINE_TEST(test_search_n)
             dpl::fill(host_keys.get(), host_keys.get() + seq_len, T(77));
             host_keys.update_data();
 
-            auto res = ::std::search_n(make_new_policy<new_kernel_name<Policy, 9>>(exec), first + 1, last, seq_len, T(77));
+            auto res = dpl::search_n(make_new_policy<new_kernel_name<Policy, 9>>(exec), first + 1, last, seq_len, T(77));
 #if _PSTL_SYCL_TEST_USM
             exec.queue().wait_and_throw();
 #endif
