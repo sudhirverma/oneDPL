@@ -34,7 +34,7 @@ test()
 
 void test_edges()
 {
-    const double pi = std::atan2(+0., -0.);
+    const double pi = dpl::atan2(+0., -0.);
     const unsigned N = sizeof(testcases) / sizeof(testcases[0]);
     for (unsigned i = 0; i < N; ++i)
     {
@@ -74,9 +74,9 @@ void test_edges()
         }
         else if (std::isfinite(testcases[i].real()) && dpl::isnan(testcases[i].imag()))
         {
-            assert(std::isnan(r.real()));
+            assert(dpl::isnan(r.real()));
 #ifndef _PSTL_CLANG_TEST_COMPLEX_ACOS_IS_NAN_CASE_BROKEN
-            assert(std::isnan(r.imag()));
+            assert(dpl::isnan(r.imag()));
 #endif // _PSTL_CLANG_TEST_COMPLEX_ACOS_IS_NAN_CASE_BROKEN
         }
         else if (dpl::isinf(testcases[i].real()) && testcases[i].real() < 0 && std::isfinite(testcases[i].imag()))

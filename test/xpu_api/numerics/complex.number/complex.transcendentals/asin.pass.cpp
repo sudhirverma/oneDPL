@@ -34,7 +34,7 @@ test()
 
 void test_edges()
 {
-    const double pi = std::atan2(+0., -0.);
+    const double pi = dpl::atan2(+0., -0.);
     const unsigned N = sizeof(testcases) / sizeof(testcases[0]);
     for (unsigned i = 0; i < N; ++i)
     {
@@ -82,8 +82,8 @@ void test_edges()
         }
         else if (dpl::isinf(testcases[i].real()) && dpl::isnan(testcases[i].imag()))
         {
-            assert(std::isnan(r.real()));
-            assert(std::isinf(r.imag()));
+            assert(dpl::isnan(r.real()));
+            assert(dpl::isinf(r.imag()));
 #ifndef _PSTL_ICC_TEST_COMPLEX_ASIN_MINUS_INF_NAN_BROKEN_SIGNBIT
             assert(std::signbit(testcases[i].real()) != std::signbit(r.imag()));
 #endif // _PSTL_ICC_TEST_COMPLEX_ASIN_MINUS_INF_NAN_BROKEN_SIGNBIT

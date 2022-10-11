@@ -17,6 +17,7 @@
 #define _TEST_COMPLEX_H
 
 #include <oneapi/dpl/complex>
+#include <oneapi/dpl/cmath>
 #include <oneapi/dpl/pstl/utils.h>
 
 #include "utils.h"
