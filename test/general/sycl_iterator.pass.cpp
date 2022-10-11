@@ -3310,7 +3310,7 @@ DEFINE_TEST(test_nth_element)
 
         // invoke
         auto comp = ::std::less<T1>{};
-        ::std::nth_element(make_new_policy<new_kernel_name<Policy, 0>>(exec), first1, middle1, last1, comp);
+        dpl::nth_element(make_new_policy<new_kernel_name<Policy, 0>>(exec), first1, middle1, last1, comp);
 #if _PSTL_SYCL_TEST_USM
         exec.queue().wait_and_throw();
 #endif
@@ -3320,7 +3320,7 @@ DEFINE_TEST(test_nth_element)
         auto host_first1 = host_keys.get();
         auto host_first2 = host_vals.get();
 
-        ::std::nth_element(host_first2, host_first2 + n / 2, host_first2 + n, comp);
+        dpl::nth_element(host_first2, host_first2 + n / 2, host_first2 + n, comp);
 
         // check
         auto median = *(host_first1 + n / 2);
