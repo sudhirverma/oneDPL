@@ -61,7 +61,7 @@ main()
     //check result
     int expected[max_n];
     dpl::reverse(data, data + max_n);
-    ::std::transform(data, data + max_n, expected, lambda1);
+    dpl::transform(data, data + max_n, expected, lambda1);
 
     EXPECT_EQ_N(expected, data2, max_n, "wrong effect from move with sycl ranges");
 #endif //_ENABLE_RANGES_TESTING

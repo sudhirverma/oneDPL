@@ -47,7 +47,7 @@ int main()
             std::get<1>(x) = (2 * std::get<0>(x)) / n;
         });
     // val_buf = {0,1,2,...,n-1}
-    std::transform(dpl::execution::make_device_policy<class Transform>(dpl::execution::dpcpp_default),
+    dpl::transform(dpl::execution::make_device_policy<class Transform>(dpl::execution::dpcpp_default),
 		counting_first, counting_first + n, val_first, dpl::identity());
     auto result = dpl::inclusive_scan_by_segment(
 		dpl::execution::make_device_policy<class Scan>(dpl::execution::dpcpp_default),

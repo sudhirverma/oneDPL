@@ -593,7 +593,7 @@ DEFINE_TEST(test_transform_unary)
         dpl::fill(host_vals.get(), host_vals.get() + n, value + 1);
         update_data(host_keys, host_vals);
 
-        ::std::transform(make_new_policy<new_kernel_name<Policy, 0>>(exec), first1 + n / 2, last1, first2 + n / 2, Flip(7));
+        dpl::transform(make_new_policy<new_kernel_name<Policy, 0>>(exec), first1 + n / 2, last1, first2 + n / 2, Flip(7));
 #if _PSTL_SYCL_TEST_USM
         exec.queue().wait_and_throw();
 #endif
@@ -623,7 +623,7 @@ DEFINE_TEST(test_transform_binary)
         dpl::fill(host_keys.get(), host_keys.get() + n, value);
         host_keys.update_data();
 
-        ::std::transform(make_new_policy<new_kernel_name<Policy, 0>>(exec), first1, last1, first1, first2, Plus());
+        dpl::transform(make_new_policy<new_kernel_name<Policy, 0>>(exec), first1, last1, first1, first2, Plus());
 #if _PSTL_SYCL_TEST_USM
         exec.queue().wait_and_throw();
 #endif

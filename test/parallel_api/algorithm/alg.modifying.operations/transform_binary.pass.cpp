@@ -70,7 +70,7 @@ struct test_one_policy
     operator()(Policy&& exec, InputIterator1 first1, InputIterator1 last1, InputIterator2 first2, InputIterator2 /* last2 */,
                OutputIterator out_first, OutputIterator /* out_last */, BinaryOp op)
     {
-        ::std::transform(exec, first1, last1, first2, out_first, op);
+        dpl::transform(exec, first1, last1, first2, out_first, op);
         check_and_reset(first1, last1, first2, out_first);
     }
 };

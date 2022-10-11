@@ -49,7 +49,7 @@ struct test_one_policy
     operator()(Policy&& exec, InputIterator first, InputIterator last, OutputIterator out_first,
                OutputIterator out_last, UnaryOp op)
     {
-        auto orr = ::std::transform(exec, first, last, out_first, op);
+        auto orr = dpl::transform(exec, first, last, out_first, op);
         EXPECT_TRUE(out_last == orr, "transform returned wrong iterator");
         check_and_reset(first, last, out_first);
     }
