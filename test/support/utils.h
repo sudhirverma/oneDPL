@@ -22,6 +22,7 @@
 #include "test_config.h"
 
 #include _PSTL_TEST_HEADER(execution)
+#include _PSTL_TEST_HEADER(utility)
 
 #include <atomic>
 #include <cstdint>
@@ -503,7 +504,7 @@ struct NonConstAdapter
 
     template <typename... Types>
     auto
-    operator()(Types&&... args) -> decltype(::std::declval<F>().
+    operator()(Types&&... args) -> decltype(dpl::declval<F>().
                                             operator()(::std::forward<Types>(args)...))
     {
         return my_f(::std::forward<Types>(args)...);
@@ -689,7 +690,7 @@ struct can_use_default_less_operator : ::std::false_type
 };
 
 template <typename T>
-struct can_use_default_less_operator<T, decltype(::std::declval<T>() < ::std::declval<T>())> : ::std::true_type
+struct can_use_default_less_operator<T, decltype(dpl::declval<T>() < dpl::declval<T>())> : ::std::true_type
 {
 };
 
