@@ -88,8 +88,8 @@ struct test_one_policy
 
         EXPECT_TRUE(actual_return == actual_e, "wrong result of rotate_copy");
         auto comparer = comparator<T, Iterator1, Iterator2>();
-        bool check = ::std::equal(data_m, data_e, actual_b, comparer);
-        check = check && ::std::equal(data_b, data_m, ::std::next(actual_b, ::std::distance(data_m, data_e)), comparer);
+        bool check = dpl::equal(data_m, data_e, actual_b, comparer);
+        check = check && dpl::equal(data_b, data_m, ::std::next(actual_b, ::std::distance(data_m, data_e)), comparer);
 
         EXPECT_TRUE(check, "wrong effect of rotate_copy");
     }

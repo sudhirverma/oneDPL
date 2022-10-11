@@ -57,7 +57,7 @@ template <typename Iterator>
 typename ::std::enable_if<::std::is_trivial<typename ::std::iterator_traits<Iterator>::value_type>::value, bool>::type
 is_equal(Iterator first, Iterator last, Iterator d_first)
 {
-    return ::std::equal(first, last, d_first);
+    return dpl::equal(first, last, d_first);
 }
 
 template <typename Iterator>

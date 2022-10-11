@@ -93,8 +93,8 @@ struct test_one_policy
 
         EXPECT_TRUE(actual_return == ::std::next(actual_b, ::std::distance(actual_m, actual_e)), "wrong result of rotate");
         auto comparator = compare<T>();
-        bool check = ::std::equal(actual_return, actual_e, data_b, comparator);
-        check = check && ::std::equal(actual_b, actual_return, ::std::next(data_b, shift), comparator);
+        bool check = dpl::equal(actual_return, actual_e, data_b, comparator);
+        check = check && dpl::equal(actual_b, actual_return, ::std::next(data_b, shift), comparator);
 
         EXPECT_TRUE(check, "wrong effect of rotate");
         EXPECT_TRUE(check_move(exec, actual_b, actual_e, shift), "wrong move test of rotate");

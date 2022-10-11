@@ -319,7 +319,7 @@ DEFINE_TEST(test_equal)
         auto tuple_last1 = oneapi::dpl::make_zip_iterator(last1, last1);
         auto tuple_first2 = oneapi::dpl::make_zip_iterator(first2, first2);
 
-        bool is_equal = ::std::equal(make_new_policy<new_kernel_name<Policy, 0>>(exec), tuple_first1, tuple_last1, tuple_first2,
+        bool is_equal = dpl::equal(make_new_policy<new_kernel_name<Policy, 0>>(exec), tuple_first1, tuple_last1, tuple_first2,
                                    TuplePredicate<::std::equal_to<T>, 0>{::std::equal_to<T>{}});
 #if _PSTL_SYCL_TEST_USM
         exec.queue().wait_and_throw();
@@ -330,7 +330,7 @@ DEFINE_TEST(test_equal)
         *(host_vals.get() + n - 1) = T{0};
         host_vals.update_data();
 
-        is_equal = ::std::equal(make_new_policy<new_kernel_name<Policy, 1>>(exec), tuple_first1, tuple_last1, tuple_first2,
+        is_equal = dpl::equal(make_new_policy<new_kernel_name<Policy, 1>>(exec), tuple_first1, tuple_last1, tuple_first2,
                               TuplePredicate<::std::equal_to<T>, 0>{::std::equal_to<T>{}});
 #if _PSTL_SYCL_TEST_USM
         exec.queue().wait_and_throw();
@@ -375,7 +375,7 @@ DEFINE_TEST(test_equal_structured_binding)
             return (a == c) && (b == d);
         };
 
-        bool is_equal = ::std::equal(make_new_policy<new_kernel_name<Policy, 0>>(exec), tuple_first1, tuple_last1, tuple_first2,
+        bool is_equal = dpl::equal(make_new_policy<new_kernel_name<Policy, 0>>(exec), tuple_first1, tuple_last1, tuple_first2,
                                      compare);
 #if _PSTL_SYCL_TEST_USM
         exec.queue().wait_and_throw();
@@ -386,7 +386,7 @@ DEFINE_TEST(test_equal_structured_binding)
         *(host_vals.get() + n - 1) = T{0};
         host_vals.update_data();
 
-        is_equal = ::std::equal(make_new_policy<new_kernel_name<Policy, 1>>(exec), tuple_first1, tuple_last1, tuple_first2,
+        is_equal = dpl::equal(make_new_policy<new_kernel_name<Policy, 1>>(exec), tuple_first1, tuple_last1, tuple_first2,
                                 compare);
         EXPECT_TRUE(!is_equal, "wrong effect from equal(tuple with use of structured binding) 2");
     }

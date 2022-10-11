@@ -51,7 +51,7 @@ int main() {
     EXPECT_TRUE(red_val == 42001, "wrong return value from reduce");
     auto buf_out_begin = oneapi::dpl::begin(out_buf);
     ::std::inclusive_scan(policy, buf_begin, buf_end, buf_out_begin);
-    bool is_equal = ::std::equal(policy, buf_begin, buf_end, buf_out_begin);
+    bool is_equal = dpl::equal(policy, buf_begin, buf_end, buf_out_begin);
     EXPECT_TRUE(!is_equal, "wrong return value from equal");
     auto does_1_exist = ::std::find(policy, buf_begin, buf_end, 1);
     EXPECT_TRUE(does_1_exist - buf_begin == 1000, "wrong return value from find");

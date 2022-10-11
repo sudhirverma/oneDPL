@@ -1672,13 +1672,13 @@ DEFINE_TEST(test_equal)
         update_data(host_keys, host_vals);
 
         auto expected  = new_end - new_start > 0;
-        auto result = ::std::equal(make_new_policy<new_kernel_name<Policy, 0>>(exec), first1 + new_start,
+        auto result = dpl::equal(make_new_policy<new_kernel_name<Policy, 0>>(exec), first1 + new_start,
                                    first1 + new_end, first2 + new_start);
 #if _PSTL_SYCL_TEST_USM
         exec.queue().wait_and_throw();
 #endif
         EXPECT_TRUE(expected == result, "wrong effect from equal with 3 iterators");
-        result = ::std::equal(make_new_policy<new_kernel_name<Policy, 1>>(exec), first1 + new_start, first1 + new_end,
+        result = dpl::equal(make_new_policy<new_kernel_name<Policy, 1>>(exec), first1 + new_start, first1 + new_end,
                               first2 + new_start, first2 + new_end);
 #if _PSTL_SYCL_TEST_USM
         exec.queue().wait_and_throw();
