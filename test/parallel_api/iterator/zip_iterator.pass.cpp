@@ -650,9 +650,9 @@ DEFINE_TEST(test_stable_sort)
 #endif
 
         retrieve_data(host_keys, host_vals);
-        EXPECT_TRUE(::std::is_sorted(host_keys.get(), host_keys.get() + n, ::std::greater<T>()),
+        EXPECT_TRUE(dpl::is_sorted(host_keys.get(), host_keys.get() + n, ::std::greater<T>()),
                     "wrong effect from stable_sort (tuple)");
-        EXPECT_TRUE(::std::is_sorted(host_vals.get(), host_vals.get() + n, ::std::greater<T>()),
+        EXPECT_TRUE(dpl::is_sorted(host_vals.get(), host_vals.get() + n, ::std::greater<T>()),
                     "wrong effect from stable_sort (tuple)");
     }
 };

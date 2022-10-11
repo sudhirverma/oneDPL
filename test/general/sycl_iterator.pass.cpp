@@ -1330,7 +1330,7 @@ DEFINE_TEST(test_is_sorted)
         host_keys.update_data();
 
         // check sorted
-        bool result_bool = ::std::is_sorted(make_new_policy<new_kernel_name<Policy, 0>>(exec), first, last, comp);
+        bool result_bool = dpl::is_sorted(make_new_policy<new_kernel_name<Policy, 0>>(exec), first, last, comp);
         bool expected_bool = true;
 #if _PSTL_SYCL_TEST_USM
         exec.queue().wait_and_throw();
@@ -1348,7 +1348,7 @@ DEFINE_TEST(test_is_sorted)
             *(host_keys.get() + n - 1) = ValueType{0};
             host_keys.update_data();
         }
-        result_bool = ::std::is_sorted(make_new_policy<new_kernel_name<Policy, 1>>(exec), first, last, comp);
+        result_bool = dpl::is_sorted(make_new_policy<new_kernel_name<Policy, 1>>(exec), first, last, comp);
         expected_bool = max_dis > 1 ? false : true;
 #if _PSTL_SYCL_TEST_USM
         exec.queue().wait_and_throw();
@@ -1367,7 +1367,7 @@ DEFINE_TEST(test_is_sorted)
             *(host_keys.get() + max_dis / 2) = ValueType{0};
             host_keys.update_data();
         }
-        result_bool = ::std::is_sorted(make_new_policy<new_kernel_name<Policy, 2>>(exec), first, last, comp);
+        result_bool = dpl::is_sorted(make_new_policy<new_kernel_name<Policy, 2>>(exec), first, last, comp);
         expected_bool = max_dis > 1 ? false : true;
 #if _PSTL_SYCL_TEST_USM
         exec.queue().wait_and_throw();
@@ -1379,7 +1379,7 @@ DEFINE_TEST(test_is_sorted)
                     << "expected: " << expected_bool << ::std::endl;
 #    endif
         // check unsorted: the middle element (no predicate)
-        result_bool = ::std::is_sorted(make_new_policy<new_kernel_name<Policy, 3>>(exec), first, last);
+        result_bool = dpl::is_sorted(make_new_policy<new_kernel_name<Policy, 3>>(exec), first, last);
 #if _PSTL_SYCL_TEST_USM
         exec.queue().wait_and_throw();
 #endif
@@ -1397,7 +1397,7 @@ DEFINE_TEST(test_is_sorted)
             *(host_keys.get() + 1) = ValueType{0};
             host_keys.update_data();
         }
-        result_bool = ::std::is_sorted(make_new_policy<new_kernel_name<Policy, 4>>(exec), first, last, comp);
+        result_bool = dpl::is_sorted(make_new_policy<new_kernel_name<Policy, 4>>(exec), first, last, comp);
         expected_bool = max_dis > 1 ? false : true;
 #if _PSTL_SYCL_TEST_USM
         exec.queue().wait_and_throw();
@@ -2525,8 +2525,8 @@ DEFINE_TEST(test_partition)
         host_keys.retrieve_data();
         EXPECT_TRUE(dpl::all_of(host_keys.get(), host_keys.get() + (res - first), unary_op) &&
                         !dpl::any_of(host_keys.get() + (res - first), host_keys.get() + n, unary_op) &&
-                        ::std::is_sorted(host_keys.get(), host_keys.get() + (res - first)) &&
-                        ::std::is_sorted(host_keys.get() + (res - first), host_keys.get() + n),
+                        dpl::is_sorted(host_keys.get(), host_keys.get() + (res - first)) &&
+                        dpl::is_sorted(host_keys.get() + (res - first), host_keys.get() + n),
                     "wrong effect from stable_partition");
     }
 };
@@ -2720,7 +2720,7 @@ DEFINE_TEST(test_merge)
         }
 #    endif
         EXPECT_TRUE(res1 - first3 == exp1 - exp.begin(), "wrong result from merge_1");
-        EXPECT_TRUE(::std::is_sorted(host_first3, host_first3 + (res1 - first3)), "wrong effect from merge_1");
+        EXPECT_TRUE(dpl::is_sorted(host_first3, host_first3 + (res1 - first3)), "wrong effect from merge_1");
     }
 };
 
@@ -2757,7 +2757,7 @@ DEFINE_TEST(test_sort)
                 }
             }
 #           endif
-            EXPECT_TRUE(::std::is_sorted(host_first1, host_first1 + n), "wrong effect from sort_1");
+            EXPECT_TRUE(dpl::is_sorted(host_first1, host_first1 + n), "wrong effect from sort_1");
         }
 
         ::std::sort(make_new_policy<new_kernel_name<Policy, 1>>(exec), first1, last1, ::std::greater<T1>());
@@ -2776,7 +2776,7 @@ DEFINE_TEST(test_sort)
             }
         }
 #       endif
-        EXPECT_TRUE(::std::is_sorted(host_first1, host_first1 + n, ::std::greater<T1>()), "wrong effect from sort_2");
+        EXPECT_TRUE(dpl::is_sorted(host_first1, host_first1 + n, ::std::greater<T1>()), "wrong effect from sort_2");
     }
 };
 
@@ -2814,7 +2814,7 @@ DEFINE_TEST(test_stable_sort)
                 }
             }
 #           endif
-            EXPECT_TRUE(::std::is_sorted(host_first1, host_first1 + n), "wrong effect from stable_sort_1");
+            EXPECT_TRUE(dpl::is_sorted(host_first1, host_first1 + n), "wrong effect from stable_sort_1");
         }
 
         ::std::stable_sort(make_new_policy<new_kernel_name<Policy, 1>>(exec), first1, last1, ::std::greater<T1>());
@@ -2833,7 +2833,7 @@ DEFINE_TEST(test_stable_sort)
             }
         }
 #       endif
-        EXPECT_TRUE(::std::is_sorted(host_first1, host_first1 + n, ::std::greater<T1>()),
+        EXPECT_TRUE(dpl::is_sorted(host_first1, host_first1 + n, ::std::greater<T1>()),
                     "wrong effect from stable_sort_3");
     }
 };
@@ -2871,7 +2871,7 @@ DEFINE_TEST(test_partial_sort)
             // than the last sorted one.
             host_keys.retrieve_data();
             auto host_first1 = host_keys.get();
-            EXPECT_TRUE(::std::is_sorted(host_first1, host_first1 + end_idx), "wrong effect from partial_sort_1");
+            EXPECT_TRUE(dpl::is_sorted(host_first1, host_first1 + end_idx), "wrong effect from partial_sort_1");
 
             auto res = dpl::all_of(host_first1 + end_idx, host_first1 + n,
                                    [&](T1 val) { return val >= *(host_first1 + end_idx - 1); });
@@ -2887,7 +2887,7 @@ DEFINE_TEST(test_partial_sort)
 #endif
             host_keys.retrieve_data();
             auto host_first1 = host_keys.get();
-            EXPECT_TRUE(::std::is_sorted(host_first1, host_first1 + n), "wrong effect from partial_sort_2");
+            EXPECT_TRUE(dpl::is_sorted(host_first1, host_first1 + n), "wrong effect from partial_sort_2");
         }
     }
 };
@@ -2928,7 +2928,7 @@ DEFINE_TEST(test_partial_sort_copy)
 
             EXPECT_TRUE(last_sorted == end2, "wrong effect from partial_sort_copy_1");
             // Make sure that elements up to end2 are sorted
-            EXPECT_TRUE(::std::is_sorted(host_first2, host_first2 + end_idx), "wrong effect from partial_sort_copy_1");
+            EXPECT_TRUE(dpl::is_sorted(host_first2, host_first2 + end_idx), "wrong effect from partial_sort_copy_1");
 
             // Now ensure that the original sequence wasn't changed by partial_sort_copy
             auto init = value;
@@ -2949,7 +2949,7 @@ DEFINE_TEST(test_partial_sort_copy)
             auto host_first2 = host_vals.get();
 
             EXPECT_TRUE(last_sorted == last2, "wrong effect from partial_sort_copy_2");
-            EXPECT_TRUE(::std::is_sorted(host_first2, host_first2 + n), "wrong effect from partial_sort_copy_2");
+            EXPECT_TRUE(dpl::is_sorted(host_first2, host_first2 + n), "wrong effect from partial_sort_copy_2");
 
             // Now ensure that partial_sort_copy hasn't change the unsorted part of original sequence
             auto init = value - end_idx;

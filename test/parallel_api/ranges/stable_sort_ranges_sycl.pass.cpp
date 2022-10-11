@@ -48,10 +48,10 @@ main()
     }
 
     //check result
-    bool res1 = ::std::is_sorted(data1, data1 + max_n);
+    bool res1 = dpl::is_sorted(data1, data1 + max_n);
     EXPECT_TRUE(res1, "wrong effect from 'stable_sort' with sycl ranges");
 
-    bool res2 = ::std::is_sorted(data2, data2 + max_n, ::std::greater<int>());
+    bool res2 = dpl::is_sorted(data2, data2 + max_n, ::std::greater<int>());
     EXPECT_TRUE(res2, "wrong effect from 'stable_sort with comparator' with sycl ranges");
 #endif //_ENABLE_RANGES_TESTING
 

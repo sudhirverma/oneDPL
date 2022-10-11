@@ -198,12 +198,12 @@ struct test_zip_iterator {
         //sort sequences by first stream.
         {
         // sanity check if sequence is un-sorted.
-        auto res = ::std::is_sorted(b, e, sort_fun());
+        auto res = dpl::is_sorted(b, e, sort_fun());
         EXPECT_TRUE(!res, "input sequence to be sorted is already sorted! Test might lead to false positives.");
         ::std::sort(oneapi::dpl::make_zip_iterator(in1.begin(), in2.begin()),
                   oneapi::dpl::make_zip_iterator(in1.end(), in2.end()),
                   sort_fun());
-        res = ::std::is_sorted(b, e, sort_fun());
+        res = dpl::is_sorted(b, e, sort_fun());
         EXPECT_TRUE(res, "wrong result sorting sequence using zip-iterator");
             // TODO: Add simple check: comparison with sort_fun().
         }
@@ -294,7 +294,7 @@ struct test_permutation_iterator
         ::std::vector<T1> result(iota_max);
         dpl::copy(perm_begin, perm_end, result.begin());
 
-        EXPECT_TRUE(::std::is_sorted(result.begin(), result.end(), ::std::greater<T1>()),
+        EXPECT_TRUE(dpl::is_sorted(result.begin(), result.end(), ::std::greater<T1>()),
                     "wrong result from copy with permutation_iterator");
 
         oneapi::dpl::permutation_iterator<typename ::std::vector<T1>::iterator, typename ::std::vector<T2>::iterator> perm_it1(in1.begin(), in2.begin());
