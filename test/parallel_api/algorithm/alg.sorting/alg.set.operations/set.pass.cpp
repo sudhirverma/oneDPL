@@ -17,6 +17,7 @@
 
 #include _PSTL_TEST_HEADER(execution)
 #include _PSTL_TEST_HEADER(algorithm)
+#include _PSTL_TEST_HEADER(utility)
 
 #include "support/utils.h"
 
@@ -76,7 +77,7 @@ init(InputIterator1 first1, InputIterator1 last1, InputIterator2 first2, InputIt
     auto n = n1 + n2;
     Sequence<T1> expect(n);
     Sequence<T1> out(n);
-    return ::std::make_pair(expect,out);
+    return dpl::make_pair(expect, out);
 }
 
 template <typename Type>

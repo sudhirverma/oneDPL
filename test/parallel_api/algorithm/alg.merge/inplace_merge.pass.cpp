@@ -17,6 +17,7 @@
 
 #include _PSTL_TEST_HEADER(execution)
 #include _PSTL_TEST_HEADER(algorithm)
+#include _PSTL_TEST_HEADER(utility)
 
 #include "support/utils.h"
 
@@ -60,7 +61,7 @@ struct test_one_policy
         const BiDirIt mid2 = ::std::next(first2, m);
         fill_data(first2, mid2, generator1);
         fill_data(mid2, last2, generator2);
-        return ::std::make_pair(mid1, mid2);
+        return dpl::make_pair(mid1, mid2);
     }
 
     template <typename Policy, typename BiDirIt1, typename Size, typename Generator1, typename Generator2>

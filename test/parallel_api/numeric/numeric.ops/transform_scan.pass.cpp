@@ -18,6 +18,7 @@
 #include _PSTL_TEST_HEADER(execution)
 #include _PSTL_TEST_HEADER(numeric)
 #include _PSTL_TEST_HEADER(algorithm)
+#include _PSTL_TEST_HEADER(utility)
 
 #include "support/utils.h"
 
@@ -143,7 +144,7 @@ transform_inclusive_scan_serial(InputIterator first, InputIterator last, OutputI
         init = binary_op(init, unary_op(*first));
         *result = init;
     }
-    return ::std::make_pair(result, init);
+    return dpl::make_pair(result, init);
 }
 
 template <typename InputIterator, typename OutputIterator, typename UnaryOperation, typename T,
@@ -157,7 +158,7 @@ transform_exclusive_scan_serial(InputIterator first, InputIterator last, OutputI
         *result = init;
         init = binary_op(init, unary_op(*first));
     }
-    return ::std::make_pair(result, init);
+    return dpl::make_pair(result, init);
 }
 
 template <typename In, typename Out, typename UnaryOp, typename BinaryOp>
