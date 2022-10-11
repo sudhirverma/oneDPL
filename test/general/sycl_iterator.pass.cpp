@@ -509,7 +509,7 @@ DEFINE_TEST(test_generate_n)
         typedef typename ::std::iterator_traits<Iterator1>::value_type T1;
         auto value = T1(4);
 
-        ::std::generate_n(make_new_policy<new_kernel_name<Policy, 0>>(exec), first1, n, Generator_count<T1>(value + 1));
+        dpl::generate_n(make_new_policy<new_kernel_name<Policy, 0>>(exec), first1, n, Generator_count<T1>(value + 1));
 #if _PSTL_SYCL_TEST_USM
         exec.queue().wait_and_throw();
 #endif
