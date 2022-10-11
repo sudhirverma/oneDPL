@@ -674,7 +674,7 @@ DEFINE_TEST(test_replace_if)
         dpl::fill(host_keys.get(), host_keys.get() + n, value);
         host_keys.update_data();
 
-        ::std::replace_if(make_new_policy<new_kernel_name<Policy, 0>>(exec), first1, last1,
+        dpl::replace_if(make_new_policy<new_kernel_name<Policy, 0>>(exec), first1, last1,
                           oneapi::dpl::__internal::__equal_value<T1>(value), T1(value + 1));
 #if _PSTL_SYCL_TEST_USM
         exec.queue().wait_and_throw();
