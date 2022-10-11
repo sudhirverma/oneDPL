@@ -3411,9 +3411,9 @@ DEFINE_TEST(test_rotate)
 
         ::std::vector<IteratorValyeType> local_copy(n);
         local_copy.assign(host_keys.get(), host_keys.get() + n);
-        ::std::rotate(local_copy.begin(), local_copy.begin() + 1, local_copy.end());
+        dpl::rotate(local_copy.begin(), local_copy.begin() + 1, local_copy.end());
 
-        ::std::rotate(make_new_policy<new_kernel_name<Policy, 0>>(exec), first, first + 1, last);
+        dpl::rotate(make_new_policy<new_kernel_name<Policy, 0>>(exec), first, first + 1, last);
 #if _PSTL_SYCL_TEST_USM
         exec.queue().wait_and_throw();
 #endif
@@ -3441,7 +3441,7 @@ DEFINE_TEST(test_rotate_copy)
 
         ::std::vector<IteratorValyeType> local_copy(n);
         local_copy.assign(host_keys.get(), host_keys.get() + n);
-        ::std::rotate(local_copy.begin(), local_copy.begin() + 1, local_copy.end());
+        dpl::rotate(local_copy.begin(), local_copy.begin() + 1, local_copy.end());
 
         ::std::rotate_copy(make_new_policy<new_kernel_name<Policy, 0>>(exec), first, first + 1, last, result_first);
 #if _PSTL_SYCL_TEST_USM
