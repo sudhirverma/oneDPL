@@ -639,7 +639,7 @@ DEFINE_TEST(test_stable_sort)
 
         auto value = T(333);
         ::std::iota(host_keys.get(), host_keys.get() + n, value);
-        ::std::copy_n(host_keys.get(), n, host_vals.get());
+        dpl::copy_n(host_keys.get(), n, host_vals.get());
         update_data(host_keys, host_vals);
 
         ::std::stable_sort(make_new_policy<new_kernel_name<Policy, 0>>(exec), oneapi::dpl::make_zip_iterator(first1, first2),

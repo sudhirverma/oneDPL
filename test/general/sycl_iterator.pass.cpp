@@ -783,7 +783,7 @@ DEFINE_TEST(test_copy_n)
         ::std::fill(host_vals.get(), host_vals.get() + n, IteratorValueType{ 0 });
         update_data(host_keys, host_vals);
 
-        ::std::copy_n(make_new_policy<new_kernel_name<Policy, 0>>(exec), first1, n, first2);
+        dpl::copy_n(make_new_policy<new_kernel_name<Policy, 0>>(exec), first1, n, first2);
 #if _PSTL_SYCL_TEST_USM
         exec.queue().wait_and_throw();
 #endif

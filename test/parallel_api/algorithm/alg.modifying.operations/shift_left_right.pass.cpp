@@ -141,7 +141,7 @@ struct shift_left_algo
         {
             EXPECT_EQ_N(first, ::std::next(first_exp, + n), m - n, "wrong effect of shift_left");
             //restore unput data
-            std::copy_n(first_exp, m, first);
+            dpl::copy_n(first_exp, m, first);
         }
     }
 };
@@ -184,7 +184,7 @@ struct shift_right_algo
         {
             EXPECT_EQ_N(::std::next(first, n), first_exp, m - n, "wrong effect of shift_right");
             //restore unput data
-            std::copy_n(first_exp, m, first);
+            dpl::copy_n(first_exp, m, first);
         }
     }
     //skip the check for non-bidirectional iterator (forward iterator, etc)

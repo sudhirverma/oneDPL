@@ -191,8 +191,8 @@ void
 copy_data(InputIterator first, OutputIterator1 expected_first, OutputIterator1 expected_last, OutputIterator2 tmp_first,
           Size n)
 {
-    ::std::copy_n(first, n, expected_first);
-    ::std::copy_n(first, n, tmp_first);
+    dpl::copy_n(first, n, expected_first);
+    dpl::copy_n(first, n, tmp_first);
 }
 
 template <typename ...Params>

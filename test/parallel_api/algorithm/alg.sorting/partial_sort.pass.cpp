@@ -64,8 +64,8 @@ struct test_brick_partial_sort
                InputIterator tmp_first, InputIterator tmp_last, Compare compare)
     {
         const ::std::size_t n = last - first;
-        ::std::copy_n(first, n, exp_first);
-        ::std::copy_n(first, n, tmp_first);
+        dpl::copy_n(first, n, exp_first);
+        dpl::copy_n(first, n, tmp_first);
 
         for (::std::size_t p = 0; p < n; p = p <= 16 ? p + 1 : ::std::size_t(31.415 * p))
         {
@@ -116,8 +116,8 @@ struct test_brick_partial_sort
                InputIterator tmp_first, InputIterator tmp_last)
     {
         const ::std::size_t n = last - first;
-        ::std::copy_n(first, n, exp_first);
-        ::std::copy_n(first, n, tmp_first);
+        dpl::copy_n(first, n, exp_first);
+        dpl::copy_n(first, n, tmp_first);
 
         for (::std::size_t p = 0; p < n; p = p <= 16 ? p + 1 : ::std::size_t(31.415 * p))
         {
