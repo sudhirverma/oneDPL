@@ -43,7 +43,7 @@ int comparison(Fp* r0, Fp* r1, std::uint32_t length) {
             }
         } else {
             auto diff = dpl::fabs(r0[i] - r1[i]);
-            auto norm = std::fmax(fabs(r0[i]), fabs(r1[i]));
+            auto norm = dpl::fmax(fabs(r0[i]), fabs(r1[i]));
             if (diff > norm * 1000 * 16 * std::numeric_limits<Fp>::epsilon()) {
                 std::cout <<  "mismatch in " << i << " element: "  << std::endl;
                 std::cout << std::setprecision (15) << r0[i]  << std::endl; 
