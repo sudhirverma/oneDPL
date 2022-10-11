@@ -1544,18 +1544,18 @@ DEFINE_TEST(test_is_partitioned)
 
         ValueType fill_value{0};
         dpl::for_each(host_keys.get(), host_keys.get() + n, [&fill_value](ValueType& value) { value = ++fill_value; });
-        expected_bool_less_then = ::std::is_partitioned(host_keys.get(), host_keys.get() + n, less_than);
-        expected_bool_is_odd = ::std::is_partitioned(host_keys.get(), host_keys.get() + n, is_odd);
+        expected_bool_less_then = dpl::is_partitioned(host_keys.get(), host_keys.get() + n, less_than);
+        expected_bool_is_odd = dpl::is_partitioned(host_keys.get(), host_keys.get() + n, is_odd);
         host_keys.update_data();
 
         // check sorted
-        bool result_bool = ::std::is_partitioned(make_new_policy<new_kernel_name<Policy, 0>>(exec), first, last, less_than);
+        bool result_bool = dpl::is_partitioned(make_new_policy<new_kernel_name<Policy, 0>>(exec), first, last, less_than);
 #if _PSTL_SYCL_TEST_USM
         exec.queue().wait_and_throw();
 #endif
         EXPECT_TRUE(result_bool == expected_bool_less_then, "wrong effect from is_partitioned (Test #1 less than)");
 
-        result_bool = ::std::is_partitioned(make_new_policy<new_kernel_name<Policy, 1>>(exec), first, last, is_odd);
+        result_bool = dpl::is_partitioned(make_new_policy<new_kernel_name<Policy, 1>>(exec), first, last, is_odd);
 #if _PSTL_SYCL_TEST_USM
         exec.queue().wait_and_throw();
 #endif
@@ -1563,10 +1563,10 @@ DEFINE_TEST(test_is_partitioned)
 
         // The code as below was added to prevent accessor destruction working with host memory
         ::std::partition(host_keys.get(), host_keys.get() + n, is_odd);
-        expected_bool_is_odd = ::std::is_partitioned(host_keys.get(), host_keys.get() + n, is_odd);
+        expected_bool_is_odd = dpl::is_partitioned(host_keys.get(), host_keys.get() + n, is_odd);
         host_keys.update_data();
 
-        result_bool = ::std::is_partitioned(make_new_policy<new_kernel_name<Policy, 2>>(exec), first, last, is_odd);
+        result_bool = dpl::is_partitioned(make_new_policy<new_kernel_name<Policy, 2>>(exec), first, last, is_odd);
 #if _PSTL_SYCL_TEST_USM
         exec.queue().wait_and_throw();
 #endif

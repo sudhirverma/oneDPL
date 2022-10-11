@@ -29,8 +29,8 @@ struct test_is_partitioned
     void
     operator()(ExecutionPolicy&& exec, Iterator1 begin1, Iterator1 end1, Predicate pred)
     {
-        const bool expected = ::std::is_partitioned(begin1, end1, pred);
-        const bool actual = ::std::is_partitioned(exec, begin1, end1, pred);
+        const bool expected = dpl::is_partitioned(begin1, end1, pred);
+        const bool actual = dpl::is_partitioned(exec, begin1, end1, pred);
         EXPECT_TRUE(actual == expected, "wrong return result from is_partitioned");
     }
 };
