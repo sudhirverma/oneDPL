@@ -18,6 +18,7 @@
 #include _PSTL_TEST_HEADER(iterator)
 #include _PSTL_TEST_HEADER(execution)
 #include _PSTL_TEST_HEADER(algorithm)
+#include _PSTL_TEST_HEADER(utility)
 
 #include "support/utils.h"
 
@@ -60,7 +61,7 @@ void test_random_iterator(const RandomIt& it) {
     ++it1;
     EXPECT_TRUE(it1 == it + 1, "wrong result with prefix operator++");
 
-    using ::std::swap;
+    using dpl::swap;
     swap(it1, it2);
     EXPECT_TRUE((it1 == it) && (it2 == it + 1), "iterator is not swappable");
 
@@ -184,7 +185,7 @@ struct test_zip_iterator {
 
         //check swapping de-referenced iterators (required by sort algorithm)
         {
-        using ::std::swap;
+        using dpl::swap;
         auto t = ::std::make_tuple(T1(3), T2(2));
         *b = t;
         t = *(b + 1);

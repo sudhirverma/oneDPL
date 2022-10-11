@@ -17,6 +17,7 @@
 
 #include _PSTL_TEST_HEADER(execution)
 #include _PSTL_TEST_HEADER(algorithm)
+#include _PSTL_TEST_HEADER(utility)
 
 #include "support/utils.h"
 
@@ -49,7 +50,7 @@ template <typename T>
 void
 swap(wrapper<T>& a, wrapper<T>& b)
 {
-    ::std::swap(a.t, b.t);
+    dpl::swap(a.t, b.t);
     a.number_of_swaps++;
     b.number_of_swaps++;
 }

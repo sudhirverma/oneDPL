@@ -22,6 +22,7 @@
 #include <memory>
 
 #include "oneapi/dpl/pstl/hetero/dpcpp/sycl_defs.h"
+#include "oneapi/dpl/utility"
 
 namespace TestUtils
 {
@@ -99,9 +100,9 @@ public:
     usm_data_transfer(usm_data_transfer&) = delete;
     usm_data_transfer(usm_data_transfer&& other)
     {
-        ::std::swap(__queue, other.__queue);
-        ::std::swap(__ptr,   other.__ptr);
-        ::std::swap(__count, other.__count);
+        dpl::swap(__queue, other.__queue);
+        dpl::swap(__ptr,   other.__ptr);
+        dpl::swap(__count, other.__count);
     }
 
     ~usm_data_transfer()
@@ -114,9 +115,9 @@ public:
     {
         reset();
 
-        ::std::swap(__queue, other.__queue);
-        ::std::swap(__ptr,   other.__ptr);
-        ::std::swap(__count, other.__count);
+        dpl::swap(__queue, other.__queue);
+        dpl::swap(__ptr,   other.__ptr);
+        dpl::swap(__count, other.__count);
 
         return *this;
     }
