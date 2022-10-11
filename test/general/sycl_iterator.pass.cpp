@@ -485,7 +485,7 @@ DEFINE_TEST(test_generate)
         typedef typename ::std::iterator_traits<Iterator1>::value_type T1;
         auto value = T1(4);
 
-        ::std::generate(make_new_policy<new_kernel_name<Policy, 0>>(exec), first1 + (n / 3), first1 + (n / 2),
+        dpl::generate(make_new_policy<new_kernel_name<Policy, 0>>(exec), first1 + (n / 3), first1 + (n / 2),
                       Generator_count<T1>(value));
 #if _PSTL_SYCL_TEST_USM
         exec.queue().wait_and_throw();
@@ -2855,7 +2855,7 @@ DEFINE_TEST(test_partial_sort)
 
         auto value = T1(333);
         auto init = value;
-        ::std::generate(host_keys.get(), host_keys.get() + n, [&init]() { return init--; });
+        dpl::generate(host_keys.get(), host_keys.get() + n, [&init]() { return init--; });
         host_keys.update_data();
 
         auto end_idx = ((n < 3) ? 1 : n / 3);
@@ -2910,7 +2910,7 @@ DEFINE_TEST(test_partial_sort_copy)
             return;
 
         auto init = value;
-        ::std::generate(host_keys.get(), host_keys.get() + n, [&init]() { return init--; });
+        dpl::generate(host_keys.get(), host_keys.get() + n, [&init]() { return init--; });
         host_keys.update_data();
 
         auto end_idx = ((n < 3) ? 1 : n / 3);

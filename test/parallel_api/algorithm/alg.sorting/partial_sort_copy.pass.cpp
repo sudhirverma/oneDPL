@@ -98,7 +98,7 @@ struct test_one_policy
     {
         // The rand()%(2*n+1) encourages generation of some duplicates.
         ::std::srand(42);
-        ::std::generate(first, last, [n1]() { return T(rand() % (2 * n1 + 1)); });
+        dpl::generate(first, last, [n1]() { return T(rand() % (2 * n1 + 1)); });
 
         dpl::fill(exp_first, exp_last, trash);
         dpl::fill(d_first, d_last, trash);
