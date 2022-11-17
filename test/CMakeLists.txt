@@ -38,10 +38,12 @@ macro(onedpl_add_test test_source_file is_std_test)
         file(RELATIVE_PATH _test_name "${CMAKE_CURRENT_SOURCE_DIR}" "${test_source_file}")
         string(REPLACE "\.cpp" "" _test_name ${_test_name})
         string(REPLACE "/" "-" _test_name ${_test_name})
+        message(STATUS "add_executable for std tests : ${_test_name}")
     else()
         #process oneDPL tests: target name equal to cpp file name without extention
         get_filename_component(_test_name ${test_source_file} NAME)
         string(REPLACE "\.cpp" "" _test_name ${_test_name})
+        message(STATUS "add_executable for oneDPL tests : ${_test_name}")
     endif()
 
     add_executable(${_test_name} EXCLUDE_FROM_ALL "${test_source_file}")
@@ -126,6 +128,7 @@ set(_skip_regex_for_not_dpcpp "(xpu_api/algorithms|xpu_api/functional|xpu_api/nu
 set(_skip_regex_for_not_std "(std/)")
 file(GLOB_RECURSE UNIT_TESTS "*.pass.cpp")
 foreach (_file IN LISTS UNIT_TESTS)
+    message(STATUS "Process the next source file (1) : ${_file}")
     if (_file MATCHES "${_skip_regex_for_not_dpcpp}" AND NOT ONEDPL_BACKEND MATCHES "^(dpcpp|dpcpp_only)$")
         message(STATUS "Skip test ${_file} as it requires DPC++ backend")
         continue()
@@ -140,6 +143,6 @@ endforeach()
 
 file(GLOB_RECURSE UNIT_TESTS "std/*.pass.cpp")
 foreach (_file IN LISTS UNIT_TESTS)
-
+    message(STATUS "Process the next source file (2) : ${_file}")
     onedpl_add_test(${_file} true)
 endforeach()
