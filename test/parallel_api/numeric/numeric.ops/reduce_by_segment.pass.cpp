@@ -280,12 +280,22 @@ struct UserBinaryPredicate
 };
 
 template <typename _Tp>
-struct UserBinaryOperation
+struct UserBinaryMaxOperation
 {
     _Tp
     operator()(const _Tp& __x, const _Tp& __y) const
     {
-        return __x * __y;
+        return (__x < __y) ? __y : __x;
+    }
+};
+
+template <typename _Tp>
+struct UserBinaryComplexMaxOperation
+{
+    _Tp
+    operator()(const _Tp& __x, const _Tp& __y) const
+    {
+        return (::std::abs(__x) < ::std::abs(__y)) ? ::std::abs(__y) : std::abs(__x);
     }
 };
 
@@ -295,7 +305,7 @@ main()
     {
         using ValueType = ::std::uint64_t;
         using BinaryPredicate = UserBinaryPredicate<ValueType>;
-        using BinaryOperation = UserBinaryOperation<ValueType>;
+        using BinaryOperation = UserBinaryMaxOperation<ValueType>;
 
 #if TEST_DPCPP_BACKEND_PRESENT
         // Run tests for USM shared memory
@@ -316,7 +326,7 @@ main()
     {
         using ValueType = ::std::complex<float>;
         using BinaryPredicate = UserBinaryPredicate<ValueType>;
-        using BinaryOperation = UserBinaryOperation<ValueType>;
+        using BinaryOperation = UserBinaryComplexMaxOperation<ValueType>;
 
 #if TEST_DPCPP_BACKEND_PRESENT
         // Run tests for USM shared memory
