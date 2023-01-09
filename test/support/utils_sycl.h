@@ -20,14 +20,7 @@
 // Do not #include <algorithm>, because if we do we will not detect accidental dependencies.
 
 #include <iterator>
-#include "oneapi/dpl/pstl/hetero/dpcpp/sycl_defs.h"
-#if _ONEDPL_FPGA_DEVICE
-#    if _ONEDPL_LIBSYCL_VERSION >= 50400
-#        include <sycl/ext/intel/fpga_extensions.hpp>
-#    else
-#        include <CL/sycl/INTEL/fpga_extensions.hpp>
-#    endif
-#endif
+#include "utils_sycl_defs.h"
 
 #include "test_config.h"
 
@@ -107,9 +100,9 @@ make_new_policy(_Policy&& __policy)
 #if ONEDPL_FPGA_DEVICE
     auto default_selector =
 #    if ONEDPL_FPGA_EMULATOR
-        __dpl_sycl::__fpga_emulator_selector{};
+        fpga_emulator_selector{};
 #    else
-        __dpl_sycl::__fpga_selector{};
+        fpga_selector{};
 #    endif // ONEDPL_FPGA_EMULATOR
 
     auto&& default_dpcpp_policy =
@@ -120,7 +113,7 @@ make_new_policy(_Policy&& __policy)
 #    endif // ONEDPL_USE_PREDEFINED_POLICIES
 #else
     auto default_selector =
-#    if _ONEDPL_LIBSYCL_VERSION >= 60000
+#    if TEST_LIBSYCL_VERSION >= 60000
         sycl::default_selector_v;
 #    else
         sycl::default_selector{};
