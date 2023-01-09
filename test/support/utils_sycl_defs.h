@@ -38,7 +38,7 @@
 #    else
 #        include <CL/sycl/INTEL/fpga_extensions.hpp>
 #    endif
-#endif
+#endif // ONEDPL_FPGA_DEVICE
 
 namespace TestUtils
 {
