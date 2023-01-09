@@ -13,11 +13,7 @@
 //
 //===----------------------------------------------------------------------===//
 
-// This file contains SYCL specific macros and abstractions
-// to support different versions of SYCL and to simplify its interfaces
-//
-// Functionality, required for the tests, is copied from sycl_defs.h and thus is not directly used
-// for compatibility with different versions of the library
+// This file contains SYCL-specific macros and abstractions to support different versions of SYCL library
 
 #ifndef _UTILS_SYCL_DEFS_H
 #define _UTILS_SYCL_DEFS_H
