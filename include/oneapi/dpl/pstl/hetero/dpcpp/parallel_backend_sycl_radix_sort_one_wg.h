@@ -160,8 +160,8 @@ struct __subgroup_radix_sort
         using _ValT = oneapi::dpl::__internal::__value_t<_RangeIn>;
         using _KeyT = oneapi::dpl::__internal::__key_t<_Proj, _RangeIn>;
 
-        //A value is a key: we use an uniform iteration space and use a defaultult(identical) value for __i >= __n
-        constexpr bool __uniform_space = std::is_same_v<_KeyT, _ValT> && sizeof(_KeyT) == sizeof(_ValT);
+        //A value is a key: we use an uniform iteration space and use a default(identical) value for __i >= __n
+        constexpr bool __uniform_space = std::is_same_v<_KeyT, _ValT>;
 
         _TempBuf<_ValT, _SLM_tag> __buf_val(__block_size * __wg_size);
         _TempBuf<uint32_t, _SLM_tag> __buf_count(__counter_buf_sz);

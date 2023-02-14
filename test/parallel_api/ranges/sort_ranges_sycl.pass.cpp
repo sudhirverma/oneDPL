@@ -45,7 +45,7 @@ main()
 
         sort(exec, A); //check passing sycl buffer directly
         sort(make_new_policy<new_kernel_name<Policy, 0>>(exec), all_view<int, sycl::access::mode::read_write>(B),
-             ::std::greater<int>());
+            ::std::greater<int>());
     }
 
     //check result
