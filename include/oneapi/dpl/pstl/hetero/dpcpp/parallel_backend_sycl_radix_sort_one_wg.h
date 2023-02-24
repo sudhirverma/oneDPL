@@ -75,60 +75,32 @@ struct __subgroup_radix_sort
         }
     };
 
-    template <typename _ValT, bool __uniform_space, typename _Wi, typename _Src, typename _Vals>
+    template <typename _Wi, typename _Src, typename _Keys>
     static void
-    __block_load(const _Wi __wi, const _Src& __src, _Vals& __vals, const uint32_t __n)
+    __block_load(const _Wi __wi, const _Src& __src, _Keys& __keys, const uint32_t __n)
     {
         _ONEDPL_PRAGMA_UNROLL
         for (uint16_t __i = 0; __i < __block_size; ++__i)
         {
-            const uint16_t __idx = __wi * __block_size + __i;
-            if (__idx < __n)
-                __vals[__i] = __src[__idx];
-            else
-            {
-                if constexpr (__uniform_space)
-                {
-                    //we use numeric_limits::lowest for floating-point types with denormalization,
-                    //due to numeric_limits::min gets the minimum positive normalized value
-                    static constexpr _ValT __default_val =
-                        __is_asc ? std::numeric_limits<_ValT>::max() : std::numeric_limits<_ValT>::lowest();
-
-                    __vals[__i] = __default_val;
-                }
-            }
+            const uint16_t __offset = __wi * __block_size + __i;
+            if (__offset < __n)
+                __keys[__i] = __src[__offset];
         }
     }
 
-    template <bool __uniform_space, typename _Item, typename _Wi, typename _Lacc, typename _Vals, typename _Indices>
+    template <typename _Item, typename _Wi, typename _Lacc, typename _Keys, typename _Indices>
     static void
-    __to_blocked(_Item __it, const _Wi __wi, _Lacc& __exchange_lacc, _Vals& __vals, const uint32_t __n, const _Indices& __indices)
+    __to_blocked(_Item __it, const _Wi __wi, _Lacc& __exchange_lacc, _Keys& __keys, const _Indices& __indices)
     {
         _ONEDPL_PRAGMA_UNROLL
         for (uint16_t __i = 0; __i < __block_size; ++__i)
-        {
-            if constexpr (!__uniform_space)
-            {
-                const uint16_t __idx = __wi * __block_size + __i;
-                if(__idx >= __n)
-                    continue;
-            }
-            __exchange_lacc[__indices[__i]] = __vals[__i];
-        }
+            __exchange_lacc[__indices[__i]] = __keys[__i];
 
         __dpl_sycl::__group_barrier(__it);
 
         _ONEDPL_PRAGMA_UNROLL
         for (uint16_t __i = 0; __i < __block_size; ++__i)
-        {
-            if constexpr (!__uniform_space)
-            {
-                const uint16_t __idx = __wi * __block_size + __i;
-                if(__idx >= __n)
-                    continue;
-            }
-            __vals[__i] = __exchange_lacc[__wi * __block_size + __i];
-        }
+            __keys[__i] = __exchange_lacc[__wi * __block_size + __i];
     }
 
     static_assert(__wg_size <= 1024);
@@ -160,9 +132,6 @@ struct __subgroup_radix_sort
         using _ValT = oneapi::dpl::__internal::__value_t<_RangeIn>;
         using _KeyT = oneapi::dpl::__internal::__key_t<_Proj, _RangeIn>;
 
-        //A value is a key: we use an uniform iteration space and use a default(identical) value for __i >= __n
-        constexpr bool __uniform_space = std::is_same_v<_KeyT, _ValT>;
-
         _TempBuf<_ValT, _SLM_tag> __buf_val(__block_size * __wg_size);
         _TempBuf<uint32_t, _SLM_tag> __buf_count(__counter_buf_sz);
 
@@ -175,12 +144,12 @@ struct __subgroup_radix_sort
 
             __cgh.parallel_for<_KernelName>(
                 __range, ([=](sycl::nd_item<1> __it)[[_ONEDPL_SYCL_REQD_SUB_GROUP_SIZE(__req_sub_group_size)]] {
-                    _ValT __vals[__block_size];
+                    _ValT __keys[__block_size];
                     uint16_t __wi = __it.get_local_linear_id();
                     uint16_t __begin_bit = 0;
                     constexpr uint16_t __end_bit = sizeof(_KeyT) * 8;
 
-                    __block_load<_ValT, __uniform_space>(__wi, __src, __vals, __n);
+                    __block_load(__wi, __src, __keys, __n);
 
                     __dpl_sycl::__group_barrier(__it);
                     while (true)
@@ -200,15 +169,10 @@ struct __subgroup_radix_sort
                             _ONEDPL_PRAGMA_UNROLL
                             for (uint16_t __i = 0; __i < __block_size; ++__i)
                             {
-                                if constexpr (!__uniform_space)
-                                {
-                                    const uint16_t __idx = __wi * __block_size + __i;
-                                    if(__idx >= __n)
-                                        continue;
-                                }
-
-                                const uint16_t __bin = __get_bucket</*mask*/ __bin_count - 1>(
-                                    __order_preserving_cast<__is_asc>(__proj(__vals[__i])), __begin_bit);
+                                const uint16_t __idx = __wi * __block_size + __i;
+                                const uint16_t __bin = __idx < __n ? __get_bucket</*mask*/ __bin_count - 1>(
+                                    __order_preserving_cast<__is_asc>(__keys[__i]), __begin_bit)
+                                    : __bin_count - 1/*default bin for out of range elements (when idx >= n)*/;
 
                                 //"counting" and local offset calculation
                                 __counters[__i] = &__pcounter[__bin * __wg_size];
@@ -245,7 +209,10 @@ struct __subgroup_radix_sort
 
                             _ONEDPL_PRAGMA_UNROLL
                             for (uint16_t __i = 0; __i < __block_size; ++__i)
+                            {
+                                // a global index is a local offset plus a global base index
                                 __indices[__i] += *__counters[__i];
+                            }
                         }
 
                         __begin_bit += __radix;
@@ -258,19 +225,13 @@ struct __subgroup_radix_sort
                             _ONEDPL_PRAGMA_UNROLL
                             for (uint16_t __i = 0; __i < __block_size; ++__i)
                             {
-                                if constexpr (!__uniform_space)
-                                {
-                                    const uint16_t __idx = __wi * __block_size + __i;
-                                    if(__idx >= __n)
-                                        continue;
-                                }
                                 const uint16_t __r = __indices[__i];
                                 if (__r < __n)
-                                    __src[__r] = __vals[__i];
+                                    __src[__r] = __keys[__i];
                             }
                             return;
                         }
-                        __to_blocked<__uniform_space>(__it, __wi, __exchange_lacc, __vals, __n, __indices);
+                        __to_blocked(__it, __wi, __exchange_lacc, __keys, __indices);
                         __dpl_sycl::__group_barrier(__it);
                     }
                 }));
