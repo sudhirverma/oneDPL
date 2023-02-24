@@ -135,6 +135,7 @@ inline namespace deprecated
 
     // begin
     template <typename T, typename Allocator, access_mode Mode>
+    _ONEDPL_DEPRECATED("use begin(sycl::buffer<T, 1, Allocator> buf)")
     __internal::sycl_iterator<T, Allocator>
     begin(sycl::buffer<T, /*dim=*/1, Allocator> buf, sycl::mode_tag_t<Mode>)
     {
@@ -142,6 +143,7 @@ inline namespace deprecated
     }
 
     template <typename T, typename Allocator, access_mode Mode>
+    _ONEDPL_DEPRECATED("use begin(sycl::buffer<T, 1, Allocator> buf)")
     __internal::sycl_iterator<T, Allocator>
     begin(sycl::buffer<T, /*dim=*/1, Allocator> buf, sycl::mode_tag_t<Mode>, __dpl_sycl::__no_init)
     {
@@ -149,6 +151,7 @@ inline namespace deprecated
     }
 
     template <typename T, typename Allocator>
+    _ONEDPL_DEPRECATED("use begin(sycl::buffer<T, 1, Allocator> buf)")
     __internal::sycl_iterator<T, Allocator>
     begin(sycl::buffer<T, /*dim=*/1, Allocator> buf, __dpl_sycl::__no_init)
     {
@@ -157,6 +160,7 @@ inline namespace deprecated
 
     // end
     template <typename T, typename Allocator, access_mode Mode>
+    _ONEDPL_DEPRECATED("use end(sycl::buffer<T, 1, Allocator> buf)")
     __internal::sycl_iterator<T, Allocator>
     end(sycl::buffer<T, /*dim=*/1, Allocator> buf, sycl::mode_tag_t<Mode>)
     {
@@ -164,6 +168,7 @@ inline namespace deprecated
     }
 
     template <typename T, typename Allocator, access_mode Mode>
+    _ONEDPL_DEPRECATED("use end(sycl::buffer<T, 1, Allocator> buf)")
     __internal::sycl_iterator<T, Allocator>
     end(sycl::buffer<T, /*dim=*/1, Allocator> buf, sycl::mode_tag_t<Mode>, __dpl_sycl::__no_init)
     {
@@ -171,6 +176,7 @@ inline namespace deprecated
     }
 
     template <typename T, typename Allocator>
+    _ONEDPL_DEPRECATED("use end(sycl::buffer<T, 1, Allocator> buf)")
     __internal::sycl_iterator<T, Allocator>
     end(sycl::buffer<T, /*dim=*/1, Allocator> buf, __dpl_sycl::__no_init)
     {
