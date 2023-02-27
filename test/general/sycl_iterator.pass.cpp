@@ -847,7 +847,7 @@ DEFINE_TEST(test_adjacent_difference)
         update_data(host_keys, host_vals);
 
         // test with custom functor
-        ::std::adjacent_difference(make_new_policy<new_kernel_name<Policy, 0>>(exec), first1, last1, first2, __f);
+        dpl::adjacent_difference(make_new_policy<new_kernel_name<Policy, 0>>(exec), first1, last1, first2, __f);
 #if _PSTL_SYCL_TEST_USM
         exec.queue().wait_and_throw();
 #endif
@@ -869,7 +869,7 @@ DEFINE_TEST(test_adjacent_difference)
         dpl::fill(host_vals.get(), host_vals.get() + n, blank_value);
         host_vals.update_data();
 
-        ::std::adjacent_difference(make_new_policy<new_kernel_name<Policy, 1>>(exec), first1, last1, first2);
+        dpl::adjacent_difference(make_new_policy<new_kernel_name<Policy, 1>>(exec), first1, last1, first2);
 #if _PSTL_SYCL_TEST_USM
         exec.queue().wait_and_throw();
 #endif
@@ -905,7 +905,7 @@ DEFINE_TEST(test_reduce)
         host_keys.update_data();
 
         // without initial value
-        auto result1 = ::std::reduce(make_new_policy<new_kernel_name<Policy, 0>>(exec), first1 + (n / 3), first1 + (n / 2));
+        auto result1 = dpl::reduce(make_new_policy<new_kernel_name<Policy, 0>>(exec), first1 + (n / 3), first1 + (n / 2));
 #if _PSTL_SYCL_TEST_USM
         exec.queue().wait_and_throw();
 #endif
@@ -913,7 +913,7 @@ DEFINE_TEST(test_reduce)
 
         // with initial value
         auto init = T1(42);
-        auto result2 = ::std::reduce(make_new_policy<new_kernel_name<Policy, 0>>(exec), first1 + (n / 3), first1 + (n / 2), init);
+        auto result2 = dpl::reduce(make_new_policy<new_kernel_name<Policy, 0>>(exec), first1 + (n / 3), first1 + (n / 2), init);
 #if _PSTL_SYCL_TEST_USM
         exec.queue().wait_and_throw();
 #endif
@@ -937,7 +937,7 @@ DEFINE_TEST(test_transform_reduce_unary)
         dpl::fill(host_keys.get(), host_keys.get() + n, value);
         host_keys.update_data();
 
-        auto result = ::std::transform_reduce(make_new_policy<new_kernel_name<Policy, 0>>(exec), first1, last1, T1(42),
+        auto result = dpl::transform_reduce(make_new_policy<new_kernel_name<Policy, 0>>(exec), first1, last1, T1(42),
                                             Plus(), ::std::negate<T1>());
 #if _PSTL_SYCL_TEST_USM
         exec.queue().wait_and_throw();
@@ -963,7 +963,7 @@ DEFINE_TEST(test_transform_reduce_binary)
         host_keys.update_data();
 
         auto result =
-            ::std::transform_reduce(make_new_policy<new_kernel_name<Policy, 0>>(exec), first1, last1, first1, T1(42));
+            dpl::transform_reduce(make_new_policy<new_kernel_name<Policy, 0>>(exec), first1, last1, first1, T1(42));
 #if _PSTL_SYCL_TEST_USM
         exec.queue().wait_and_throw();
 #endif
@@ -1035,7 +1035,7 @@ DEFINE_TEST(test_adjacent_find)
         host_keys.update_data();
 
         // check with no adjacent equal elements
-        Iterator result = ::std::adjacent_find(make_new_policy<new_kernel_name<Policy, 0>>(exec), first, last, comp);
+        Iterator result = dpl::adjacent_find(make_new_policy<new_kernel_name<Policy, 0>>(exec), first, last, comp);
         Iterator expected = last;
 #if _PSTL_SYCL_TEST_USM
         exec.queue().wait_and_throw();

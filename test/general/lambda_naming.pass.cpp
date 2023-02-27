@@ -47,10 +47,10 @@ int main() {
     dpl::copy(policy, buf_begin, buf_end, buf_out_begin_2);
     dpl::copy(policy, buf_out_begin_2, buf_out_begin_2 + n, buf_begin);
     dpl::inplace_merge(policy, buf_begin, buf_begin + n / 2, buf_end);
-    auto red_val = ::std::reduce(policy, buf_begin, buf_end, 1);
+    auto red_val = dpl::reduce(policy, buf_begin, buf_end, 1);
     EXPECT_TRUE(red_val == 42001, "wrong return value from reduce");
     auto buf_out_begin = oneapi::dpl::begin(out_buf);
-    ::std::inclusive_scan(policy, buf_begin, buf_end, buf_out_begin);
+    dpl::inclusive_scan(policy, buf_begin, buf_end, buf_out_begin);
     bool is_equal = dpl::equal(policy, buf_begin, buf_end, buf_out_begin);
     EXPECT_TRUE(!is_equal, "wrong return value from equal");
     auto does_1_exist = dpl::find(policy, buf_begin, buf_end, 1);
@@ -60,7 +60,7 @@ int main() {
 #else
     // dpl::for_each(policy, buf_begin, buf_end, [](int& x) { x++; }); // It's not allowed. Policy with different name is needed
     dpl::for_each(oneapi::dpl::execution::make_device_policy<class ForEach>(policy), buf_begin, buf_end, [](int& x) { x++; });
-    auto red_val = ::std::reduce(policy, buf_begin, buf_end, 1);
+    auto red_val = dpl::reduce(policy, buf_begin, buf_end, 1);
     EXPECT_TRUE(red_val == 2001, "wrong return value from reduce");
 #endif // __SYCL_UNNAMED_LAMBDA__
 #endif // TEST_DPCPP_BACKEND_PRESENT
