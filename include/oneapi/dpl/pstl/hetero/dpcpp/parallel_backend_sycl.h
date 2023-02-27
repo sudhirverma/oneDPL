@@ -490,10 +490,16 @@ struct __parallel_transform_scan_single_group_submitter
                     const ::std::uint16_t __subgroup_size = __subgroup.get_local_linear_range();
 
 #if _ONEDPL_SYCL_SUB_GROUP_LOAD_STORE_PRESENT
-                    constexpr bool __can_use_subgroup_load_store = _IsFullGroup;
+                    constexpr bool __ranges_are_raw_ptrs =
+                        std::is_same_v<::std::remove_cv_t<decltype(__in_rng.begin())>,
+                                       oneapi::dpl::__internal::__value_t<_InRng>*> &&
+                        std::is_same_v<::std::remove_cv_t<decltype(__out_rng.begin())>,
+                                       oneapi::dpl::__internal::__value_t<_OutRng>*>;
+                    constexpr bool __can_use_subgroup_load_store = _IsFullGroup && __ranges_are_raw_ptrs;
 #else
                     constexpr bool __can_use_subgroup_load_store = false;
 #endif
+                    using foo = typename std::integral_constant<bool, __can_use_subgroup_load_store>::foo;
 
                     if constexpr (__can_use_subgroup_load_store)
                     {
