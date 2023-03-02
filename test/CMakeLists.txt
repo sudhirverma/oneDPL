@@ -15,6 +15,8 @@
 set (ranlux_24_48_test.pass_timeout_debug "900") # 15min
 set (ranlux_24_48_test.pass_timeout_release "720") # 12min
 
+option(TEST_USE_KERNEL_NAMES "Use kernel names in tests")
+
 # disable fast math for ALL TESTS
 check_cxx_compiler_flag("-fno-fast-math" _fno_fast_math_option)
 if (_fno_fast_math_option)
