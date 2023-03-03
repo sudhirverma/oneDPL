@@ -116,7 +116,8 @@ struct __parallel_transform_reduce_small_submitter<__work_group_size, __iters_pe
         auto __transform_pattern =
             unseq_backend::transform_reduce<_ExecutionPolicy, __iters_per_work_item, _ReduceOp, _TransformOp>{
                 __reduce_op, _TransformOp{__transform_op}};
-        auto __reduce_pattern = unseq_backend::reduce_over_group<_ExecutionPolicy, _ReduceOp, _Tp>{__reduce_op};
+        auto __reduce_pattern =
+            unseq_backend::reduce_over_group<_ExecutionPolicy, __work_group_size, _ReduceOp, _Tp>{__reduce_op};
 
         const _Size __n_items = __ceiling_div(__n, __iters_per_work_item); // number of work items
 
@@ -188,7 +189,8 @@ struct __parallel_transform_reduce_submitter<__work_group_size, __iters_per_work
         auto __transform_pattern2 =
             unseq_backend::transform_reduce<_ExecutionPolicy, __iters_per_work_item, _ReduceOp, _NoOpFunctor>{
                 __reduce_op, _NoOpFunctor{}};
-        auto __reduce_pattern = unseq_backend::reduce_over_group<_ExecutionPolicy, _ReduceOp, _Tp>{__reduce_op};
+        auto __reduce_pattern =
+            unseq_backend::reduce_over_group<_ExecutionPolicy, __work_group_size, _ReduceOp, _Tp>{__reduce_op};
 
         _Size __size_per_work_group =
             __iters_per_work_item * __work_group_size; // number of buffer elements processed within workgroup
@@ -202,8 +204,8 @@ struct __parallel_transform_reduce_submitter<__work_group_size, __iters_per_work
         // __is_first == false. Reduce between work groups
         bool __is_first = true;
 
-        // For memory utilization it's better to use one big buffer instead of two small because size of the buffer is close
-        // to a few MB
+        // For memory utilization it's better to use one big buffer instead of two small because size of the buffer is 
+        // close to a few MB
         _Size __offset_1 = 0;
         _Size __offset_2 = __n_groups;
 

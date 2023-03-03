@@ -241,8 +241,8 @@ struct transform_reduce
     }
 };
 
-// Reduce on local memory
-template <typename _ExecutionPolicy, typename _BinaryOperation1, typename _Tp>
+// Reduce on local memory. Implemented up to a work group size of 256.
+template <typename _ExecutionPolicy, ::std::uint16_t __work_group_size, typename _BinaryOperation1, typename _Tp>
 struct reduce_over_group
 {
     _BinaryOperation1 __bin_op1;
@@ -251,7 +251,16 @@ struct reduce_over_group
     template <typename _NDItemId, typename _GlobalIdx, typename _Size, typename _AccLocal>
     _Tp
     reduce_impl(const _NDItemId __item_id, const _GlobalIdx __global_idx, const _Size __n, _AccLocal& __local_mem,
-                std::true_type /*has_known_identity*/) const
+                ::std::true_type /*has_known_identity*/, ::std::true_type /*is_full*/) const
+    {
+        return __dpl_sycl::__reduce_over_group(__item_id.get_group(), __local_mem[__item_id.get_local_id(0)],
+                                               __bin_op1);
+    }
+
+    template <typename _NDItemId, typename _GlobalIdx, typename _Size, typename _AccLocal>
+    _Tp
+    reduce_impl(const _NDItemId __item_id, const _GlobalIdx __global_idx, const _Size __n, _AccLocal& __local_mem,
+                ::std::true_type /*has_known_identity*/, ::std::false_type /*is_full*/) const
     {
         auto __local_id = __item_id.get_local_id(0);
         if (__global_idx >= __n)
@@ -266,23 +275,84 @@ struct reduce_over_group
     template <typename _NDItemId, typename _GlobalIdx, typename _Size, typename _AccLocal>
     _Tp
     reduce_impl(const _NDItemId __item_id, const _GlobalIdx __global_idx, const _Size __n, _AccLocal& __local_mem,
-                std::false_type /*has_known_identity*/) const
+                ::std::false_type /*has_known_identity*/, ::std::true_type /*is_full*/) const
     {
         auto __local_idx = __item_id.get_local_id(0);
-        auto __group_size = __item_id.get_local_range().size();
 
-        auto __k = 1;
+        if constexpr (__work_group_size >= 256)
+            if (__local_idx < 128)
+                __local_mem[__local_idx] = __bin_op1(__local_mem[__local_idx], __local_mem[__local_idx + 128]);
+        __dpl_sycl::__group_barrier(__item_id);
+        if constexpr (__work_group_size >= 128)
+            if (__local_idx < 64)
+                __local_mem[__local_idx] = __bin_op1(__local_mem[__local_idx], __local_mem[__local_idx + 64]);
+        __dpl_sycl::__group_barrier(__item_id);
+        if constexpr (__work_group_size >= 64)
+            if (__local_idx < 32)
+                __local_mem[__local_idx] = __bin_op1(__local_mem[__local_idx], __local_mem[__local_idx + 32]);
+        __dpl_sycl::__group_barrier(__item_id);
+        if constexpr (__work_group_size >= 32)
+            if (__local_idx < 16)
+                __local_mem[__local_idx] = __bin_op1(__local_mem[__local_idx], __local_mem[__local_idx + 16]);
+        __dpl_sycl::__group_barrier(__item_id);
+        if constexpr (__work_group_size >= 16)
+            if (__local_idx < 8)
+                __local_mem[__local_idx] = __bin_op1(__local_mem[__local_idx], __local_mem[__local_idx + 8]);
+        __dpl_sycl::__group_barrier(__item_id);
+        if constexpr (__work_group_size >= 8)
+            if (__local_idx < 4)
+                __local_mem[__local_idx] = __bin_op1(__local_mem[__local_idx], __local_mem[__local_idx + 4]);
+        __dpl_sycl::__group_barrier(__item_id);
+        if constexpr (__work_group_size >= 4)
+            if (__local_idx < 2)
+                __local_mem[__local_idx] = __bin_op1(__local_mem[__local_idx], __local_mem[__local_idx + 2]);
+        __dpl_sycl::__group_barrier(__item_id);
+        if constexpr (__work_group_size >= 2)
+            if (__local_idx == 0)
+                __local_mem[__local_idx] = __bin_op1(__local_mem[__local_idx], __local_mem[__local_idx + 1]);
 
-        do
-        {
-            __dpl_sycl::__group_barrier(__item_id);
-            if (__local_idx % (2 * __k) == 0 && __local_idx + __k < __group_size && __global_idx < __n &&
-                __global_idx + __k < __n)
-            {
-                __local_mem[__local_idx] = __bin_op1(__local_mem[__local_idx], __local_mem[__local_idx + __k]);
-            }
-            __k *= 2;
-        } while (__k < __group_size);
+        return __local_mem[__local_idx];
+    }
+
+    template <typename _NDItemId, typename _GlobalIdx, typename _Size, typename _AccLocal>
+    _Tp
+    reduce_impl(const _NDItemId __item_id, const _GlobalIdx __global_idx, const _Size __n, _AccLocal& __local_mem,
+                ::std::false_type /*has_known_identity*/, ::std::false_type /*is_full*/) const
+    {
+        auto __local_idx = __item_id.get_local_id(0);
+
+        if constexpr (__work_group_size >= 256)
+            if (__local_idx < 128 && __global_idx + 128 < __n)
+                __local_mem[__local_idx] = __bin_op1(__local_mem[__local_idx], __local_mem[__local_idx + 128]);
+        __dpl_sycl::__group_barrier(__item_id);
+        if constexpr (__work_group_size >= 128)
+            if (__local_idx < 64 && __global_idx + 64 < __n)
+                __local_mem[__local_idx] = __bin_op1(__local_mem[__local_idx], __local_mem[__local_idx + 64]);
+        __dpl_sycl::__group_barrier(__item_id);
+        if constexpr (__work_group_size >= 64)
+            if (__local_idx < 32 && __global_idx + 32 < __n)
+                __local_mem[__local_idx] = __bin_op1(__local_mem[__local_idx], __local_mem[__local_idx + 32]);
+        __dpl_sycl::__group_barrier(__item_id);
+        if constexpr (__work_group_size >= 32)
+            if (__local_idx < 16 && __global_idx + 16 < __n)
+                __local_mem[__local_idx] = __bin_op1(__local_mem[__local_idx], __local_mem[__local_idx + 16]);
+        __dpl_sycl::__group_barrier(__item_id);
+        if constexpr (__work_group_size >= 16)
+            if (__local_idx < 8 && __global_idx + 8 < __n)
+                __local_mem[__local_idx] = __bin_op1(__local_mem[__local_idx], __local_mem[__local_idx + 8]);
+        __dpl_sycl::__group_barrier(__item_id);
+        if constexpr (__work_group_size >= 8)
+            if (__local_idx < 4 && __global_idx + 4 < __n)
+                __local_mem[__local_idx] = __bin_op1(__local_mem[__local_idx], __local_mem[__local_idx + 4]);
+        __dpl_sycl::__group_barrier(__item_id);
+        if constexpr (__work_group_size >= 4)
+            if (__local_idx < 2 && __global_idx + 2 < __n)
+                __local_mem[__local_idx] = __bin_op1(__local_mem[__local_idx], __local_mem[__local_idx + 2]);
+        __dpl_sycl::__group_barrier(__item_id);
+        if constexpr (__work_group_size >= 2)
+            if (__local_idx == 0 && __global_idx + 1 < __n)
+                __local_mem[__local_idx] = __bin_op1(__local_mem[__local_idx], __local_mem[__local_idx + 1]);
+
         return __local_mem[__local_idx];
     }
 
@@ -290,7 +360,16 @@ struct reduce_over_group
     _Tp
     operator()(const _NDItemId __item_id, const _GlobalIdx __global_idx, const _Size __n, _AccLocal& __local_mem) const
     {
-        return reduce_impl(__item_id, __global_idx, __n, __local_mem, __has_known_identity<_BinaryOperation1, _Tp>{});
+        if (__work_group_size == __n)
+        {
+            return reduce_impl(__item_id, __global_idx, __n, __local_mem,
+                               __has_known_identity<_BinaryOperation1, _Tp>{}, ::std::true_type{});
+        }
+        else
+        {
+            return reduce_impl(__item_id, __global_idx, __n, __local_mem,
+                               __has_known_identity<_BinaryOperation1, _Tp>{}, ::std::false_type{});
+        }
     }
 
     template <typename _InitType, typename _Result>
