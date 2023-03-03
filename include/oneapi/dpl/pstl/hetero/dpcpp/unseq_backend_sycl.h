@@ -204,21 +204,20 @@ struct transform_reduce_seq
 };
 
 template <typename _ExecutionPolicy, ::std::size_t __iters_per_work_item, typename _Operation1, typename _Operation2>
-struct transform_reduce_known
+struct transform_reduce
 {
     _Operation1 __binary_op;
     _Operation2 __unary_op;
 
     template <typename _Size, typename _AccLocal, typename... _Acc>
     void
-    operator()(const ::std::uint16_t __local_id, const _Size __n,
-               const ::std::size_t /* unused __iters_per_work_item */, const ::std::size_t __global_id,
+    operator()(const ::std::uint16_t __local_id, const _Size __n, const ::std::size_t __global_id,
                const ::std::size_t __global_offset, _AccLocal& __local_mem, const _Acc&... __acc) const
     {
         const ::std::size_t __adjusted_global_id = __global_offset + __iters_per_work_item * __global_id;
-        const ::std::int64_t __items_to_process = __n - (__iters_per_work_item * __global_id);
+        _Size __adjusted_n = __global_offset + __n;
         // Add neighbour to the current __local_mem
-        if (__items_to_process >= __iters_per_work_item)
+        if (__adjusted_global_id + __iters_per_work_item < __adjusted_n)
         {
             // Keep these statements in the same scope to allow for better memory alignment
             typename _AccLocal::value_type __res = __unary_op(__adjusted_global_id, __acc...);
@@ -227,35 +226,10 @@ struct transform_reduce_known
                 __res = __binary_op(__res, __unary_op(__adjusted_global_id + __i, __acc...));
             __local_mem[__local_id] = __res;
         }
-        else if (__items_to_process > 0)
+        else if (__adjusted_global_id < __adjusted_n)
         {
             // Keep these statements in the same scope to allow for better memory alignment
             typename _AccLocal::value_type __res = __unary_op(__adjusted_global_id, __acc...);
-            for (_Size __i = 1; __i < __items_to_process; ++__i)
-                __res = __binary_op(__res, __unary_op(__adjusted_global_id + __i, __acc...));
-            __local_mem[__local_id] = __res;
-        }
-    }
-};
-
-template <typename _ExecutionPolicy, typename _Operation1, typename _Operation2>
-struct transform_reduce_unknown
-{
-    _Operation1 __binary_op;
-    _Operation2 __unary_op;
-
-    template <typename _Size, typename _AccLocal, typename... _Acc>
-    void
-    operator()(const ::std::uint16_t __local_id, const _Size __n, const ::std::size_t __iters_per_work_item,
-               const ::std::size_t __global_id, const ::std::size_t __global_offset, _AccLocal& __local_mem,
-               const _Acc&... __acc) const
-    {
-        ::std::size_t __adjusted_global_id = __global_offset + __iters_per_work_item * __global_id;
-        _Size __adjusted_n = __global_offset + __n;
-        if (__adjusted_global_id < __adjusted_n)
-        {
-            typename _AccLocal::value_type __res = __unary_op(__adjusted_global_id, __acc...);
-            // Add neighbour to the current __local_mem
             for (_Size __i = 1; __i < __iters_per_work_item; ++__i)
             {
                 ::std::size_t __shifted_id = __adjusted_global_id + __i;
