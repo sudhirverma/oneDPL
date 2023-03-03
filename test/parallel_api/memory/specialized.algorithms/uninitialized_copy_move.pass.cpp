@@ -120,7 +120,7 @@ struct test_uninitialized_move
         ::std::destroy_n(oneapi::dpl::execution::seq, out_first, n);
         T::SetCount(0);
 
-        ::std::uninitialized_move(exec, first, last, out_first);
+        dpl::uninitialized_move(exec, first, last, out_first);
         EXPECT_TRUE(T::MoveCount() == n, "wrong uninitialized_move");
     }
 
@@ -129,7 +129,7 @@ struct test_uninitialized_move
     operator()(Policy&& exec, InputIterator first, InputIterator last, OutputIterator out_first, size_t n,
                /*is_trivial<T>=*/::std::true_type)
     {
-        ::std::uninitialized_move(exec, first, last, out_first);
+        dpl::uninitialized_move(exec, first, last, out_first);
         EXPECT_TRUE(IsCheckValueCorrectness(first, out_first, n), "wrong uninitialized_move");
     }
 };
@@ -149,7 +149,7 @@ struct test_uninitialized_move_n
         ::std::destroy_n(oneapi::dpl::execution::seq, out_first, n);
         T::SetCount(0);
 
-        ::std::uninitialized_move_n(exec, first, n, out_first);
+        dpl::uninitialized_move_n(exec, first, n, out_first);
         EXPECT_TRUE(T::MoveCount() == n, "wrong uninitialized_move_n");
     }
 
@@ -158,7 +158,7 @@ struct test_uninitialized_move_n
     operator()(Policy&& exec, InputIterator first, InputIterator /* last */, OutputIterator out_first, size_t n,
                /*is_trivial<T>=*/::std::true_type)
     {
-        ::std::uninitialized_move_n(exec, first, n, out_first);
+        dpl::uninitialized_move_n(exec, first, n, out_first);
         EXPECT_TRUE(IsCheckValueCorrectness(first, out_first, n), "wrong uninitialized_move_n");
     }
 };
