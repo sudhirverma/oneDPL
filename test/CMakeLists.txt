@@ -15,14 +15,31 @@
 set (ranlux_24_48_test.pass_timeout_debug "900") # 15min
 set (ranlux_24_48_test.pass_timeout_release "720") # 12min
 
-option(TEST_USE_KERNEL_NAMES "Use kernel names in tests")
-
 # disable fast math for ALL TESTS
 check_cxx_compiler_flag("-fno-fast-math" _fno_fast_math_option)
 if (_fno_fast_math_option)
     add_compile_options("-fno-fast-math")
 else()
     message(STATUS "oneDPL: -fno-fast-math is not supported by current compiler")
+endif()
+
+# usage of Kernel names in tests
+set(TEST_USE_KERNEL_NAMES "auto" CACHE STRING "BY default, we use TEST_USE_KERNEL_NAMES=auto : usage of Kernel names in tests depends on unnamed lambda option")
+set_property(CACHE TEST_USE_KERNEL_NAMES PROPERTY STRINGS "auto" "on" "off")
+message(STATUS "Usage of Kernel names in tests: TEST_USE_KERNEL_NAMES='${TEST_USE_KERNEL_NAMES}'")
+if (${TEST_USE_KERNEL_NAMES} STREQUAL "auto")
+    message(STATUS "    Usage of Kernel names in tests depends on unnamed lambda option")
+    #stay TEST_USE_KERNEL_NAMES as undefined in C++ code
+elseif(${TEST_USE_KERNEL_NAMES} STREQUAL "on")
+    add_compile_definitions(TEST_USE_KERNEL_NAMES=1)
+    message(STATUS "    Use Kernel names in tests :")
+    message(STATUS "        #define TEST_USE_KERNEL_NAMES 1")
+elseif(${TEST_USE_KERNEL_NAMES} STREQUAL "off")
+    add_compile_definitions(TEST_USE_KERNEL_NAMES=0)
+    message(STATUS "    Don't use Kernel names in tests :")
+    message(STATUS "        #define TEST_USE_KERNEL_NAMES 0")
+else()
+    message(FATAL_ERROR "Invalid value of property TEST_USE_KERNEL_NAMES (auto, on, off) : '${TEST_USE_KERNEL_NAMES}'")
 endif()
 
 add_custom_target(build-onedpl-tests
