@@ -230,8 +230,8 @@ DEFINE_TEST(test_uninitialized_fill)
         typedef typename ::std::iterator_traits<Iterator1>::value_type T1;
         auto value = T1(2);
 
-        ::std::uninitialized_fill(make_new_policy<new_kernel_name<Policy, 0>>(exec), first1 + (n / 3), first1 + (n / 2),
-                                  value);
+        dpl::uninitialized_fill(make_new_policy<new_kernel_name<Policy, 0>>(exec), first1 + (n / 3), first1 + (n / 2),
+                                value);
 
 #if _PSTL_SYCL_TEST_USM
         exec.queue().wait_and_throw();
@@ -256,7 +256,7 @@ DEFINE_TEST(test_uninitialized_fill_n)
         typedef typename ::std::iterator_traits<Iterator1>::value_type T1;
         auto value = T1(2);
 
-        ::std::uninitialized_fill_n(make_new_policy<new_kernel_name<Policy, 0>>(exec), first1, n, value + 1);
+        dpl::uninitialized_fill_n(make_new_policy<new_kernel_name<Policy, 0>>(exec), first1, n, value + 1);
 #if _PSTL_SYCL_TEST_USM
         exec.queue().wait_and_throw();
 #endif
