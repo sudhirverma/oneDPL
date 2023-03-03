@@ -127,7 +127,7 @@ DEFINE_TEST(test_uninitialized_copy)
         dpl::fill(host_vals.get(), host_vals.get() + n, IteratorValueType{ -1 });
         update_data(host_keys, host_vals);
 
-        ::std::uninitialized_copy(make_new_policy<new_kernel_name<Policy, 0>>(exec), first1, last1, first2);
+        dpl::uninitialized_copy(make_new_policy<new_kernel_name<Policy, 0>>(exec), first1, last1, first2);
 #if _PSTL_SYCL_TEST_USM
         exec.queue().wait_and_throw();
 #endif
@@ -154,7 +154,7 @@ DEFINE_TEST(test_uninitialized_copy_n)
         dpl::fill_n(host_vals.get(), n, IteratorValueType{0});
         update_data(host_keys, host_vals);
 
-        ::std::uninitialized_copy_n(make_new_policy<new_kernel_name<Policy, 0>>(exec), first1, n, first2);
+        dpl::uninitialized_copy_n(make_new_policy<new_kernel_name<Policy, 0>>(exec), first1, n, first2);
 #if _PSTL_SYCL_TEST_USM
         exec.queue().wait_and_throw();
 #endif

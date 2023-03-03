@@ -62,7 +62,7 @@ struct test_uninitialized_copy
         ::std::destroy_n(oneapi::dpl::execution::seq, out_first, n);
         T::SetCount(0);
 
-        ::std::uninitialized_copy(exec, first, last, out_first);
+        dpl::uninitialized_copy(exec, first, last, out_first);
         EXPECT_TRUE(T::Count() == n, "wrong uninitialized_copy");
     }
 
@@ -71,7 +71,7 @@ struct test_uninitialized_copy
     operator()(Policy&& exec, InputIterator first, InputIterator last, OutputIterator out_first, size_t n,
                /*is_trivial<T>=*/::std::true_type)
     {
-        ::std::uninitialized_copy(exec, first, last, out_first);
+        dpl::uninitialized_copy(exec, first, last, out_first);
         EXPECT_TRUE(IsCheckValueCorrectness(first, out_first, n), "wrong uninitialized_copy");
     }
 };
@@ -91,7 +91,7 @@ struct test_uninitialized_copy_n
         ::std::destroy_n(oneapi::dpl::execution::seq, out_first, n);
         T::SetCount(0);
 
-        ::std::uninitialized_copy_n(exec, first, n, out_first);
+        dpl::uninitialized_copy_n(exec, first, n, out_first);
         EXPECT_TRUE(T::Count() == n, "wrong uninitialized_copy_n");
     }
 
@@ -100,7 +100,7 @@ struct test_uninitialized_copy_n
     operator()(Policy&& exec, InputIterator first, InputIterator /* last */, OutputIterator out_first, size_t n,
                /*is_trivial<T>=*/::std::true_type)
     {
-        ::std::uninitialized_copy_n(exec, first, n, out_first);
+        dpl::uninitialized_copy_n(exec, first, n, out_first);
         EXPECT_TRUE(IsCheckValueCorrectness(first, out_first, n), "wrong uninitialized_copy_n");
     }
 };
