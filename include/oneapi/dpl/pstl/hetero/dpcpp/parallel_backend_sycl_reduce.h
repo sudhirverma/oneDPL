@@ -309,55 +309,76 @@ __parallel_transform_reduce(_ExecutionPolicy&& __exec, _ReduceOp __reduce_op, _T
     // Pessimistically double the memory requirement to take into account memory used by compiled kernel
     __work_group_size = oneapi::dpl::__internal::__max_local_allocation_size(::std::forward<_ExecutionPolicy>(__exec),
                                                                              sizeof(_Tp) * 2, __work_group_size);
-    if (__n <= 65536 && __work_group_size >= 512)
+    if (__n <= 128 && __work_group_size >= 128)
     {
-        if (__n <= 128)
-        {
-            return __parallel_transform_reduce_small_impl<128, 1, _Tp>(::std::forward<_ExecutionPolicy>(__exec), __n,
-                                                                       __reduce_op, __transform_op, __init,
-                                                                       ::std::forward<_Ranges>(__rngs)...);
-        }
-        else if (__n <= 256)
-        {
-            return __parallel_transform_reduce_small_impl<256, 1, _Tp>(::std::forward<_ExecutionPolicy>(__exec), __n,
-                                                                       __reduce_op, __transform_op, __init,
-                                                                       ::std::forward<_Ranges>(__rngs)...);
-        }
-        else if (__n <= 512)
-        {
-            return __parallel_transform_reduce_small_impl<256, 2, _Tp>(::std::forward<_ExecutionPolicy>(__exec), __n,
-                                                                       __reduce_op, __transform_op, __init,
-                                                                       ::std::forward<_Ranges>(__rngs)...);
-        }
-        else if (__n <= 1024)
-        {
-            return __parallel_transform_reduce_small_impl<256, 4, _Tp>(::std::forward<_ExecutionPolicy>(__exec), __n,
-                                                                       __reduce_op, __transform_op, __init,
-                                                                       ::std::forward<_Ranges>(__rngs)...);
-        }
-        else if (__n <= 2048)
-        {
-            return __parallel_transform_reduce_small_impl<256, 8, _Tp>(::std::forward<_ExecutionPolicy>(__exec), __n,
-                                                                       __reduce_op, __transform_op, __init,
-                                                                       ::std::forward<_Ranges>(__rngs)...);
-        }
-        else if (__n <= 4096)
-        {
-            return __parallel_transform_reduce_small_impl<256, 16, _Tp>(::std::forward<_ExecutionPolicy>(__exec), __n,
-                                                                        __reduce_op, __transform_op, __init,
-                                                                        ::std::forward<_Ranges>(__rngs)...);
-        }
-        else
-        {
-            return __parallel_transform_reduce_small_impl<256, 32, _Tp>(::std::forward<_ExecutionPolicy>(__exec), __n,
-                                                                        __reduce_op, __transform_op, __init,
-                                                                        ::std::forward<_Ranges>(__rngs)...);
-        }
+        return __parallel_transform_reduce_small_impl<128, 1, _Tp>(::std::forward<_ExecutionPolicy>(__exec), __n,
+                                                                   __reduce_op, __transform_op, __init,
+                                                                   ::std::forward<_Ranges>(__rngs)...);
+    }
+    if (__n <= 256 && __work_group_size >= 128)
+    {
+        return __parallel_transform_reduce_small_impl<128, 2, _Tp>(::std::forward<_ExecutionPolicy>(__exec), __n,
+                                                                   __reduce_op, __transform_op, __init,
+                                                                   ::std::forward<_Ranges>(__rngs)...);
+    }
+    if (__n <= 512 && __work_group_size >= 128)
+    {
+        return __parallel_transform_reduce_small_impl<128, 4, _Tp>(::std::forward<_ExecutionPolicy>(__exec), __n,
+                                                                   __reduce_op, __transform_op, __init,
+                                                                   ::std::forward<_Ranges>(__rngs)...);
+    }
+    if (__n <= 1024 && __work_group_size >= 128)
+    {
+        return __parallel_transform_reduce_small_impl<128, 8, _Tp>(::std::forward<_ExecutionPolicy>(__exec), __n,
+                                                                   __reduce_op, __transform_op, __init,
+                                                                   ::std::forward<_Ranges>(__rngs)...);
+    }
+    if (__n <= 2048 && __work_group_size >= 128)
+    {
+        return __parallel_transform_reduce_small_impl<128, 16, _Tp>(::std::forward<_ExecutionPolicy>(__exec), __n,
+                                                                    __reduce_op, __transform_op, __init,
+                                                                    ::std::forward<_Ranges>(__rngs)...);
+    }
+    if (__n <= 4096 && __work_group_size >= 128)
+    {
+        return __parallel_transform_reduce_small_impl<128, 32, _Tp>(::std::forward<_ExecutionPolicy>(__exec), __n,
+                                                                    __reduce_op, __transform_op, __init,
+                                                                    ::std::forward<_Ranges>(__rngs)...);
+    }
+    if (__n <= 8192 && __work_group_size >= 256)
+    {
+        return __parallel_transform_reduce_small_impl<256, 32, _Tp>(::std::forward<_ExecutionPolicy>(__exec), __n,
+                                                                    __reduce_op, __transform_op, __init,
+                                                                    ::std::forward<_Ranges>(__rngs)...);
     }
 
     // Use a recursive tree reduction for large arrays.
-    return __parallel_transform_reduce_impl<256, 32, _Tp>(::std::forward<_ExecutionPolicy>(__exec), __n, __reduce_op,
-                                                          __transform_op, __init, ::std::forward<_Ranges>(__rngs)...);
+    if (__work_group_size >= 256)
+    {
+        return __parallel_transform_reduce_impl<256, 32, _Tp>(::std::forward<_ExecutionPolicy>(__exec), __n,
+                                                              __reduce_op, __transform_op, __init,
+                                                              ::std::forward<_Ranges>(__rngs)...);
+    }
+    if (__work_group_size >= 128)
+    {
+        return __parallel_transform_reduce_impl<128, 32, _Tp>(::std::forward<_ExecutionPolicy>(__exec), __n,
+                                                              __reduce_op, __transform_op, __init,
+                                                              ::std::forward<_Ranges>(__rngs)...);
+    }
+    if (__work_group_size >= 64)
+    {
+        return __parallel_transform_reduce_impl<64, 32, _Tp>(::std::forward<_ExecutionPolicy>(__exec), __n, __reduce_op,
+                                                             __transform_op, __init,
+                                                             ::std::forward<_Ranges>(__rngs)...);
+    }
+    else
+    {
+        assert("Parallel transform_reduce error. Maximum work group size of the device is too small." &&
+               __work_group_size >= 32);
+        return __parallel_transform_reduce_impl<32, 32, _Tp>(::std::forward<_ExecutionPolicy>(__exec), __n, __reduce_op,
+                                                             __transform_op, __init,
+                                                             ::std::forward<_Ranges>(__rngs)...);
+    }
 }
 
 } // namespace __par_backend_hetero
