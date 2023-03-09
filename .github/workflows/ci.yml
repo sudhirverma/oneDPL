@@ -34,9 +34,6 @@ jobs:
       - uses: actions/checkout@v2
       - name: Install Intel® oneAPI Threading Building Blocks (oneTBB)
         run: $CONDA/bin/conda install -c intel tbb-devel
-      - name: Install Intel® oneAPI DPC++/C++ Compiler
-        if: matrix.cxx_compiler == 'icpx' || matrix.cxx_compiler == 'icx' || matrix.cxx_compiler == 'icx-cl' || matrix.cxx_compiler == 'dpcpp' || matrix.cxx_compiler == 'dpcpp-cl'
-        run: $CONDA/bin/conda install -c intel dpcpp_linux-64
       - name: Run testing
         shell: bash
         run: |
