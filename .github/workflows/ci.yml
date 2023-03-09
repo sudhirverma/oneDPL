@@ -1,6 +1,4 @@
 name: oneDPL CI
-
-
 on:
   push:
     branches: [main]
