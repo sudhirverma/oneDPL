@@ -8,12 +8,6 @@ on:
       - main
       - 'release/**'
 
-env:
-  BUILD_CONCURRENCY: 2
-  MACOS_BUILD_CONCURRENCY: 3
-  TEST_TIMEOUT: 360
-  MACOS_ONEAPI_DOWNLOAD_LINK: https://registrationcenter-download.intel.com/akdlm/irc_nas/18358/m_cpp-compiler-classic_p_2022.0.0.62_offline.dmg
-
 jobs:
   
   linux-testing:
@@ -45,16 +39,7 @@ jobs:
           export PATH=$CONDA/lib:$PATH
           export CPATH=$CONDA/include:$CPATH
           export OCL_ICD_FILENAMES=$CONDA/lib/libintelocl.so
-          if [[ "${{ matrix.cxx_compiler }}" == "icpx" ]] || [[ "${{ matrix.cxx_compiler }}" == "icx" ]] || [[ "${{ matrix.cxx_compiler }}" == "icx-cl" ]] || [[ "${{ matrix.cxx_compiler }}" == "dpcpp" ]] || [[ "${{ matrix.cxx_compiler }}" == "dpcpp-cl" ]]; then
-            echo "::warning::Compiler: $(${{ matrix.cxx_compiler }} --version)"
-          fi
-          if [[ "${{ matrix.backend }}" == "dpcpp" ]]; then
-            make_targets="build-onedpl-sycl_iterator-tests"
-            ctest_flags="-R sycl_iterator_.*\.pass"
-            echo "::warning::dpcpp backend is set. Compile and run only sycl_iterator tests"
-          else
-            make_targets="build-onedpl-tests"
-          fi
+          make_targets="build-onedpl-tests"
           mkdir build && cd build
           lscpu
           cmake -DCMAKE_CXX_STANDARD=17 -DCMAKE_BUILD_TYPE=release \
