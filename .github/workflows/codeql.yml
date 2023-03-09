@@ -70,8 +70,8 @@ jobs:
         lscpu
         cmake -DCMAKE_CXX_STANDARD=17 -DCMAKE_BUILD_TYPE=release \
           -DCMAKE_CXX_COMPILER=g++ -DONEDPL_BACKEND=tbb -DONEDPL_DEVICE_TYPE=HOST ..
-        make VERBOSE=1 -j${BUILD_CONCURRENCY} ${make_targets}
-        ctest --timeout ${TEST_TIMEOUT} --output-on-failure ${ctest_flags}
+        make VERBOSE=1 -j2 ${make_targets}
+        ctest --timeout 360 --output-on-failure ${ctest_flags}
     # Autobuild attempts to build any compiled languages  (C/C++, C#, Go, or Java).
     # If this step fails, then you should remove it and run the build manually (see below)
     #- name: Autobuild
